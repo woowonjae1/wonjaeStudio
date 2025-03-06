@@ -3,35 +3,35 @@ import { Player } from '@/types';
 import { Match } from '@/types';
 
 export const ALBUMS: Album[] = [
-  {
+    {
     id: 1,
-    title: 'Romantic Album',
+      title: 'Romantic Album',
     image: '/image/Romantic.jpg',
-    imageSrc: '/image/Romantic.jpg',
+      imageSrc: '/image/Romantic.jpg',
     audioSrc: '/audio/禹元宰 - 傍晚的Romantic.mp3',
     artist: '禹元宰52hz'
-  },
-  {
+    },
+    {
     id: 2,
-    title: 'Art Life Album',
+      title: 'Art Life Album',
     image: '/image/Artlife.jpg',
-    imageSrc: '/image/Artlife.jpg',
+      imageSrc: '/image/Artlife.jpg',
     audioSrc: '/audio/禹元宰 - [Free]#cant chat with you.mp3',
     artist: '禹元宰52hz'
-  },
-  {
+    },
+    {
     id: 3,
-    title: 'Heart Breaking Album',
+      title: 'Heart Breaking Album',
     image: '/image/HeartBreaking.jpg',
-    imageSrc: '/image/HeartBreaking.jpg',
+      imageSrc: '/image/HeartBreaking.jpg',
     audioSrc: '/audio/禹元宰 - Crush.mp3',
     artist: '禹元宰52hz'
-  },
-  {
+    },
+    {
     id: 4,
-    title: 'Nobody Gets Me Album',
+      title: 'Nobody Gets Me Album',
     image: '/image/nobodygetsme.jpg',
-    imageSrc: '/image/nobodygetsme.jpg',
+      imageSrc: '/image/nobodygetsme.jpg',
     audioSrc: '/audio/禹元宰 - Nobody Gets Me Like u R&B TYPE BEAT.mp3',
     artist: '禹元宰52hz'
   }
@@ -239,4 +239,4 @@ export const MATCHES: Match[] = [
     awayTeamLogo: `https://ui-avatars.com/api/?name=Chelsea&bold=true&background=98C5E9&color=fff`
   },
   // 可以添加更多比赛...
-];
+  ];
