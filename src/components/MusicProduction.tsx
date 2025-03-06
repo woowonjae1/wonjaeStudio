@@ -1,6 +1,8 @@
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { MusicMarquee3D } from './MusicMarquee3D';
+import { MusicPlayer } from './MusicPlayer';
 
 const MusicProduction: React.FC = () => {
   // FL Studio功能列表
@@ -106,6 +108,22 @@ const MusicProduction: React.FC = () => {
           ))}
         </div>
 
+        {/* 在教程部分上方添加播放器组件 */}
+        <div className="mt-12 mb-16">
+          <h3 className="text-2xl font-bold text-[#1C2C5B] mb-6 text-center">试听演示</h3>
+          <div className="max-w-2xl mx-auto">
+            <MusicPlayer 
+              audioSrc="/demo-track.mp3" 
+              title="FL Studio制作示例 - 电子舞曲" 
+              className="mb-8"
+            />
+            <MusicPlayer 
+              audioSrc="/piano-demo.mp3" 
+              title="钢琴Roll编辑器示例" 
+            />
+          </div>
+        </div>
+
         {/* 教程部分 */}
         <h3 className="text-3xl font-bold text-[#1C2C5B] text-center mb-8">开始你的音乐制作之旅</h3>
         <div className="grid md:grid-cols-3 gap-8">
@@ -127,6 +145,15 @@ const MusicProduction: React.FC = () => {
               </div>
             </div>
           ))}
+        </div>
+
+        {/* 在教程部分后添加3D消息队列 */}
+        <div className="mt-24">
+          <h3 className="text-3xl font-bold text-[#1C2C5B] text-center mb-8">用户评价</h3>
+          <p className="text-center text-gray-600 max-w-3xl mx-auto mb-12">
+            听听其他音乐制作人对FL Studio的看法，了解他们如何使用这款强大的软件创作出令人惊叹的音乐作品。
+          </p>
+          <MusicMarquee3D />
         </div>
 
         {/* 号召性用语 */}
