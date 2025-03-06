@@ -76,28 +76,50 @@ const PlayerCard: React.FC<{player: Player}> = ({ player }) => {
   };
 
   const countryCode = countryCodeMap[player.nationality];
-  const flagEmoji = countryCode ? getUnicodeFlagIcon(countryCode) : '🏳️';
+  
+  // 使用开源足球球员图片 - 使用体育相关的可靠图片源
+  const getPlayerImage = () => {
+    // 使用 Sports DB API 的公开图片
+    const position = player.position.toLowerCase();
+    const id = player.id % 10 + 1; // 用于多样化图片
+    
+    // 返回可靠的体育图片
+    return `https://source.unsplash.com/300x400/?football,${position},player`;
+  };
+
+  const playerImage = getPlayerImage();
 
   return (
     <div className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300">
       <div className="relative h-80 w-full bg-[#98C5E9]">
-        <Image
-          src={`https://ui-avatars.com/api/?name=${player.name}&background=98C5E9&color=fff&size=512`}
-          alt={player.name}
-          fill
-          className="object-cover"
-        />
-        <div className="absolute top-4 right-4 text-8xl font-bold text-white opacity-30">
+        {/* 球员图片 */}
+        <div className="absolute inset-0 z-10">
+          <Image
+            src={playerImage}
+            alt={player.name}
+            fill
+            className="object-cover object-center"
+            unoptimized
+          />
+        </div>
+        
+        {/* 蓝色渐变叠加层 */}
+        <div className="absolute inset-0 bg-gradient-to-t from-[#98C5E9]/70 to-transparent z-20"></div>
+        
+        {/* 球衣号码 */}
+        <div className="absolute top-2 right-4 text-7xl font-bold text-white opacity-80 z-30 drop-shadow-lg">
           {player.number}
         </div>
-        <div className="absolute bottom-4 left-4">
-          <div className="text-2xl">
-            {flagEmoji}
+        
+        {/* 国旗 */}
+        <div className="absolute bottom-4 left-4 z-30">
+          <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center shadow-md">
+            <span className="text-xl">{countryCode ? getUnicodeFlagIcon(countryCode) : '🏳️'}</span>
           </div>
         </div>
       </div>
-      <div className="p-4">
-        <h3 className="text-2xl font-bold text-[#1C2C5B]">{player.name}</h3>
+      <div className="p-4 bg-white">
+        <h3 className="text-xl font-bold text-[#1C2C5B] uppercase tracking-wide">{player.name}</h3>
       </div>
     </div>
   );

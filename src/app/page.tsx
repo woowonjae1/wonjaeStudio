@@ -12,7 +12,8 @@ import CodeShowcase from '@/components/CodeShowcase';
 import Image from 'next/image';
 import PlayerGrid from '@/components/PlayerGrid';
 import MatchSchedule from '@/components/MatchSchedule';
-import GradientText from '@/components/GradientText';
+import FixturesAPI from '@/components/FixturesAPI';
+import MusicProduction from '@/components/MusicProduction';
 
 // 使用 Next.js 的数据获取方法
 export const revalidate = 3600; // 每小时重新验证一次
@@ -96,7 +97,7 @@ export default function Home() {
             </p>
 
             <h3 className="text-2xl font-bold mb-6">First Team Players</h3>
-            <PlayerGrid players={PLAYERS} />
+            <FixturesAPI />
             
             <div className="mt-12">
               <MatchSchedule matches={MATCHES} />
@@ -109,16 +110,6 @@ export default function Home() {
             <p className="text-gray-700 mb-4">
               Check out my game development projects and gaming content. From design to implementation, I enjoy creating engaging experiences.
             </p>
-
-            {/* 添加 GradientText 组件 */}
-            <GradientText
-              colors={["#40ffaa", "#4079ff", "#40ffaa", "#4079ff", "#40ffaa"]}
-              animationSpeed={3}
-              showBorder={true}
-              className="mb-6 text-5xl border-2 border-transparent" // 添加边框样式
-            >
-              King of FPS Game
-            </GradientText>
           </section>
 
           <section id="music" className="py-12 relative min-h-[800px]">
@@ -223,6 +214,8 @@ export default function Home() {
               Hello! I'm Woowonjae, a passionate music producer and blogger. Welcome to my personal space where I share my journey and insights into music production.
             </p>
           </section>
+
+          <MusicProduction />
         </main>
       </div>
 
