@@ -11,8 +11,9 @@ module.exports = {
   		animation: {
   			'spin-slow': 'spin 3s linear infinite',
   			gradient: 'gradient 8s linear infinite',
-  			marquee: 'marquee var(--duration) infinite linear',
-  			'marquee-vertical': 'marquee-vertical var(--duration) linear infinite'
+  			marquee: 'marquee var(--speed) linear infinite',
+  			'marquee-vertical': 'marquee-vertical var(--duration) linear infinite',
+  			'marquee-reverse': 'marquee-reverse var(--speed) linear infinite',
   		},
   		borderRadius: {
   			lg: 'var(--radius)',
@@ -74,12 +75,8 @@ module.exports = {
   				}
   			},
   			marquee: {
-  				from: {
-  					transform: 'translateX(0)'
-  				},
-  				to: {
-  					transform: 'translateX(calc(-100% - var(--gap)))'
-  				}
+  				'0%': { transform: 'translateX(0%)' },
+  				'100%': { transform: 'translateX(-100%)' },
   			},
   			'marquee-vertical': {
   				from: {
@@ -88,7 +85,11 @@ module.exports = {
   				to: {
   					transform: 'translateY(calc(-100% - var(--gap)))'
   				}
-  			}
+  			},
+  			'marquee-reverse': {
+  				'0%': { transform: 'translateX(-100%)' },
+  				'100%': { transform: 'translateX(0%)' },
+  			},
   		}
   	}
   },

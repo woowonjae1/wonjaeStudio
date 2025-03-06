@@ -150,7 +150,7 @@ const FixturesAPI: React.FC = () => {
           setFixtures(backupFixtures);
         } else {
           // 转换API数据
-          const formattedFixtures = apiMatches.map(match => ({
+          const formattedFixtures = apiMatches.map((match: ApiMatch) => ({
             id: match.id.toString(),
             competition: match.competition.name,
             competitionType: getCompetitionType(match.competition.type),

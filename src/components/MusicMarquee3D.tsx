@@ -1,5 +1,43 @@
+import React from 'react';
 import { cn } from "@/lib/utils";
-import { Marquee } from "@/registry/magicui/marquee";
+
+// 自定义Marquee组件替换缺失的导入
+const Marquee = ({ 
+  children, 
+  className, 
+  pauseOnHover = false, 
+  direction = 'left', 
+  speed = 50,
+  vertical = false,
+  reverse = false
+}: { 
+  children: React.ReactNode, 
+  className?: string, 
+  pauseOnHover?: boolean, 
+  direction?: 'left' | 'right', 
+  speed?: number,
+  vertical?: boolean,
+  reverse?: boolean
+}) => {
+  return (
+    <div 
+      className={cn("relative overflow-hidden", className)}
+      style={{ '--speed': `${speed}s` } as React.CSSProperties}
+    >
+      <div 
+        className={cn(
+          vertical ? "flex flex-col min-h-full" : "flex min-w-full",
+          "whitespace-nowrap py-3",
+          vertical ? "animate-marquee-vertical" : "animate-marquee",
+          pauseOnHover && "hover:[animation-play-state:paused]",
+          (!vertical && direction === 'right') || reverse ? "animate-marquee-reverse" : ""
+        )}
+      >
+        {children}
+      </div>
+    </div>
+  );
+};
 
 // 音乐制作相关的评论
 const musicReviews = [
