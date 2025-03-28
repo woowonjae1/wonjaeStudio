@@ -29,7 +29,7 @@ export default function ProfilePage() {
     const fetchUserData = async () => {
       try {
         const data = await apiRequest<UserData>('/user/profile', { requireAuth: true });
-        setUserData(data);
+        setUserData(data as UserData);
       } catch (error) {
         console.error('获取用户数据失败:', error);
       } finally {
@@ -41,7 +41,7 @@ export default function ProfilePage() {
   }, [isAuthenticated, router]);
 
   if (!isAuthenticated) {
-    return null; // 等待重定向
+    return null; 
   }
 
   if (isLoading) {
