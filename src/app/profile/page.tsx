@@ -5,10 +5,17 @@ import { useRouter } from 'next/navigation';
 import { useAuth } from '@/contexts/AuthContext';
 import { apiRequest } from '@/utils/api';
 
+interface UserData {
+  id: number;
+  username: string;
+  email: string;
+  roles: string[];
+}
+
 export default function ProfilePage() {
   const { user, isAuthenticated } = useAuth();
   const router = useRouter();
-  const [userData, setUserData] = useState(null);
+  const [userData, setUserData] = useState<UserData | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -21,7 +28,7 @@ export default function ProfilePage() {
     // 获取用户数据
     const fetchUserData = async () => {
       try {
-        const data = await apiRequest('/user/profile', { requireAuth: true });
+        const data = await apiRequest<UserData>('/user/profile', { requireAuth: true });
         setUserData(data);
       } catch (error) {
         console.error('获取用户数据失败:', error);
