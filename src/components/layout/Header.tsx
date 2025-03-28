@@ -1,9 +1,14 @@
+'use client'
+
 import React from "react";
 import Link from "next/link";
 import { FaInstagram, FaWeibo } from 'react-icons/fa';
 import { SiNeteasecloudmusic, SiBilibili } from 'react-icons/si';
+import { useAuth } from '@/contexts/AuthContext';
 
 const Header: React.FC = () => {
+  const { isAuthenticated, user, logout } = useAuth();
+
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
@@ -87,6 +92,35 @@ const Header: React.FC = () => {
                 <FaWeibo className="w-5 h-5" />
               </a>
             </div>
+
+            {isAuthenticated ? (
+              <>
+                <li>
+                  <span className="text-gray-700">
+                    欢迎, {user?.username}
+                  </span>
+                </li>
+                <li>
+                  <Link href="/profile" className="text-gray-700 hover:text-[#98C5E9]">
+                    个人资料
+                  </Link>
+                </li>
+                <li>
+                  <button 
+                    onClick={logout}
+                    className="text-gray-700 hover:text-[#98C5E9]"
+                  >
+                    注销
+                  </button>
+                </li>
+              </>
+            ) : (
+              <li>
+                <Link href="/login" className="text-gray-700 hover:text-[#98C5E9]">
+                  登录
+                </Link>
+              </li>
+            )}
           </div>
         </div>
       </div>

@@ -1,11 +1,14 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { AuthProvider } from "@/contexts/AuthContext";
+// 不要在服务器组件中直接导入客户端组件
+// import Navbar from '@/components/Navbar';
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "音乐制作中心",
+  title: "Woowonjae Blog",
   description: "探索音乐制作的无限可能",
   icons: {
     icon: [
@@ -24,7 +27,12 @@ export default function RootLayout({
 }) {
   return (
     <html lang="zh">
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <AuthProvider>
+          {/* 移除直接引用Navbar */}
+          {children}
+        </AuthProvider>
+      </body>
     </html>
   );
 }

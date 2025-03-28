@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { FaRobot, FaBrain, FaCode } from 'react-icons/fa';
 
@@ -55,35 +55,38 @@ const codeSnippets: CodeSnippet[] = [
 
 const CodeShowcase: React.FC = () => {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {codeSnippets.map((snippet, index) => (
-        <motion.div
-          key={snippet.title}
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: index * 0.2 }}
-          className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300"
-        >
-          <div className="p-6">
-            <div className="flex items-center mb-4">
-              {snippet.category === 'AI' ? (
-                <FaRobot className="text-2xl text-purple-600" />
-              ) : snippet.category === 'Development' ? (
-                <FaCode className="text-2xl text-blue-600" />
-              ) : (
-                <FaBrain className="text-2xl text-green-600" />
-              )}
-              <h3 className="text-xl font-semibold ml-2">{snippet.title}</h3>
+    <div className="relative">
+      {/* 代码示例展示 */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {codeSnippets.map((snippet, index) => (
+          <motion.div
+            key={snippet.title}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: index * 0.2 }}
+            className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300"
+          >
+            <div className="p-6">
+              <div className="flex items-center mb-4">
+                {snippet.category === 'AI' ? (
+                  <FaRobot className="text-2xl text-purple-600" />
+                ) : snippet.category === 'Development' ? (
+                  <FaCode className="text-2xl text-blue-600" />
+                ) : (
+                  <FaBrain className="text-2xl text-green-600" />
+                )}
+                <h3 className="text-xl font-semibold ml-2">{snippet.title}</h3>
+              </div>
+              <p className="text-gray-600 mb-4">{snippet.description}</p>
+              <div className="bg-gray-900 rounded-lg p-4 overflow-x-auto">
+                <pre className="text-sm">
+                  <code className="text-gray-200">{snippet.code}</code>
+                </pre>
+              </div>
             </div>
-            <p className="text-gray-600 mb-4">{snippet.description}</p>
-            <div className="bg-gray-900 rounded-lg p-4 overflow-x-auto">
-              <pre className="text-sm">
-                <code className="text-gray-200">{snippet.code}</code>
-              </pre>
-            </div>
-          </div>
-        </motion.div>
-      ))}
+          </motion.div>
+        ))}
+      </div>
     </div>
   );
 };
