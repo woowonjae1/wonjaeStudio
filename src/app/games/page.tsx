@@ -52,7 +52,7 @@ const games = [
     id: 6,
     title: "Apex英雄",
     category: "Battle Royale",
-    description: "《Apex英雄》是一款免费的大逃杀游戏，玩家组成三人小队，选择具有独特能力的"传奇"角色，在不断缩小的地图上战斗。",
+    description: "《Apex英雄》是一款免费的大逃杀游戏，玩家组成三人小队，选择具有独特能力的\"传奇\"角色，在不断缩小的地图上战斗。",
     image: "https://images.unsplash.com/photo-1552820728-8b83bb6b773f?q=80&w=400&auto=format&fit=crop",
     releaseDate: "2019年2月",
     platforms: ["PC", "主机", "移动端"]
