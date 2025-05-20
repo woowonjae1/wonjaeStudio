@@ -19,7 +19,7 @@ export default function LoginPage() {
     setIsLoading(true);
 
     try {
-      const response = await fetch('http://localhost:8080/api/auth/login', {
+      const response = await fetch('/api/auth/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -29,20 +29,11 @@ export default function LoginPage() {
 
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.message || errorData.error || '登录失败');
+        throw new Error(errorData.error || '登录失败');
       }
 
       const data = await response.json();
-      
-      // 使用AuthContext的login方法
-      login(data.token, {
-        id: data.id,
-        username: data.username,
-        email: data.email,
-        roles: data.roles
-      });
-
-      // 登录成功，跳转到首页
+      login(data);
       router.push('/');
     } catch (err: any) {
       console.error('登录错误:', err);

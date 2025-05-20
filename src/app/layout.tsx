@@ -2,8 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { AuthProvider } from "@/contexts/AuthContext";
-// 不要在服务器组件中直接导入客户端组件
-// import Navbar from '@/components/Navbar';
+import Navbar from '@/components/Navbar';
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -29,7 +28,7 @@ export default function RootLayout({
     <html lang="zh">
       <body className={inter.className}>
         <AuthProvider>
-          {/* 移除直接引用Navbar */}
+          <Navbar />
           {children}
         </AuthProvider>
       </body>

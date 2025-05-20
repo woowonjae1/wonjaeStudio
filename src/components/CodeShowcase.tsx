@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { FaRobot, FaBrain, FaCode } from 'react-icons/fa';
+import Image from 'next/image';
 
 interface CodeSnippet {
   title: string;
   description: string;
   code: string;
   category: 'AI' | 'Development' | 'Innovation';
+  logo?: string;
 }
 
 const codeSnippets: CodeSnippet[] = [
@@ -21,7 +23,8 @@ const codeSnippets: CodeSnippet[] = [
   });
   return response.choices[0].text;
 }`,
-    category: 'AI'
+    category: 'AI',
+    logo: 'https://seeklogo.com/images/O/openai-logo-8B9BFEDC26-seeklogo.com.png'
   },
   {
     title: "Neural Network Implementation",
@@ -32,7 +35,8 @@ const codeSnippets: CodeSnippet[] = [
     tf.layers.dense({units: 3, activation: 'softmax'})
   ]
 });`,
-    category: 'AI'
+    category: 'AI',
+    logo: 'https://upload.wikimedia.org/wikipedia/commons/2/2d/Tensorflow_logo.svg'
   },
   {
     title: "React Three.js Integration",
@@ -49,7 +53,8 @@ const codeSnippets: CodeSnippet[] = [
     </mesh>
   );
 };`,
-    category: 'Development'
+    category: 'Development',
+    logo: 'https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg'
   }
 ];
 
@@ -67,6 +72,12 @@ const CodeShowcase: React.FC = () => {
             className="bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-2xl transition-shadow duration-300"
           >
             <div className="p-6">
+              {/* 新增logo图片 */}
+              {snippet.logo && (
+                <div className="flex justify-center mb-4">
+                  <Image src={snippet.logo} alt={snippet.title + ' logo'} width={48} height={48} />
+                </div>
+              )}
               <div className="flex items-center mb-4">
                 {snippet.category === 'AI' ? (
                   <FaRobot className="text-2xl text-purple-600" />
