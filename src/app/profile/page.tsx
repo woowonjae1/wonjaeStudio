@@ -9,7 +9,7 @@ interface UserData {
   id: number;
   username: string;
   email: string;
-  roles: string[];
+  role: string;
 }
 
 export default function ProfilePage() {
@@ -68,11 +68,9 @@ export default function ProfilePage() {
             <div>
               <p className="text-gray-500">角色</p>
               <div className="flex flex-wrap gap-2">
-                {user?.roles.map(role => (
-                  <span key={role} className="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded">
-                    {role}
-                  </span>
-                ))}
+                <span className="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded">
+                  {user?.role}
+                </span>
               </div>
             </div>
           </div>
