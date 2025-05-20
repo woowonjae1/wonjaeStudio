@@ -1,6 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { prisma } from '@/lib/db'
-import { verifyPassword, generateToken, setTokenCookie } from '@/lib/auth'
+import { generateToken, setTokenCookie } from '@/lib/auth'
+
+// 模拟用户数据
+const MOCK_USER = {
+  id: 1,
+  username: 'admin',
+  email: 'admin@example.com',
+  password: 'admin123', // 实际项目中应该使用加密密码
+  role: 'admin'
+}
 
 export async function POST(request: NextRequest) {
   try {
@@ -13,20 +21,8 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    const user = await prisma.user.findUnique({
-      where: { username }
-    })
-
-    if (!user) {
-      return NextResponse.json(
-        { error: '用户名或密码错误' },
-        { status: 401 }
-      )
-    }
-
-    const isValidPassword = await verifyPassword(password, user.password)
-
-    if (!isValidPassword) {
+    // 简单的用户名密码验证
+    if (username !== MOCK_USER.username || password !== MOCK_USER.password) {
       return NextResponse.json(
         { error: '用户名或密码错误' },
         { status: 401 }
@@ -34,18 +30,18 @@ export async function POST(request: NextRequest) {
     }
 
     const token = await generateToken({
-      id: user.id,
-      username: user.username,
-      role: user.role
+      id: MOCK_USER.id,
+      username: MOCK_USER.username,
+      role: MOCK_USER.role
     })
 
     await setTokenCookie(token)
 
     return NextResponse.json({
-      id: user.id,
-      username: user.username,
-      email: user.email,
-      role: user.role
+      id: MOCK_USER.id,
+      username: MOCK_USER.username,
+      email: MOCK_USER.email,
+      role: MOCK_USER.role
     })
   } catch (error) {
     console.error('Login error:', error)

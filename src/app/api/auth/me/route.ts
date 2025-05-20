@@ -1,6 +1,13 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getTokenFromCookies, verifyToken } from '@/lib/auth'
-import { prisma } from '@/lib/db'
+
+// 模拟用户数据
+const MOCK_USER = {
+  id: 1,
+  username: 'admin',
+  email: 'admin@example.com',
+  role: 'admin'
+}
 
 export async function GET(request: NextRequest) {
   try {
@@ -22,22 +29,12 @@ export async function GET(request: NextRequest) {
       )
     }
 
-    const user = await prisma.user.findUnique({
-      where: { id: payload.id as number }
-    })
-
-    if (!user) {
-      return NextResponse.json(
-        { error: '用户不存在' },
-        { status: 404 }
-      )
-    }
-
+    // 直接返回模拟用户数据
     return NextResponse.json({
-      id: user.id,
-      username: user.username,
-      email: user.email,
-      role: user.role
+      id: MOCK_USER.id,
+      username: MOCK_USER.username,
+      email: MOCK_USER.email,
+      role: MOCK_USER.role
     })
   } catch (error) {
     console.error('Get user error:', error)
