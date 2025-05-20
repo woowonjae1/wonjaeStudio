@@ -1,8 +1,4 @@
-import { SunoClient } from '@suno/api';
-
-const sunoClient = new SunoClient({
-  apiKey: process.env.SUNO_API_KEY || '',
-});
+const SUNO_API_BASE = 'https://api.suno.ai/v1';
 
 export interface MusicGenerationParams {
   prompt: string;
@@ -21,18 +17,30 @@ export interface GeneratedMusic {
 
 export async function generateMusic(params: MusicGenerationParams): Promise<GeneratedMusic> {
   try {
-    const response = await sunoClient.generate({
-      prompt: params.prompt,
-      duration: params.duration || 30,
-      style: params.style,
-      mood: params.mood,
+    const response = await fetch(`${SUNO_API_BASE}/generate`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${process.env.SUNO_API_KEY}`,
+      },
+      body: JSON.stringify({
+        prompt: params.prompt,
+        duration: params.duration || 30,
+        style: params.style,
+        mood: params.mood,
+      }),
     });
 
+    if (!response.ok) {
+      throw new Error('API request failed');
+    }
+
+    const data = await response.json();
     return {
-      id: response.id,
-      url: response.audioUrl,
-      title: response.title,
-      duration: response.duration,
+      id: data.id,
+      url: data.audioUrl,
+      title: data.title,
+      duration: data.duration,
       createdAt: new Date(),
     };
   } catch (error) {
@@ -43,8 +51,18 @@ export async function generateMusic(params: MusicGenerationParams): Promise<Gene
 
 export async function getMusicHistory(): Promise<GeneratedMusic[]> {
   try {
-    const response = await sunoClient.getHistory();
-    return response.map(item => ({
+    const response = await fetch(`${SUNO_API_BASE}/history`, {
+      headers: {
+        'Authorization': `Bearer ${process.env.SUNO_API_KEY}`,
+      },
+    });
+
+    if (!response.ok) {
+      throw new Error('API request failed');
+    }
+
+    const data = await response.json();
+    return data.map((item: any) => ({
       id: item.id,
       url: item.audioUrl,
       title: item.title,
