@@ -54,16 +54,16 @@ export const ALBUMS: Album[] = [
   {
     id: 7,
     title: 'pinkBlue',
-    image: '/image/pinkBlue.jpg',
-    imageSrc: '/image/pinkBlue.jpg',
+    image: '/image/PinkBlue.jpg',
+    imageSrc: '/image/PinkBlue.jpg',
     audioSrc: '',
     artist: '禹元宰52hz'
   },
   {
     id: 8,
     title: 'summer',
-    image: '/image/summer.jpg',
-    imageSrc: '/image/summer.jpg',
+    image: '/image/Summer.jpg',
+    imageSrc: '/image/Summer.jpg',
     audioSrc: '',
     artist: '禹元宰52hz'
   }
