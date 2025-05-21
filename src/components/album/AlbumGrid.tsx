@@ -77,7 +77,7 @@ const AlbumGrid: React.FC<AlbumGridProps> = ({ albums, onPlayAlbum, currentAlbum
         animate();
       });
 
-      // 添加鼠标事件
+      // 添加鼠标事件：移上去静止，移开恢复旋转
       container.addEventListener('mouseenter', () => {
         if (controlsArray.current[index]) {
           controlsArray.current[index].autoRotate = false;
@@ -87,6 +87,7 @@ const AlbumGrid: React.FC<AlbumGridProps> = ({ albums, onPlayAlbum, currentAlbum
       container.addEventListener('mouseleave', () => {
         if (controlsArray.current[index]) {
           controlsArray.current[index].autoRotate = true;
+          controlsArray.current[index].autoRotateSpeed = 2.0;
         }
       });
     });
