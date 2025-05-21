@@ -3,7 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import { FaInstagram, FaWeibo } from 'react-icons/fa';
-import { SiNeteasecloudmusic, SiBilibili } from 'react-icons/si';
+import { SiNeteasecloudmusic, SiBilibili, SiXiaohongshu, SiGithub } from 'react-icons/si';
 import { useAuth } from '@/contexts/AuthContext';
 
 const Header: React.FC = () => {
@@ -75,21 +75,21 @@ const Header: React.FC = () => {
 
             {/* 社交媒体图标 */}
             <div className="flex items-center space-x-4">
-              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" 
+              <a href="https://www.xiaohongshu.com/user/profile/5dd412400000000001006f7c" target="_blank" rel="noopener noreferrer"
                 className="text-gray-600 hover:text-gray-900 transition-colors">
-                <FaInstagram className="w-5 h-5" />
+                <SiXiaohongshu className="w-5 h-5" />
               </a>
-              <a href="https://bilibili.com" target="_blank" rel="noopener noreferrer"
+              <a href="https://space.bilibili.com/270089039" target="_blank" rel="noopener noreferrer"
                 className="text-gray-600 hover:text-gray-900 transition-colors">
                 <SiBilibili className="w-5 h-5" />
               </a>
-              <a href="https://music.163.com" target="_blank" rel="noopener noreferrer"
+              <a href="https://github.com/woowonjae1" target="_blank" rel="noopener noreferrer"
+                className="text-gray-600 hover:text-gray-900 transition-colors">
+                <SiGithub className="w-5 h-5" />
+              </a>
+              <a href="https://music.163.com/#/user/home?id=1939616311" target="_blank" rel="noopener noreferrer"
                 className="text-gray-600 hover:text-gray-900 transition-colors">
                 <SiNeteasecloudmusic className="w-5 h-5" />
-              </a>
-              <a href="https://weibo.com" target="_blank" rel="noopener noreferrer"
-                className="text-gray-600 hover:text-gray-900 transition-colors">
-                <FaWeibo className="w-5 h-5" />
               </a>
             </div>
 

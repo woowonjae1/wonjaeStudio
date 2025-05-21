@@ -2,26 +2,11 @@ import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 
 const images = [
-  {
-    src: '/image/ningning.jpg',
-    alt: 'Ningning Portrait'
-  },
-  {
-    src: '/image/ningning1.jpg',
-    alt: 'Ningning Style 1'
-  },
-  {
-    src: '/image/ningning2.jpg',
-    alt: 'Ningning Style 2'
-  },
-  {
-    src: '/image/ningning3.jpg',
-    alt: 'Ningning Style 3'
-  },
-  {
-    src: '/image/ningning4.jpg',
-    alt: 'Ningning Style 4'
-  }
+  { src: '/image/banner.jpg', alt: 'Banner' },
+  { src: '/image/banner宁1.jpg', alt: 'Banner 宁1' },
+  { src: '/image/banner宁2.jpg', alt: 'Banner 宁2' },
+  { src: '/image/banner宁3.jpg', alt: 'Banner 宁3' },
+  { src: '/image/banner宁4.jpg', alt: 'Banner 宁4' },
 ];
 
 const ImageSlider: React.FC = () => {

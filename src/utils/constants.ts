@@ -34,6 +34,38 @@ export const ALBUMS: Album[] = [
       imageSrc: '/image/nobodygetsme.jpg',
     audioSrc: '/audio/禹元宰 - Nobody Gets Me Like u R&B TYPE BEAT.mp3',
     artist: '禹元宰52hz'
+  },
+  {
+    id: 5,
+    title: 'entityLife',
+    image: '/image/entityLife.jpg',
+    imageSrc: '/image/entityLife.jpg',
+    audioSrc: '',
+    artist: '禹元宰52hz'
+  },
+  {
+    id: 6,
+    title: 'iambluegroove',
+    image: '/image/iambluegroove.jpg',
+    imageSrc: '/image/iambluegroove.jpg',
+    audioSrc: '',
+    artist: '禹元宰52hz'
+  },
+  {
+    id: 7,
+    title: 'pinkBlue',
+    image: '/image/pinkBlue.jpg',
+    imageSrc: '/image/pinkBlue.jpg',
+    audioSrc: '',
+    artist: '禹元宰52hz'
+  },
+  {
+    id: 8,
+    title: 'summer',
+    image: '/image/summer.jpg',
+    imageSrc: '/image/summer.jpg',
+    audioSrc: '',
+    artist: '禹元宰52hz'
   }
 ];
 

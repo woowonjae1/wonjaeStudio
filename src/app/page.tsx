@@ -18,6 +18,59 @@ import MusicProduction from '@/components/MusicProduction';
 // 使用 Next.js 的数据获取方法
 export const revalidate = 3600; // 每小时重新验证一次
 
+// 在Header下方添加社交卡片
+const socialList = [
+  {
+    name: '小红书',
+    followers: 80,
+    color: '#FF2C55',
+    link: 'https://www.xiaohongshu.com/user/profile/5dd412400000000001006f7c',
+  },
+  {
+    name: 'Bilibili',
+    followers: 3,
+    color: '#FF7CA8',
+    link: 'https://space.bilibili.com/270089039',
+  },
+  {
+    name: 'GitHub',
+    followers: 1,
+    color: '#181818',
+    link: 'https://github.com/woowonjae1',
+  },
+  {
+    name: '网易云',
+    followers: 489,
+    color: '#E71A1A',
+    link: 'https://music.163.com/#/user/home?id=1939616311',
+  },
+];
+
+// 定义SocialCardProps类型
+interface SocialCardProps {
+  name: string;
+  followers: number;
+  color: string;
+  link: string;
+  textColor?: string;
+}
+
+function SocialCard({ name, followers, color, link, textColor }: SocialCardProps) {
+  return (
+    <a
+      href={link}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="w-full rounded-2xl shadow-xl px-8 py-6 mb-8 flex justify-between items-center font-bold text-xl transition-transform duration-150 hover:scale-105 cursor-pointer focus:outline-none focus:ring-4 focus:ring-opacity-50"
+      style={{ background: color, color: textColor || '#fff', boxShadow: '0 6px 32px 0 rgba(0,0,0,0.18), 0 0 16px 2px ' + color + '33' }}
+      tabIndex={0}
+    >
+      <span className="tracking-wide">{name}</span>
+      <span className="text-base font-semibold opacity-95">{followers} Followers</span>
+    </a>
+  );
+}
+
 export default function Home() {
   const [audioState, setAudioState] = useState({
     currentAlbum: null as Album | null,
@@ -298,20 +351,7 @@ export default function Home() {
               </div>
             </div>
 
-            {/* 阵型图展示 */}
-            <div className="mb-8 flex flex-col items-center">
-              <Image
-                src="/image/mcfc_pitch_open.jpg"
-                alt="Manchester City Pitch 24-25"
-                width={600}
-                height={400}
-                className="rounded-lg shadow-lg object-contain w-full max-w-[600px] h-auto"
-                priority
-              />
-            </div>
-
             <h3 className="text-2xl font-bold mb-6">First Team Players</h3>
-            <FixturesAPI />
           </section>
 
           <section id="game" className="py-12">
