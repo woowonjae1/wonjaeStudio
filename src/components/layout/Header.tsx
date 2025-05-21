@@ -40,7 +40,7 @@ const Header: React.FC = () => {
             <div className="flex items-center">
               <div className="w-8 h-8 mr-2 rounded-full overflow-hidden cursor-pointer" onClick={() => setShowQRCode(true)}>
                 <img
-                  src="/image/头像.jpg"
+                  src="/image/headPhoto.jpg"
                   alt="Profile"
                   className="w-full h-full object-cover"
                 />
