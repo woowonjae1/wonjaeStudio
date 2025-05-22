@@ -5,10 +5,12 @@ import Link from "next/link";
 import { FaInstagram, FaWeibo } from 'react-icons/fa';
 import { SiNeteasecloudmusic, SiBilibili, SiXiaohongshu, SiGithub } from 'react-icons/si';
 import { useAuth } from '@/contexts/AuthContext';
+import AuthModal from '@/components/AuthModal'
 
 const Header: React.FC = () => {
   const { isAuthenticated, user, logout } = useAuth();
   const [showQRCode, setShowQRCode] = useState(false);
+  const [showAuthModal, setShowAuthModal] = useState(false);
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
@@ -131,9 +133,12 @@ const Header: React.FC = () => {
                 </>
               ) : (
                 <li>
-                  <Link href="/login" className="text-gray-700 hover:text-[#98C5E9]">
-                    登录
-                  </Link>
+                  <button
+                    className="text-gray-700 hover:text-[#98C5E9]"
+                    onClick={() => setShowAuthModal(true)}
+                  >
+                    登录/注册
+                  </button>
                 </li>
               )}
             </div>
@@ -162,6 +167,11 @@ const Header: React.FC = () => {
             <div className="mt-3 text-center text-gray-600">微信扫一扫，联系我</div>
           </div>
         </div>
+      )}
+
+      {/* 登录/注册弹窗 */}
+      {showAuthModal && (
+        <AuthModal onClose={() => setShowAuthModal(false)} />
       )}
     </>
   );
