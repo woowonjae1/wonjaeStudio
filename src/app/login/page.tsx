@@ -21,7 +21,12 @@ export default function LoginPage() {
       setMessage(error.message);
     } else {
       setMessage('登录成功，正在跳转...');
-      login(data);
+      login({
+        id: data.user.id,
+        username: "",
+        email: data.user.email ?? "",
+        role: ""
+      });
       setTimeout(() => router.push('/profile'), 1000);
     }
   };
