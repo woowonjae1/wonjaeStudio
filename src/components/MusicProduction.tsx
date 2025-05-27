@@ -179,7 +179,6 @@ const MusicProduction: React.FC = () => {
           <div className="text-center mb-10">
             <h2 className="text-4xl font-bold text-[#1C2C5B]">About Me</h2>
           </div>
-          
           <div className="max-w-4xl mx-auto bg-white rounded-xl shadow-lg overflow-hidden">
             <div className="md:flex flex-col items-center">
               <div className="w-full md:w-1/3 mx-auto p-4">
@@ -196,7 +195,7 @@ const MusicProduction: React.FC = () => {
                   Hello! I'm Woowonjae, a passionate music producer and blogger. Welcome to my personal space where I share my journey and insights into music production.
                 </p>
                 <p className="text-gray-600 mb-4">
-                  我使用FL Studio已经有7年时间，熟悉各种音乐制作技术和工作流程。我相信音乐是表达自我的最佳方式之一，无论你是专业音乐人还是爱好者，都能通过这个平台找到表达的方式。
+                  我使用FL Studio已经有2年时间，熟悉各种音乐制作技术和工作流程。我相信音乐是表达自我的最佳方式之一，无论你是专业音乐人还是爱好者，都能通过这个平台找到表达的方式。
                 </p>
                 <p className="text-gray-600 mb-6">
                   在这个音乐制作中心，我希望与大家分享我的经验和技巧，帮助更多人踏上音乐创作的旅程。无论你是想学习基础知识，还是寻求高级技巧，我都很乐意提供帮助。

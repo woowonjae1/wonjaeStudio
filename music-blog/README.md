@@ -1,4 +1,58 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Woowonjae Music Blog
+
+一个基于 Next.js 的音乐博客网站。
+
+## 项目结构
+
+```
+music-blog/
+├── app/                    # Next.js 应用目录
+│   ├── dashboard/         # 仪表板页面
+│   ├── layout.tsx        # 根布局
+│   └── page.tsx          # 首页
+├── public/               # 静态资源
+│   └── image/           # 图片资源
+├── src/                 # 源代码
+│   ├── components/      # 组件
+│   │   ├── ui/         # UI组件
+│   │   │   ├── dot-pattern.tsx    # 背景点阵组件
+│   │   │   └── floating-card.tsx  # 浮动卡片组件
+│   │   └── AppHeader.tsx          # 应用头部
+│   └── lib/            # 工具函数
+└── .env.local          # 环境变量（需要手动创建）
+```
+
+## 功能特性
+
+- 响应式设计
+- 动画效果
+- 音乐博客内容展示
+
+## 开发设置
+
+1. 安装依赖：
+```bash
+npm install
+```
+
+2. 创建 `.env.local` 文件并添加 Supabase 配置：
+```
+NEXT_PUBLIC_SUPABASE_URL=你的项目URL
+NEXT_PUBLIC_SUPABASE_ANON_KEY=你的匿名密钥
+```
+
+3. 启动开发服务器：
+```bash
+npm run dev
+```
+
+## 技术栈
+
+- Next.js 14
+- TypeScript
+- Tailwind CSS
+- Supabase
+- React
 
 ## Getting Started
 

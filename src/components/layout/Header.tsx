@@ -2,15 +2,14 @@
 
 import React, { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { FaInstagram, FaWeibo } from 'react-icons/fa';
 import { SiNeteasecloudmusic, SiBilibili, SiXiaohongshu, SiGithub } from 'react-icons/si';
-import { useAuth } from '@/contexts/AuthContext';
-import AuthModal from '@/components/AuthModal'
 
 const Header: React.FC = () => {
-  const { isAuthenticated, user, logout } = useAuth();
+  const router = useRouter();
   const [showQRCode, setShowQRCode] = useState(false);
-  const [showAuthModal, setShowAuthModal] = useState(false);
 
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
@@ -52,7 +51,7 @@ const Header: React.FC = () => {
               </Link>
             </div>
 
-            <div className="flex items-center space-x-12">
+            <div className="flex items-center space-x-8">
               {/* 右侧导航菜单 */}
               <nav className="flex items-center space-x-8">
                 <button 
@@ -94,7 +93,7 @@ const Header: React.FC = () => {
               </nav>
 
               {/* 社交媒体图标 */}
-              <div className="flex items-center space-x-4">
+              <div className="hidden md:flex items-center space-x-4">
                 {socialLinks.map(({ href, icon: Icon, label, followers }) => (
                   <div key={label} className="relative group">
                     <a href={href} target="_blank" rel="noopener noreferrer"
@@ -109,38 +108,6 @@ const Header: React.FC = () => {
                   </div>
                 ))}
               </div>
-
-              {isAuthenticated ? (
-                <>
-                  <li>
-                    <span className="text-gray-700">
-                      欢迎, {user?.username}
-                    </span>
-                  </li>
-                  <li>
-                    <Link href="/profile" className="text-gray-700 hover:text-[#98C5E9]">
-                      个人资料
-                    </Link>
-                  </li>
-                  <li>
-                    <button 
-                      onClick={logout}
-                      className="text-gray-700 hover:text-[#98C5E9]"
-                    >
-                      注销
-                    </button>
-                  </li>
-                </>
-              ) : (
-                <li>
-                  <button
-                    className="text-gray-700 hover:text-[#98C5E9]"
-                    onClick={() => setShowAuthModal(true)}
-                  >
-                    登录/注册
-                  </button>
-                </li>
-              )}
             </div>
           </div>
         </div>
@@ -167,11 +134,6 @@ const Header: React.FC = () => {
             <div className="mt-3 text-center text-gray-600">微信扫一扫，联系我</div>
           </div>
         </div>
-      )}
-
-      {/* 登录/注册弹窗 */}
-      {showAuthModal && (
-        <AuthModal onClose={() => setShowAuthModal(false)} />
       )}
     </>
   );

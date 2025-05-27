@@ -1,71 +1,38 @@
 'use client'
 
-import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+import { createContext, useContext, ReactNode } from 'react';
 
 interface User {
   id: string;
   username: string;
   email: string;
   role: string;
+  avatar_url?: string;
+  nickname?: string;
 }
 
 interface AuthContextType {
   user: User | null;
   isAuthenticated: boolean;
-  login: (user: User) => void;
-  logout: () => void;
 }
 
 const AuthContext = createContext<AuthContextType>({
   user: null,
   isAuthenticated: false,
-  login: () => {},
-  logout: () => {},
 });
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<User | null>(null);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-
-  useEffect(() => {
-    // 检查用户是否已登录
-    const checkAuth = async () => {
-      try {
-        const response = await fetch('/api/auth/me');
-        if (response.ok) {
-          const userData = await response.json();
-          setUser(userData);
-          setIsAuthenticated(true);
-        }
-      } catch (error) {
-        console.error('Auth check failed:', error);
-      }
-    };
-
-    checkAuth();
-  }, []);
-
-  const login = (userData: User) => {
-    setUser(userData);
-    setIsAuthenticated(true);
-  };
-
-  const logout = async () => {
-    try {
-      await fetch('/api/auth/logout', { method: 'POST' });
-    } catch (error) {
-      console.error('Logout failed:', error);
-    } finally {
-      setUser(null);
-      setIsAuthenticated(false);
-    }
+  // 默认用户信息
+  const defaultUser: User = {
+    id: 'default',
+    username: 'Guest',
+    email: '',
+    role: 'guest',
   };
 
   const value = {
-    user,
-    isAuthenticated,
-    login,
-    logout,
+    user: defaultUser,
+    isAuthenticated: true,
   };
 
   return (
@@ -75,10 +42,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   );
 }
 
-export function useAuth() {
+export const useAuth = () => {
   const context = useContext(AuthContext);
   if (!context) {
     throw new Error('useAuth must be used within an AuthProvider');
   }
   return context;
-} 
+}; 
