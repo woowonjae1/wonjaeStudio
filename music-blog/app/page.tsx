@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
-import { useAuth } from "@/components/AuthProvider";
 import Link from "next/link";
 
 // 简化版 DotPattern 组件，内联到这个文件中
@@ -198,8 +197,6 @@ function DotPatternDemo() {
 }
 
 export default function HomePage() {
-  const { user, isAuthenticated, logout } = useAuth();
-
   return (
     <div className="py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -215,40 +212,15 @@ export default function HomePage() {
 
         <div className="mt-10 bg-white/80 backdrop-blur-sm rounded-lg shadow-lg p-6">
           <div className="text-center">
-            {isAuthenticated ? (
-              <div className="space-y-4">
-                <p className="text-lg">
-                  欢迎回来, <span className="font-bold">{user?.nickname || user?.username}</span>!
-                </p>
-                <div className="flex justify-center gap-4">
-                  <Link 
-                    href="/dashboard" 
-                    className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-[#1C2C5B] hover:bg-[#98C5E9]"
-                  >
-                    前往个人中心
-                  </Link>
-                  <button
-                    onClick={async () => {
-                      await logout();
-                      window.location.reload();
-                    }}
-                    className="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md shadow-sm text-gray-700 bg-white hover:bg-gray-50"
-                  >
-                    退出登录
-                  </button>
-                </div>
-              </div>
-            ) : (
-              <div className="space-y-4">
-                <p className="text-lg">请登录以获取完整功能</p>
-                <Link 
-                  href="/login" 
-                  className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-[#1C2C5B] hover:bg-[#98C5E9]"
-                >
-                  登录 / 注册
-                </Link>
-              </div>
-            )}
+            <div className="space-y-4">
+              <p className="text-lg">请登录以获取完整功能</p>
+              <Link 
+                href="/login" 
+                className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-[#1C2C5B] hover:bg-[#98C5E9]"
+              >
+                登录 / 注册
+              </Link>
+            </div>
           </div>
 
           <div className="mt-8">
