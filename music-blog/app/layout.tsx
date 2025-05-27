@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import { DotPattern } from "@/components/ui/dot-pattern";
-import { AppHeader } from "@/components/AppHeader";
 
 const geistSans = localFont({
   src: "../public/fonts/GeistVF.woff",
@@ -34,7 +33,6 @@ export default function RootLayout({
             className="fixed inset-0 z-0 opacity-50 [mask-image:radial-gradient(800px_circle_at_center,white,transparent)]"
           />
           <div className="relative z-10">
-            <AppHeader />
             <main className="pt-20 container mx-auto px-4">
               {children}
             </main>
