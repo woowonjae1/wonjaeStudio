@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import { DotPattern } from "@/components/ui/dot-pattern";
-import { AuthProvider } from "@/components/AuthProvider";
 import { AppHeader } from "@/components/AppHeader";
 
 const geistSans = localFont({
@@ -29,20 +28,18 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen bg-gradient-to-b from-gray-50 to-gray-100 relative`}>
-        <AuthProvider>
-          <div className="relative min-h-screen w-full overflow-hidden">
-            {/* 整个页面的背景点阵 */}
-            <DotPattern
-              className="fixed inset-0 z-0 opacity-50 [mask-image:radial-gradient(800px_circle_at_center,white,transparent)]"
-            />
-            <div className="relative z-10">
-              <AppHeader />
-              <main className="pt-20 container mx-auto px-4">
-                {children}
-              </main>
-            </div>
+        <div className="relative min-h-screen w-full overflow-hidden">
+          {/* 整个页面的背景点阵 */}
+          <DotPattern
+            className="fixed inset-0 z-0 opacity-50 [mask-image:radial-gradient(800px_circle_at_center,white,transparent)]"
+          />
+          <div className="relative z-10">
+            <AppHeader />
+            <main className="pt-20 container mx-auto px-4">
+              {children}
+            </main>
           </div>
-        </AuthProvider>
+        </div>
       </body>
     </html>
   );
