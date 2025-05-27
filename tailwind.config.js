@@ -14,6 +14,7 @@ module.exports = {
   			marquee: 'marquee var(--speed) linear infinite',
   			'marquee-vertical': 'marquee-vertical var(--duration) linear infinite',
   			'marquee-reverse': 'marquee-reverse var(--speed) linear infinite',
+        'meteor-effect': 'meteor 5s linear infinite',
   		},
   		borderRadius: {
   			lg: 'var(--radius)',
@@ -90,6 +91,19 @@ module.exports = {
   				'0%': { transform: 'translateX(-100%)' },
   				'100%': { transform: 'translateX(0%)' },
   			},
+        meteor: {
+          '0%': {
+            transform: 'rotate(45deg) translateX(0)',
+            opacity: 1
+          },
+          '70%': {
+            opacity: 1
+          },
+          '100%': {
+            transform: 'rotate(45deg) translateX(500px)',
+            opacity: 0
+          },
+        },
   		}
   	}
   },

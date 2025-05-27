@@ -15,7 +15,7 @@ import FixturesAPI from '@/components/FixturesAPI';
 import MusicProduction from '@/components/MusicProduction';
 import { useRouter } from 'next/navigation';
 import Banner from '@/components/Banner';
-import { Meteors } from "@/components/ui/meteors";
+import { MeteorsCard } from "@/components/MeteorsDemo";
 
 // 技术文章Tab数据
 const techTabs = [
@@ -275,13 +275,12 @@ export default function Home() {
             <h3 className="text-2xl font-bold mb-6">Latest News</h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
               {/* 卡片1 */}
-              <div className="bg-white rounded-lg shadow-lg p-6">
-                <h4 className="text-xl font-semibold mb-3">Kevin De Bruyne's Departure</h4>
-                <p className="text-gray-600 mb-4">
-                  Manchester City's midfield maestro Kevin De Bruyne has announced his departure from the club. The Belgian international, who has been instrumental in City's recent success, will be leaving after 8 successful seasons at the Etihad Stadium.
-                </p>
-                <div className="text-sm text-gray-500">
-                  <span>Impact:</span>
+              <MeteorsCard 
+                title="Kevin De Bruyne's Departure" 
+                description="Manchester City's midfield maestro Kevin De Bruyne has announced his departure from the club. The Belgian international, who has been instrumental in City's recent success, will be leaving after 8 successful seasons at the Etihad Stadium."
+              >
+                <div>
+                  <span className="font-medium">Impact:</span>
                   <ul className="list-disc list-inside mt-2">
                     <li>8 seasons at Manchester City</li>
                     <li>96 goals and 153 assists</li>
@@ -289,15 +288,15 @@ export default function Home() {
                     <li>1 Champions League title</li>
                   </ul>
                 </div>
-              </div>
+              </MeteorsCard>
+              
               {/* 卡片2 */}
-              <div className="bg-white rounded-lg shadow-lg p-6">
-                <h4 className="text-xl font-semibold mb-3">Transfer Updates</h4>
-                <p className="text-gray-600 mb-4">
-                  Manchester City is actively working on strengthening their squad for the upcoming season. The club is looking to bring in new talent to maintain their dominance in both domestic and European competitions.
-                </p>
-                <div className="text-sm text-gray-500">
-                  <span>Recent Activities:</span>
+              <MeteorsCard 
+                title="Transfer Updates" 
+                description="Manchester City is actively working on strengthening their squad for the upcoming season. The club is looking to bring in new talent to maintain their dominance in both domestic and European competitions."
+              >
+                <div>
+                  <span className="font-medium">Recent Activities:</span>
                   <ul className="list-disc list-inside mt-2">
                     <li>Scouting for midfield replacements</li>
                     <li>Monitoring young talents</li>
@@ -305,29 +304,29 @@ export default function Home() {
                     <li>Youth academy promotions</li>
                   </ul>
                 </div>
-              </div>
+              </MeteorsCard>
+              
               {/* 卡片3 */}
-              <div className="bg-white rounded-lg shadow-lg p-6">
-                <h4 className="text-xl font-semibold mb-3">德布劳内正式离队</h4>
-                <p className="text-gray-600 mb-4">
-                  曼城传奇中场德布劳内（Kevin De Bruyne）正式宣布离队，结束了他在曼城8年的辉煌生涯。球迷纷纷送上祝福，感谢他为球队带来的无数精彩瞬间。
-                </p>
-                <div className="text-sm text-gray-500">
-                  <span>球迷热议：</span>
+              <MeteorsCard 
+                title="德布劳内正式离队" 
+                description="曼城传奇中场德布劳内（Kevin De Bruyne）正式宣布离队，结束了他在曼城8年的辉煌生涯。球迷纷纷送上祝福，感谢他为球队带来的无数精彩瞬间。"
+              >
+                <div>
+                  <span className="font-medium">球迷热议：</span>
                   <ul className="list-disc list-inside mt-2">
                     <li>"再见传奇，祝你未来一切顺利！"</li>
                     <li>"KDB永远是蓝月亮的英雄！"</li>
                   </ul>
                 </div>
-              </div>
+              </MeteorsCard>
+              
               {/* 卡片4 */}
-              <div className="bg-white rounded-lg shadow-lg p-6">
-                <h4 className="text-xl font-semibold mb-3">曼城本赛季最后一场主场比赛赛况</h4>
-                <p className="text-gray-600 mb-4">
-                  曼城在本赛季英超最后一轮主场迎战伯恩茅斯，最终以3-1获胜。
-                </p>
-                <div className="text-sm text-gray-500">
-                  <span>关键事件：</span>
+              <MeteorsCard 
+                title="曼城本赛季最后一场主场比赛赛况" 
+                description="曼城在本赛季英超最后一轮主场迎战伯恩茅斯，最终以3-1获胜。"
+              >
+                <div>
+                  <span className="font-medium">关键事件：</span>
                   <ul className="list-disc list-inside mt-2">
                     <li>马尔牧什第14分钟世界波破门</li>
                     <li>兔兔第38分钟禁区得分</li>
@@ -335,7 +334,7 @@ export default function Home() {
                     <li>尼克冈萨雷斯第89分钟替补登场,攻入曼城生涯首球</li>
                   </ul>
                 </div>
-              </div>
+              </MeteorsCard>
             </div>
           </section>
 
