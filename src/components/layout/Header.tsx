@@ -73,18 +73,6 @@ const Header: React.FC = () => {
                   Code
                 </button>
                 <button 
-                  onClick={() => scrollToSection('game')}
-                  className="text-gray-600 hover:text-gray-900 transition-colors"
-                >
-                  Game
-                </button>
-                <button 
-                  onClick={() => scrollToSection('music')}
-                  className="text-gray-600 hover:text-gray-900 transition-colors"
-                >
-                  Music
-                </button>
-                <button 
                   onClick={() => scrollToSection('about')}
                   className="text-gray-600 hover:text-gray-900 transition-colors"
                 >
