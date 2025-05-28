@@ -115,3 +115,38 @@ export const ALBUMS: Album[] = [
     ]
   }
 ];
+
+export const PLAYERS: Player[] = [
+  {
+    id: 1,
+    name: "Player One",
+    position: "Goalkeeper",
+    number: 1,
+    imageUrl: "/image/player1.jpg",
+    country: "Country One"
+  },
+  {
+    id: 2,
+    name: "Player Two",
+    position: "Defender",
+    number: 2,
+    imageUrl: "/image/player2.jpg",
+    country: "Country Two"
+  },
+  {
+    id: 3,
+    name: "Player Three",
+    position: "Midfielder",
+    number: 3,
+    imageUrl: "/image/player3.jpg",
+    country: "Country Three"
+  },
+  {
+    id: 4,
+    name: "Player Four",
+    position: "Forward",
+    number: 4,
+    imageUrl: "/image/player4.jpg",
+    country: "Country Four"
+  }
+];
