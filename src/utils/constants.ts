@@ -150,3 +150,26 @@ export const PLAYERS: Player[] = [
     country: "Country Four"
   }
 ];
+
+export const MATCHES: Match[] = [
+  {
+    id: 1,
+    homeTeam: "Team A",
+    awayTeam: "Team B",
+    date: "2023-10-01",
+    time: "15:00",
+    venue: "Stadium A",
+    competition: "League One",
+    status: "upcoming"
+  },
+  {
+    id: 2,
+    homeTeam: "Team C",
+    awayTeam: "Team D",
+    date: "2023-10-02",
+    time: "16:00",
+    venue: "Stadium B",
+    competition: "League Two",
+    status: "upcoming"
+  }
+];
