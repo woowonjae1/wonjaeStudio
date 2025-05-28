@@ -11,7 +11,7 @@ const AlbumCard: FC<AlbumCardProps> = ({ album, onPlay }) => {
   return (
     <div className="bg-white rounded-lg shadow-lg overflow-hidden">
       <div className="h-[300px]">
-        <ThreeJSAlbumRenderer imageSrc={album.imageSrc} />
+        <ThreeJSAlbumRenderer imageSrc={album.coverUrl} />
       </div>
       <div className="p-4">
         <h3 className="text-xl font-semibold">{album.title}</h3>
