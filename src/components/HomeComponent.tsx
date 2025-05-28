@@ -6,12 +6,9 @@ import Header from "@/components/layout/Header";
 import AlbumGrid from "@/components/album/AlbumGrid";
 import AudioPlayer from "@/components/audio/AudioPlayer";
 import NotificationBanner from "@/components/NotificationBanner";
-import { ALBUMS, PLAYERS, MATCHES } from "@/utils/constants";
+import { ALBUMS } from "@/utils/constants";
 import CodeShowcase from '@/components/CodeShowcase';
 import Image from 'next/image';
-import PlayerGrid from '@/components/PlayerGrid';
-import MatchSchedule from '@/components/MatchSchedule';
-import FixturesAPI from '@/components/FixturesAPI';
 import MusicProduction from '@/components/MusicProduction';
 import { useRouter } from 'next/navigation';
 import Banner from '@/components/Banner';
@@ -247,83 +244,6 @@ const HomeComponent = () => {
             <h2 className="text-3xl font-bold mb-4">Code</h2>
             <div className="mt-0">
               <TechArticleTabs />
-            </div>
-          </section>
-
-          <section id="manchester-city" className="py-12">
-            <div className="w-full bg-[#6CABDD] mb-6 rounded-lg">
-              <div className="container mx-auto px-4 py-4">
-                <div className="flex items-center space-x-4">
-                  <Image 
-                    src="/image/manchester_city_logo.jpg" 
-                    alt="Manchester City Logo" 
-                    width={64} 
-                    height={64}
-                    className="rounded-full"
-                  />
-                  <div>
-                    <h3 className="text-white text-xl font-bold">Manchester City</h3>
-                    <p className="text-white text-sm">English Premier League</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <h3 className="text-2xl font-bold mb-6 text-[#232323]">Latest News</h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {/* 卡片1 */}
-              <div className="bg-white rounded-2xl shadow-lg p-6">
-                <h4 className="text-lg font-bold mb-2 text-[#232323]">Kevin De Bruyne's Departure</h4>
-                <p className="mb-2 text-gray-700">Manchester City's midfield maestro Kevin De Bruyne has announced his departure from the club. The Belgian international, who has been instrumental in City's recent success, will be leaving after 8 successful seasons at the Etihad Stadium.</p>
-                <div>
-                  <span className="font-medium">Impact:</span>
-                  <ul className="list-disc list-inside mt-2 text-gray-600">
-                    <li>8 seasons at Manchester City</li>
-                    <li>96 goals and 153 assists</li>
-                    <li>5 Premier League titles</li>
-                    <li>1 Champions League title</li>
-                  </ul>
-                </div>
-              </div>
-              {/* 卡片2 */}
-              <div className="bg-white rounded-2xl shadow-lg p-6">
-                <h4 className="text-lg font-bold mb-2 text-[#232323]">Transfer Updates</h4>
-                <p className="mb-2 text-gray-700">Manchester City is actively working on strengthening their squad for the upcoming season. The club is looking to bring in new talent to maintain their dominance in both domestic and European competitions.</p>
-                <div>
-                  <span className="font-medium">Recent Activities:</span>
-                  <ul className="list-disc list-inside mt-2 text-gray-600">
-                    <li>Scouting for midfield replacements</li>
-                    <li>Monitoring young talents</li>
-                    <li>Contract renewals for key players</li>
-                    <li>Youth academy promotions</li>
-                  </ul>
-                </div>
-              </div>
-              {/* 卡片3 */}
-              <div className="bg-white rounded-2xl shadow-lg p-6">
-                <h4 className="text-lg font-bold mb-2 text-[#232323]">德布劳内正式离队</h4>
-                <p className="mb-2 text-gray-700">曼城传奇中场德布劳内（Kevin De Bruyne）正式宣布离队，结束了他在曼城8年的辉煌生涯。球迷纷纷送上祝福，感谢他为球队带来的无数精彩瞬间。</p>
-                <div>
-                  <span className="font-medium">球迷热议：</span>
-                  <ul className="list-disc list-inside mt-2 text-gray-600">
-                    <li>"再见传奇，祝你未来一切顺利！"</li>
-                    <li>"KDB永远是蓝月亮的英雄！"</li>
-                  </ul>
-                </div>
-              </div>
-              {/* 卡片4 */}
-              <div className="bg-white rounded-2xl shadow-lg p-6">
-                <h4 className="text-lg font-bold mb-2 text-[#232323]">曼城本赛季最后一场主场比赛赛况</h4>
-                <p className="mb-2 text-gray-700">曼城在本赛季英超最后一轮主场迎战伯恩茅斯，最终以3-1获胜。</p>
-                <div>
-                  <span className="font-medium">关键事件：</span>
-                  <ul className="list-disc list-inside mt-2 text-gray-600">
-                    <li>马尔牧什第14分钟世界波破门</li>
-                    <li>兔兔第38分钟禁区得分</li>
-                    <li>德布劳内第66分钟换下,结束曼城生涯最后一个主场比赛</li>
-                    <li>尼克冈萨雷斯第89分钟替补登场,攻入曼城生涯首球</li>
-                  </ul>
-                </div>
-              </div>
             </div>
           </section>
 

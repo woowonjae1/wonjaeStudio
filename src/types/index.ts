@@ -17,33 +17,6 @@ export interface Track {
   duration: string;
 }
 
-// 球员类型
-export interface Player {
-  id: number;
-  name: string;
-  number: number;
-  position: string;
-  country: string;
-  imageUrl: string;
-}
-
-// 比赛类型
-export interface Match {
-  id: number;
-  homeTeam: string;
-  awayTeam: string;
-  homeScore?: number;
-  awayScore?: number;
-  date: string;
-  time: string;
-  venue: string;
-  competition: string;
-  status: 'upcoming' | 'live' | 'completed';
-  isFinished: boolean;
-  homeTeamLogo: string;
-  awayTeamLogo: string;
-}
-
 export interface AudioPlayerState {
   isPlaying: boolean;
   currentTrack: Album | null;
