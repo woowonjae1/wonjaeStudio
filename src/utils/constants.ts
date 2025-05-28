@@ -160,7 +160,10 @@ export const MATCHES: Match[] = [
     time: "15:00",
     venue: "Stadium A",
     competition: "League One",
-    status: "upcoming"
+    status: "upcoming",
+    isFinished: false,
+    homeTeamLogo: "/image/teamA.png",
+    awayTeamLogo: "/image/teamB.png"
   },
   {
     id: 2,
@@ -170,6 +173,9 @@ export const MATCHES: Match[] = [
     time: "16:00",
     venue: "Stadium B",
     competition: "League Two",
-    status: "upcoming"
+    status: "upcoming",
+    isFinished: false,
+    homeTeamLogo: "/image/teamC.png",
+    awayTeamLogo: "/image/teamD.png"
   }
 ];

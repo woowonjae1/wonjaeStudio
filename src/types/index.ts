@@ -39,6 +39,9 @@ export interface Match {
   venue: string;
   competition: string;
   status: 'upcoming' | 'live' | 'completed';
+  isFinished: boolean;
+  homeTeamLogo: string;
+  awayTeamLogo: string;
 }
 
 export interface AudioPlayerState {
