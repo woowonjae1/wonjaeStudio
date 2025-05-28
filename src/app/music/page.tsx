@@ -4,6 +4,7 @@ import React from "react";
 import Link from 'next/link';
 import { useTheme } from "@/contexts/ThemeContext";
 import Image from 'next/image';
+import ThreeJSAlbumRenderer from '@/components/album/ThreeJSAlbumRenderer';
 
 export default function MusicPage() {
   const { theme } = useTheme();
@@ -120,13 +121,14 @@ export default function MusicPage() {
             {albums.map(album => (
               <div key={album.id} className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300">
                 <div className="relative h-48 w-full">
-                  <Image 
+                  {/* <Image 
                     src={album.coverUrl} 
                     alt={album.title}
                     fill
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
                     style={{ objectFit: "cover" }}
-                  />
+                  /> */}
+                  <ThreeJSAlbumRenderer imageSrc={album.coverUrl} />
                 </div>
                 <div className="p-4">
                   <h3 className="text-xl font-bold text-purple-700 dark:text-purple-400">{album.title}</h3>

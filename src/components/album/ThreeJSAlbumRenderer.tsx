@@ -2,7 +2,7 @@
 
 import { FC, useRef } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { useTexture } from "@react-three/drei";
+import { useTexture, Environment } from "@react-three/drei";
 import * as THREE from "three";
 
 interface AlbumMeshProps {
@@ -21,7 +21,7 @@ const AlbumMesh: FC<AlbumMeshProps> = ({ imageSrc }) => {
   });
 
   return (
-    <mesh ref={meshRef}>
+    <mesh ref={meshRef} position={[0, 0, 0]}>
       <planeGeometry args={[3, 3]} />
       <meshBasicMaterial 
         map={texture} 
@@ -39,8 +39,8 @@ const ThreeJSAlbumRenderer: FC<ThreeJSAlbumRendererProps> = ({ imageSrc }) => {
   return (
     <div style={{ width: "100%", height: "300px" }}>
       <Canvas camera={{ position: [0, 0, 4] }}>
-        <ambientLight intensity={0.5} />
-        <pointLight position={[10, 10, 10]} />
+        <ambientLight intensity={1.0} /> 
+        <pointLight position={[10, 10, 10]} intensity={1.5} />
         <AlbumMesh imageSrc={imageSrc} />
       </Canvas>
     </div>

@@ -17,14 +17,7 @@ export default function LandingPage() {
     document.documentElement.setAttribute('data-theme', theme);
   }, [theme]);
 
-  useEffect(() => {
-    if (typeof window !== 'undefined' && localStorage.getItem('hasVisited') === 'true') {
-      router.replace('/home');
-    }
-  }, [router]);
-
   const handleEnterSite = () => {
-    localStorage.setItem('hasVisited', 'true');
     setShowLoading(true);
   };
 

@@ -10,7 +10,7 @@ interface AlbumCardProps {
 const AlbumCard: FC<AlbumCardProps> = ({ album, onPlay }) => {
   return (
     <div className="bg-white rounded-lg shadow-lg overflow-hidden">
-      <div className="h-[300px]">
+      <div className="relative w-full" style={{ height: 300 }}>
         <ThreeJSAlbumRenderer imageSrc={album.coverUrl} />
       </div>
       <div className="p-4">

@@ -218,9 +218,6 @@ const HomeComponent = () => {
   };
 
   useEffect(() => {
-    if (typeof window !== 'undefined' && localStorage.getItem('hasVisited') === 'true') {
-      router.replace('/home');
-    }
   }, [router]);
 
   return (
