@@ -45,7 +45,7 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ album, isPlaying, onPlayPause
       <div className="container mx-auto flex items-center justify-between">
         <div className="flex items-center space-x-4">
           <img 
-            src={album.image} 
+            src={album.coverUrl} 
             alt={album.title} 
             className="w-16 h-16 object-cover rounded-lg shadow-md"
           />

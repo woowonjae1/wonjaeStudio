@@ -1,274 +1,117 @@
-import { Album } from '@/types';
-import { Player } from '@/types';
-import { Match } from '@/types';
+import { Album, Player, Match } from "@/types";
 
+// 专辑数据
 export const ALBUMS: Album[] = [
-    {
-    id: 1,
-      title: 'Romantic Album',
-    image: '/image/Romantic.jpg',
-      imageSrc: '/image/Romantic.jpg',
-    audioSrc: '/audio/禹元宰 - 傍晚的Romantic.mp3',
-    artist: '禹元宰52hz'
-    },
-    {
-    id: 2,
-      title: 'Art Life Album',
-    image: '/image/Artlife.jpg',
-      imageSrc: '/image/Artlife.jpg',
-    audioSrc: '/audio/禹元宰 - [Free]#cant chat with you.mp3',
-    artist: '禹元宰52hz'
-    },
-    {
-    id: 3,
-      title: 'Heart Breaking Album',
-    image: '/image/HeartBreaking.jpg',
-      imageSrc: '/image/HeartBreaking.jpg',
-    audioSrc: '/audio/禹元宰 - Crush.mp3',
-    artist: '禹元宰52hz'
-    },
-    {
-    id: 4,
-      title: 'Nobody Gets Me Album',
-    image: '/image/nobodygetsme.jpg',
-      imageSrc: '/image/nobodygetsme.jpg',
-    audioSrc: '/audio/禹元宰 - Nobody Gets Me Like u R&B TYPE BEAT.mp3',
-    artist: '禹元宰52hz'
+  {
+    id: "1",
+    title: "Romantic Album",
+    artist: "Woowonjae",
+    coverUrl: "/image/Romantic.jpg",
+    audioSrc: "/audio/禹元宰 - 傍晚的Romantic.mp3",
+    year: 2023,
+    description: "浪漫主题的专辑，融合了R&B和Pop元素。",
+    tracks: [
+      { id: "1-1", title: "傍晚的Romantic", duration: "3:21" },
+      { id: "1-2", title: "Love Story", duration: "3:45" },
+      { id: "1-3", title: "Midnight Thoughts", duration: "4:02" }
+    ]
   },
   {
-    id: 5,
-    title: 'entityLife',
-    image: '/image/entityLife.jpg',
-    imageSrc: '/image/entityLife.jpg',
-    audioSrc: '',
-    artist: '禹元宰52hz'
+    id: "2",
+    title: "Art Life Album",
+    artist: "Woowonjae",
+    coverUrl: "/image/Artlife.jpg",
+    audioSrc: "/audio/禹元宰 - Crush.mp3",
+    year: 2023,
+    description: "艺术生活主题的专辑，展现都市生活的艺术感。",
+    tracks: [
+      { id: "2-1", title: "Crush", duration: "3:18" },
+      { id: "2-2", title: "City Lights", duration: "3:55" },
+      { id: "2-3", title: "Artistic Flow", duration: "4:12" }
+    ]
   },
   {
-    id: 6,
-    title: 'iambluegroove',
-    image: '/image/iambluegroove.jpg',
-    imageSrc: '/image/iambluegroove.jpg',
-    audioSrc: '',
-    artist: '禹元宰52hz'
+    id: "3",
+    title: "Heart Breaking Album",
+    artist: "Woowonjae",
+    coverUrl: "/image/HeartBreaking.jpg",
+    audioSrc: "/audio/禹元宰 - [Free]#cant chat with you.mp3",
+    year: 2024,
+    description: "表达心碎情感的专辑，深入探索感情的复杂性。",
+    tracks: [
+      { id: "3-1", title: "Can't Chat With You", duration: "3:40" },
+      { id: "3-2", title: "Broken Pieces", duration: "4:05" },
+      { id: "3-3", title: "After Rain", duration: "3:50" }
+    ]
   },
   {
-    id: 7,
-    title: 'pinkBlue',
-    image: '/image/PinkBlue.jpg',
-    imageSrc: '/image/PinkBlue.jpg',
-    audioSrc: '',
-    artist: '禹元宰52hz'
+    id: "4",
+    title: "Nobody Gets Me Album",
+    artist: "Woowonjae",
+    coverUrl: "/image/nobodygetsme.jpg",
+    audioSrc: "/audio/禹元宰 - Nobody Gets Me Like u R&B TYPE BEAT.mp3",
+    year: 2024,
+    description: "探索个人独特性的R&B风格专辑。",
+    tracks: [
+      { id: "4-1", title: "Nobody Gets Me Like U", duration: "4:10" },
+      { id: "4-2", title: "Unique Soul", duration: "3:55" },
+      { id: "4-3", title: "My Way", duration: "4:25" }
+    ]
   },
   {
-    id: 8,
-    title: 'summer',
-    image: '/image/Summer.jpg',
-    imageSrc: '/image/Summer.jpg',
-    audioSrc: '',
-    artist: '禹元宰52hz'
+    id: "5",
+    title: "Summer Nights",
+    artist: "Woowonjae",
+    coverUrl: "/image/Summer.jpg",
+    audioSrc: "/audio/禹元宰 - 傍晚的Romantic.mp3",
+    year: 2023,
+    description: "夏日夜晚主题的轻松愉快专辑。",
+    tracks: [
+      { id: "5-1", title: "Summer Breeze", duration: "3:30" },
+      { id: "5-2", title: "Sunset Vibes", duration: "3:45" },
+      { id: "5-3", title: "Beach Dreams", duration: "4:10" }
+    ]
+  },
+  {
+    id: "6",
+    title: "City View",
+    artist: "Woowonjae",
+    coverUrl: "/image/entityLife.jpg",
+    audioSrc: "/audio/禹元宰 - Crush.mp3",
+    year: 2023,
+    description: "城市景观启发的现代电子音乐专辑。",
+    tracks: [
+      { id: "6-1", title: "Downtown", duration: "3:25" },
+      { id: "6-2", title: "Skyline", duration: "4:15" },
+      { id: "6-3", title: "Urban Dreams", duration: "3:50" }
+    ]
+  },
+  {
+    id: "7",
+    title: "Blue Groove",
+    artist: "Woowonjae",
+    coverUrl: "/image/iambluegroove.jpg",
+    audioSrc: "/audio/禹元宰 - [Free]#cant chat with you.mp3",
+    year: 2024,
+    description: "蓝调风格的节奏专辑，充满感性。",
+    tracks: [
+      { id: "7-1", title: "Blue Mood", duration: "4:05" },
+      { id: "7-2", title: "Rhythm & Blues", duration: "3:40" },
+      { id: "7-3", title: "Deep Ocean", duration: "4:30" }
+    ]
+  },
+  {
+    id: "8",
+    title: "Pink & Blue",
+    artist: "Woowonjae",
+    coverUrl: "/image/PinkBlue.jpg",
+    audioSrc: "/audio/禹元宰 - Nobody Gets Me Like u R&B TYPE BEAT.mp3",
+    year: 2024,
+    description: "色彩主题的梦幻电子音乐专辑。",
+    tracks: [
+      { id: "8-1", title: "Color Spectrum", duration: "3:35" },
+      { id: "8-2", title: "Dream in Color", duration: "4:20" },
+      { id: "8-3", title: "Pastel Skies", duration: "3:55" }
+    ]
   }
 ];
-
-export const PLAYERS: Player[] = [
-  // Goalkeepers
-  {
-    id: 1,
-    name: "EDERSON",
-    number: 31,
-    position: "Goalkeeper",
-    image: "/images/players/ederson.jpg",
-    nationality: "Brazil"
-  },
-  {
-    id: 2,
-    name: "STEFAN ORTEGA",
-    number: 18,
-    position: "Goalkeeper",
-    image: "/images/players/ortega.jpg",
-    nationality: "Germany"
-  },
-  {
-    id: 3,
-    name: "SCOTT CARSON",
-    number: 33,
-    position: "Goalkeeper",
-    image: "/images/players/carson.jpg",
-    nationality: "England"
-  },
-
-  // Defenders
-  {
-    id: 4,
-    name: "KYLE WALKER",
-    number: 2,
-    position: "Defender",
-    image: "/images/players/walker.jpg",
-    nationality: "England"
-  },
-  {
-    id: 5,
-    name: "RUBEN DIAS",
-    number: 3,
-    position: "Defender",
-    image: "/images/players/dias.jpg",
-    nationality: "Portugal"
-  },
-  {
-    id: 6,
-    name: "JOHN STONES",
-    number: 5,
-    position: "Defender",
-    image: "/images/players/stones.jpg",
-    nationality: "England"
-  },
-  {
-    id: 7,
-    name: "NATHAN AKE",
-    number: 6,
-    position: "Defender",
-    image: "/images/players/ake.jpg",
-    nationality: "Netherlands"
-  },
-  {
-    id: 8,
-    name: "JOSKO GVARDIOL",
-    number: 24,
-    position: "Defender",
-    image: "/images/players/gvardiol.jpg",
-    nationality: "Croatia"
-  },
-
-  // Midfielders
-  {
-    id: 9,
-    name: "KEVIN DE BRUYNE",
-    number: 17,
-    position: "Midfielder",
-    image: "/images/players/debruyne.jpg",
-    nationality: "Belgium"
-  },
-  {
-    id: 10,
-    name: "RODRI",
-    number: 16,
-    position: "Midfielder",
-    image: "/images/players/rodri.jpg",
-    nationality: "Spain"
-  },
-  {
-    id: 11,
-    name: "BERNARDO SILVA",
-    number: 20,
-    position: "Midfielder",
-    image: "/images/players/bernardo.jpg",
-    nationality: "Portugal"
-  },
-  {
-    id: 12,
-    name: "PHIL FODEN",
-    number: 47,
-    position: "Midfielder",
-    image: "/images/players/foden.jpg",
-    nationality: "England"
-  },
-  {
-    id: 13,
-    name: "MATEO KOVACIC",
-    number: 8,
-    position: "Midfielder",
-    image: "/images/players/kovacic.jpg",
-    nationality: "Croatia"
-  },
-  {
-    id: 14,
-    name: "MATHEUS NUNES",
-    number: 27,
-    position: "Midfielder",
-    image: "/images/players/nunes.jpg",
-    nationality: "Portugal"
-  },
-
-  // Forwards
-  {
-    id: 15,
-    name: "ERLING HAALAND",
-    number: 9,
-    position: "Forward",
-    image: "/images/players/haaland.jpg",
-    nationality: "Norway"
-  },
-  {
-    id: 16,
-    name: "JEREMY DOKU",
-    number: 11,
-    position: "Forward",
-    image: "/images/players/doku.jpg",
-    nationality: "Belgium"
-  },
-  {
-    id: 17,
-    name: "JACK GREALISH",
-    number: 10,
-    position: "Forward",
-    image: "/images/players/grealish.jpg",
-    nationality: "England"
-  },
-  {
-    id: 18,
-    name: "OSCAR BOBB",
-    number: 52,
-    position: "Forward",
-    image: "/images/players/bobb.jpg",
-    nationality: "Norway"
-  },
-  {
-    id: 19,
-    name: "MARLOS MORENO",
-    number: 7,
-    position: "Forward",
-    image: "/images/players/moreno.jpg",
-    nationality: "Colombia"
-  }
-];
-
-export const MATCHES: Match[] = [
-  {
-    id: 1,
-    competition: "Premier League",
-    homeTeam: "Manchester City",
-    awayTeam: "Brentford",
-    date: "2025-02-20",
-    time: "20:30",
-    venue: "Etihad Stadium",
-    isFinished: false,
-    homeTeamLogo: `https://ui-avatars.com/api/?name=Manchester+City&bold=true&background=98C5E9&color=fff`,
-    awayTeamLogo: `https://ui-avatars.com/api/?name=Brentford&bold=true&background=98C5E9&color=fff`
-  },
-  {
-    id: 2,
-    competition: "Premier League",
-    homeTeam: "Manchester City",
-    awayTeam: "Nottingham Forest",
-    date: "2025-03-08",
-    time: "23:00",
-    venue: "Etihad Stadium",
-    isFinished: false,
-    homeTeamLogo: `https://ui-avatars.com/api/?name=Manchester+City&bold=true&background=98C5E9&color=fff`,
-    awayTeamLogo: `https://ui-avatars.com/api/?name=Nottingham+Forest&bold=true&background=98C5E9&color=fff`
-  },
-  {
-    id: 3,
-    competition: "Premier League",
-    homeTeam: "Manchester City",
-    awayTeam: "Chelsea",
-    date: "2025-02-17",
-    time: "18:30",
-    venue: "Etihad Stadium",
-    isFinished: true,
-    homeScore: 1,
-    awayScore: 1,
-    homeTeamLogo: `https://ui-avatars.com/api/?name=Manchester+City&bold=true&background=98C5E9&color=fff`,
-    awayTeamLogo: `https://ui-avatars.com/api/?name=Chelsea&bold=true&background=98C5E9&color=fff`
-  },
-  // 可以添加更多比赛...
-  ];

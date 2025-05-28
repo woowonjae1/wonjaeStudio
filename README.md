@@ -1,6 +1,77 @@
-# Woowonjae's Music Blog
+# Woowonjae Studio
 
-这是一个使用现代化技术栈构建的音乐博客网站。
+A Next.js application with music production, football news, and personal blog features.
+
+## Project Structure
+
+This project follows the Next.js App Router structure:
+
+```
+src/
+├── app/ - Main Next.js app directory (routes)
+│   ├── page.tsx - Landing page (/)
+│   ├── landing.tsx - Landing page component
+│   ├── home/ - Home route (/home)
+│   │   └── page.tsx - Home page component
+│   └── not-found.tsx - Custom 404 page
+├── components/ - Reusable components
+│   └── HomeComponent.tsx - Main home page content
+├── contexts/ - React contexts
+│   └── ThemeContext.tsx - Theme provider
+├── types/ - TypeScript type definitions
+├── utils/ - Utility functions and constants
+└── styles/ - Global styles
+```
+
+## Routing
+
+The project uses Next.js App Router for routing. Each directory inside `src/app/` represents a route, with `page.tsx` files defining the route's content:
+
+- `/` - Landing page
+- `/home` - Home page
+- `/debug-route` - Debugging tool for routes
+
+## Fixing 404 Errors
+
+If you encounter 404 errors, check the following:
+
+1. **Make sure you're navigating to valid routes**:
+   - The main routes are `/` and `/home`
+
+2. **Check for routing conflicts**:
+   - Ensure you don't have both `app/home.tsx` and `app/home/page.tsx`
+   - Only one app directory should exist (in `src/app`, not a root-level `app/`)
+
+3. **Verify imports**:
+   - Make sure all dynamic imports use `{ ssr: false }` for client components with browser APIs
+
+4. **Check the Next.js config**:
+   - Ensure `next.config.js` is set up correctly
+
+## Development
+
+```bash
+# Install dependencies
+npm install
+
+# Run development server
+npm run dev
+
+# Build for production
+npm run build
+
+# Start production server
+npm start
+```
+
+## Troubleshooting
+
+If you encounter a 404 error:
+
+1. Check the URL in your browser's address bar
+2. Visit the debug route at `/debug-route` to see available routes
+3. Make sure the server is running (`npm run dev`)
+4. Check the console for any errors
 
 ## 技术栈
 
