@@ -1,4 +1,4 @@
-import { Album, Player, Match } from "@/types";
+import { Album } from "@/types";
 
 // 专辑数据
 export const ALBUMS: Album[] = [
@@ -113,69 +113,5 @@ export const ALBUMS: Album[] = [
       { id: "8-2", title: "Dream in Color", duration: "4:20" },
       { id: "8-3", title: "Pastel Skies", duration: "3:55" }
     ]
-  }
-];
-
-export const PLAYERS: Player[] = [
-  {
-    id: 1,
-    name: "Player One",
-    position: "Goalkeeper",
-    number: 1,
-    imageUrl: "/image/player1.jpg",
-    country: "Country One"
-  },
-  {
-    id: 2,
-    name: "Player Two",
-    position: "Defender",
-    number: 2,
-    imageUrl: "/image/player2.jpg",
-    country: "Country Two"
-  },
-  {
-    id: 3,
-    name: "Player Three",
-    position: "Midfielder",
-    number: 3,
-    imageUrl: "/image/player3.jpg",
-    country: "Country Three"
-  },
-  {
-    id: 4,
-    name: "Player Four",
-    position: "Forward",
-    number: 4,
-    imageUrl: "/image/player4.jpg",
-    country: "Country Four"
-  }
-];
-
-export const MATCHES: Match[] = [
-  {
-    id: 1,
-    homeTeam: "Team A",
-    awayTeam: "Team B",
-    date: "2023-10-01",
-    time: "15:00",
-    venue: "Stadium A",
-    competition: "League One",
-    status: "upcoming",
-    isFinished: false,
-    homeTeamLogo: "/image/teamA.png",
-    awayTeamLogo: "/image/teamB.png"
-  },
-  {
-    id: 2,
-    homeTeam: "Team C",
-    awayTeam: "Team D",
-    date: "2023-10-02",
-    time: "16:00",
-    venue: "Stadium B",
-    competition: "League Two",
-    status: "upcoming",
-    isFinished: false,
-    homeTeamLogo: "/image/teamC.png",
-    awayTeamLogo: "/image/teamD.png"
   }
 ];
