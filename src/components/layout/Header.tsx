@@ -6,9 +6,13 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { FaInstagram, FaWeibo } from 'react-icons/fa';
 import { SiNeteasecloudmusic, SiBilibili, SiXiaohongshu, SiGithub } from 'react-icons/si';
+import { useAuth } from '@/hooks/useAuth';
+import { LoginDialogMinimal } from '@/components/auth/LoginDialogMinimal';
+import { RegisterDialogMinimal } from '@/components/auth/RegisterDialogMinimal';
 
 const Header: React.FC = () => {
   const router = useRouter();
+  const { user } = useAuth();
   const [showQRCode, setShowQRCode] = useState(false);
 
   const scrollToSection = (id: string) => {
@@ -31,6 +35,22 @@ const Header: React.FC = () => {
     { href: 'https://github.com/woowonjae1', icon: SiGithub, label: 'GitHub', followers: 1 },
     { href: 'https://music.163.com/#/user/home?id=1939616311', icon: SiNeteasecloudmusic, label: '网易云', followers: 495 },
   ];
+
+  // 生成随机头像颜色
+  const getAvatarColor = (email: string) => {
+    const colors = [
+      'bg-blue-500',
+      'bg-purple-500',
+      'bg-pink-500',
+      'bg-green-500',
+      'bg-yellow-500',
+      'bg-red-500',
+      'bg-indigo-500',
+      'bg-teal-500',
+    ];
+    const index = email.charCodeAt(0) % colors.length;
+    return colors[index];
+  };
 
   return (
     <>
@@ -78,6 +98,12 @@ const Header: React.FC = () => {
                 >
                   About
                 </button>
+                <Link 
+                  href="/test-social"
+                  className="text-blue-600 hover:text-blue-700 transition-colors font-medium"
+                >
+                  Test Social
+                </Link>
               </nav>
 
               {/* 社交媒体图标 */}
@@ -95,6 +121,26 @@ const Header: React.FC = () => {
                     </div>
                   </div>
                 ))}
+              </div>
+
+              {/* 登录/用户菜单 */}
+              <div className="flex items-center space-x-3">
+                {user ? (
+                  <Link 
+                    href="/dashboard"
+                    className="flex items-center space-x-2 px-3 py-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-all duration-200 group"
+                  >
+                    <div className={`w-8 h-8 rounded-full ${getAvatarColor(user.email || '')} flex items-center justify-center text-white text-sm font-bold group-hover:scale-110 transition-transform`}>
+                      {user.email?.[0].toUpperCase()}
+                    </div>
+                    <span className="font-medium text-sm">{user.email?.split('@')[0]}</span>
+                  </Link>
+                ) : (
+                  <>
+                    <LoginDialogMinimal />
+                    <RegisterDialogMinimal />
+                  </>
+                )}
               </div>
             </div>
           </div>

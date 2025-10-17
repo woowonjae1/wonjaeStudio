@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation';
 import { MorphingText } from "@/components/magicui/morphing-text";
 import { LoadingTransition } from "@/components/LoadingTransition";
 import { useTheme } from "@/contexts/ThemeContext";
-import { WavyBackground } from "@/ui/wavy-background";
+import { WavyBackground } from "@/components/ui/wavy-background";
 
 export default function LandingPage() {
   const router = useRouter();
