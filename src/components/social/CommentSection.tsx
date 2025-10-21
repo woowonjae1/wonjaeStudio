@@ -1,8 +1,12 @@
-'use client';
+"use client";
 
-import { useState, useEffect } from 'react';
-import { useAuth } from '@/hooks/useAuth';
-import { getComments, createComment, deleteComment } from '@/services/supabaseService';
+import { useState, useEffect } from "react";
+import { useAuth } from "@/hooks/useAuth";
+import {
+  getComments,
+  createComment,
+  deleteComment,
+} from "@/services/supabaseService";
 
 interface Comment {
   id: string;
@@ -16,14 +20,17 @@ interface Comment {
 }
 
 interface CommentSectionProps {
-  itemType: 'album' | 'post' | 'track';
+  itemType: "album" | "post" | "track";
   itemId: string;
 }
 
-export default function CommentSection({ itemType, itemId }: CommentSectionProps) {
+export default function CommentSection({
+  itemType,
+  itemId,
+}: CommentSectionProps) {
   const { user } = useAuth();
   const [comments, setComments] = useState<Comment[]>([]);
-  const [newComment, setNewComment] = useState('');
+  const [newComment, setNewComment] = useState("");
   const [loading, setLoading] = useState(true);
   const [submitting, setSubmitting] = useState(false);
 
@@ -36,7 +43,7 @@ export default function CommentSection({ itemType, itemId }: CommentSectionProps
       const data = await getComments(itemType, itemId);
       setComments(data as any);
     } catch (error) {
-      console.error('Failed to load comments:', error);
+      console.error("Failed to load comments:", error);
     } finally {
       setLoading(false);
     }
@@ -55,24 +62,24 @@ export default function CommentSection({ itemType, itemId }: CommentSectionProps
         item_id: itemId,
       });
       setComments([...comments, comment as any]);
-      setNewComment('');
+      setNewComment("");
     } catch (error) {
-      console.error('Failed to create comment:', error);
-      alert('评论失败，请重试');
+      console.error("Failed to create comment:", error);
+      alert("评论失败，请重试");
     } finally {
       setSubmitting(false);
     }
   };
 
-  const handleDelete = async (commentId: string) {
-    if (!confirm('确定删除这条评论吗？')) return;
+  const handleDelete = async (commentId: string) => {
+    if (!confirm("确定删除这条评论吗？")) return;
 
     try {
       await deleteComment(commentId);
       setComments(comments.filter((c) => c.id !== commentId));
     } catch (error) {
-      console.error('Failed to delete comment:', error);
-      alert('删除失败，请重试');
+      console.error("Failed to delete comment:", error);
+      alert("删除失败，请重试");
     }
   };
 
@@ -100,7 +107,7 @@ export default function CommentSection({ itemType, itemId }: CommentSectionProps
             disabled={submitting}
             className="mt-2 px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50"
           >
-            {submitting ? '提交中...' : '发表评论'}
+            {submitting ? "提交中..." : "发表评论"}
           </button>
         </form>
       ) : (
@@ -119,12 +126,14 @@ export default function CommentSection({ itemType, itemId }: CommentSectionProps
               <div className="flex items-start justify-between">
                 <div className="flex items-center space-x-3">
                   <div className="w-10 h-10 bg-blue-500 rounded-full flex items-center justify-center text-white">
-                    {comment.profiles?.display_name?.[0] || 'U'}
+                    {comment.profiles?.display_name?.[0] || "U"}
                   </div>
                   <div>
-                    <p className="font-semibold">{comment.profiles?.display_name || '匿名用户'}</p>
+                    <p className="font-semibold">
+                      {comment.profiles?.display_name || "匿名用户"}
+                    </p>
                     <p className="text-sm text-gray-500">
-                      {new Date(comment.created_at).toLocaleString('zh-CN')}
+                      {new Date(comment.created_at).toLocaleString("zh-CN")}
                     </p>
                   </div>
                 </div>
@@ -145,4 +154,3 @@ export default function CommentSection({ itemType, itemId }: CommentSectionProps
     </div>
   );
 }
-
