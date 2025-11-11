@@ -1,12 +1,15 @@
-import React from 'react';
-import ArticleNavigation from '@/components/ArticleNavigation';
+import React from "react";
+import ArticleNavigation from "@/components/ArticleNavigation";
 
-const title = 'GitHub Copilot X 正式发布，AI辅助开发再升级';
-const date = '2024.06.01';
-const author = 'woowonjae';
-const category = 'copilot-x';
+const title = "GitHub Copilot X 正式发布，AI辅助开发再升级";
+const date = "2024.06.01";
+const author = "woowonjae";
+const category = "copilot-x";
 const prevArticle = undefined;
-const nextArticle = { title: 'Gitee 开源社区年度报告发布', slug: 'gitee-report' };
+const nextArticle = {
+  title: "Gitee 开源社区年度报告发布",
+  slug: "gitee-report",
+};
 const content = `2024年6月1日，GitHub Copilot X 正式发布，标志着AI辅助开发进入全新阶段。Copilot X 不仅支持多种主流编程语言，还集成了聊天式编程助手、代码解释、自动补全、单元测试生成等功能。开发者可以通过自然语言描述需求，Copilot X 自动生成高质量代码片段，大幅提升开发效率。此次升级还引入了对Pull Request的智能分析和文档自动生成，极大改善了团队协作体验。业内专家认为，Copilot X 的发布将推动AI与软件开发的深度融合，成为未来开发者不可或缺的工具。`;
 
 export default function Page() {
@@ -31,4 +34,4 @@ export default function Page() {
       />
     </div>
   );
-} 
+}
