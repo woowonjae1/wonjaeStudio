@@ -125,10 +125,12 @@ function createAudioAnalyzer(audioElement) {
         
         <section className="mb-16">
           <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-6">代码片段</h2>
-          
+
           <div className="bg-gray-900 rounded-lg shadow-md overflow-hidden">
             <div className="p-4 bg-gray-800 text-gray-200 font-mono text-sm">
-              <span className="text-blue-400">// 音频可视化示例代码</span>
+              <span className="text-blue-400">
+                {/* 音频可视化示例代码 */}
+              </span>
             </div>
             <pre className="p-4 overflow-x-auto text-gray-300 font-mono text-sm">
               {codeSnippet}
