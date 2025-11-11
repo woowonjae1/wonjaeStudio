@@ -32,11 +32,6 @@ const techArticlesByTab: Record<
 > = {
   latest: [
     {
-      title: "GitHub Copilot X 正式发布，AI辅助开发再升级",
-      date: "2024.06.01",
-      link: "/articles/copilot-x",
-    },
-    {
       title: "Gitee 开源社区年度报告发布",
       date: "2024.05.28",
       link: "/articles/gitee-report",

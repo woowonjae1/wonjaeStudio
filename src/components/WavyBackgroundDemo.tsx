@@ -1,5 +1,5 @@
 import React from "react";
-import { WavyBackground } from "../ui/wavy-background";
+import { WavyBackground } from "@/components/ui/wavy-background";
 
 export function WavyBackgroundDemo() {
   return (

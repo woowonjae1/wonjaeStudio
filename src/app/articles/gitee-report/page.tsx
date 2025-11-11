@@ -5,7 +5,7 @@ const title = 'Gitee 开源社区年度报告发布';
 const date = '2024.05.28';
 const author = 'woowonjae';
 const category = 'gitee-report';
-const prevArticle = { title: 'GitHub Copilot X 正式发布，AI辅助开发再升级', slug: 'copilot-x' };
+const prevArticle = undefined;
 const nextArticle = { title: '开源大模型 Llama 3 开放下载', slug: 'llama3' };
 const content = `2024年5月28日，Gitee发布了最新的开源社区年度报告。报告显示，过去一年Gitee平台项目数量和活跃开发者持续增长，国产开源项目影响力显著提升。报告详细分析了各类热门项目的技术趋势、社区贡献分布以及企业参与度。值得关注的是，Gitee在代码安全、合规治理和社区生态建设方面取得了突破，推动了中国开源生态的健康发展。报告还对未来开源趋势进行了展望，强调了AI、云原生等领域的创新机遇。`;
 
