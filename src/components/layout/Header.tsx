@@ -1,14 +1,19 @@
-'use client'
+"use client";
 
 import React, { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { FaInstagram, FaWeibo } from 'react-icons/fa';
-import { SiNeteasecloudmusic, SiBilibili, SiXiaohongshu, SiGithub } from 'react-icons/si';
-import { useAuth } from '@/hooks/useAuth';
-import { LoginDialogMinimal } from '@/components/auth/LoginDialogMinimal';
-import { RegisterDialogMinimal } from '@/components/auth/RegisterDialogMinimal';
+import { FaInstagram, FaWeibo } from "react-icons/fa";
+import {
+  SiNeteasecloudmusic,
+  SiBilibili,
+  SiXiaohongshu,
+  SiGithub,
+} from "react-icons/si";
+import { useAuth } from "@/hooks/useAuth";
+import { LoginDialogMinimal } from "@/components/auth/LoginDialogMinimal";
+import { RegisterDialogMinimal } from "@/components/auth/RegisterDialogMinimal";
 
 const Header: React.FC = () => {
   const router = useRouter();
@@ -20,33 +25,54 @@ const Header: React.FC = () => {
     if (element) {
       const headerOffset = 80; // 头部导航栏的高度
       const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+      const offsetPosition =
+        elementPosition + window.pageYOffset - headerOffset;
 
       window.scrollTo({
         top: offsetPosition,
-        behavior: "smooth"
+        behavior: "smooth",
       });
     }
   };
 
   const socialLinks = [
-    { href: 'https://www.xiaohongshu.com/user/profile/5dd412400000000001006f7c', icon: SiXiaohongshu, label: '小红书', followers: 80 },
-    { href: 'https://space.bilibili.com/270089039', icon: SiBilibili, label: 'Bilibili', followers: 3 },
-    { href: 'https://github.com/woowonjae1', icon: SiGithub, label: 'GitHub', followers: 1 },
-    { href: 'https://music.163.com/#/user/home?id=1939616311', icon: SiNeteasecloudmusic, label: '网易云', followers: 495 },
+    {
+      href: "https://www.xiaohongshu.com/user/profile/5dd412400000000001006f7c",
+      icon: SiXiaohongshu,
+      label: "小红书",
+      followers: 80,
+    },
+    {
+      href: "https://space.bilibili.com/270089039",
+      icon: SiBilibili,
+      label: "Bilibili",
+      followers: 3,
+    },
+    {
+      href: "https://github.com/woowonjae1",
+      icon: SiGithub,
+      label: "GitHub",
+      followers: 1,
+    },
+    {
+      href: "https://music.163.com/#/user/home?id=1939616311",
+      icon: SiNeteasecloudmusic,
+      label: "网易云",
+      followers: 495,
+    },
   ];
 
   // 生成随机头像颜色
   const getAvatarColor = (email: string) => {
     const colors = [
-      'bg-blue-500',
-      'bg-purple-500',
-      'bg-pink-500',
-      'bg-green-500',
-      'bg-yellow-500',
-      'bg-red-500',
-      'bg-indigo-500',
-      'bg-teal-500',
+      "bg-blue-500",
+      "bg-purple-500",
+      "bg-pink-500",
+      "bg-green-500",
+      "bg-yellow-500",
+      "bg-red-500",
+      "bg-indigo-500",
+      "bg-teal-500",
     ];
     const index = email.charCodeAt(0) % colors.length;
     return colors[index];
@@ -59,7 +85,10 @@ const Header: React.FC = () => {
           <div className="flex justify-between items-center h-16">
             {/* 左侧 Logo 和头像 */}
             <div className="flex items-center">
-              <div className="w-8 h-8 mr-2 rounded-full overflow-hidden cursor-pointer" onClick={() => setShowQRCode(true)}>
+              <div
+                className="w-8 h-8 mr-2 rounded-full overflow-hidden cursor-pointer"
+                onClick={() => setShowQRCode(true)}
+              >
                 <img
                   src="/image/headPhoto.jpg"
                   alt="Profile"
@@ -74,44 +103,42 @@ const Header: React.FC = () => {
             <div className="flex items-center space-x-8">
               {/* 右侧导航菜单 */}
               <nav className="flex items-center space-x-8">
-                <button 
-                  onClick={() => scrollToSection('albums')}
+                <button
+                  onClick={() => scrollToSection("albums")}
                   className="text-gray-600 hover:text-gray-900 transition-colors"
                 >
                   Albums
                 </button>
-                <button 
-                  onClick={() => scrollToSection('manchester-city')}
+                <button
+                  onClick={() => scrollToSection("manchester-city")}
                   className="text-gray-600 hover:text-gray-900 transition-colors"
                 >
                   Manchester City
                 </button>
-                <button 
-                  onClick={() => scrollToSection('code')}
+                <button
+                  onClick={() => scrollToSection("code")}
                   className="text-gray-600 hover:text-gray-900 transition-colors"
                 >
                   Code
                 </button>
-                <button 
-                  onClick={() => scrollToSection('about')}
+                <button
+                  onClick={() => scrollToSection("about")}
                   className="text-gray-600 hover:text-gray-900 transition-colors"
                 >
                   About
                 </button>
-                <Link 
-                  href="/test-social"
-                  className="text-blue-600 hover:text-blue-700 transition-colors font-medium"
-                >
-                  Test Social
-                </Link>
               </nav>
 
               {/* 社交媒体图标 */}
               <div className="hidden md:flex items-center space-x-4">
                 {socialLinks.map(({ href, icon: Icon, label, followers }) => (
                   <div key={label} className="relative group">
-                    <a href={href} target="_blank" rel="noopener noreferrer"
-                      className="text-gray-600 hover:text-gray-900 transition-colors">
+                    <a
+                      href={href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-gray-600 hover:text-gray-900 transition-colors"
+                    >
                       <Icon className="w-5 h-5" />
                     </a>
                     <div className="absolute left-1/2 -translate-x-1/2 top-8 z-50 hidden group-hover:flex flex-col items-center">
@@ -126,14 +153,18 @@ const Header: React.FC = () => {
               {/* 登录/用户菜单 */}
               <div className="flex items-center space-x-3">
                 {user ? (
-                  <Link 
+                  <Link
                     href="/dashboard"
                     className="flex items-center space-x-2 px-3 py-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-all duration-200 group"
                   >
-                    <div className={`w-8 h-8 rounded-full ${getAvatarColor(user.email || '')} flex items-center justify-center text-white text-sm font-bold group-hover:scale-110 transition-transform`}>
+                    <div
+                      className={`w-8 h-8 rounded-full ${getAvatarColor(user.email || "")} flex items-center justify-center text-white text-sm font-bold group-hover:scale-110 transition-transform`}
+                    >
                       {user.email?.[0].toUpperCase()}
                     </div>
-                    <span className="font-medium text-sm">{user.email?.split('@')[0]}</span>
+                    <span className="font-medium text-sm">
+                      {user.email?.split("@")[0]}
+                    </span>
                   </Link>
                 ) : (
                   <>
@@ -149,10 +180,16 @@ const Header: React.FC = () => {
 
       {/* 微信二维码弹窗 */}
       {showQRCode && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-[100]" onClick={() => setShowQRCode(false)}>
-          <div className="bg-white p-5 rounded-lg shadow-xl" onClick={(e) => e.stopPropagation()}>
+        <div
+          className="fixed inset-0 bg-black/50 flex items-center justify-center z-[100]"
+          onClick={() => setShowQRCode(false)}
+        >
+          <div
+            className="bg-white p-5 rounded-lg shadow-xl"
+            onClick={(e) => e.stopPropagation()}
+          >
             <div className="flex justify-end mb-2">
-              <button 
+              <button
                 onClick={() => setShowQRCode(false)}
                 className="text-gray-500 hover:text-gray-700"
               >
@@ -165,7 +202,9 @@ const Header: React.FC = () => {
               style={{ width: "280px", height: "auto" }}
               className="mx-auto"
             />
-            <div className="mt-3 text-center text-gray-600">微信扫一扫，联系我</div>
+            <div className="mt-3 text-center text-gray-600">
+              微信扫一扫，联系我
+            </div>
           </div>
         </div>
       )}

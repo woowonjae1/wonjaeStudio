@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
-import { User, Session } from '@supabase/supabase-js';
-import { supabase } from '@/lib/supabase';
+import { useState, useEffect } from "react";
+import { User, Session } from "@supabase/supabase-js";
+import { supabase } from "@/lib/supabase";
 
 export function useAuth() {
   const [user, setUser] = useState<User | null>(null);
@@ -32,13 +32,34 @@ export function useAuth() {
 
 // 登录
 export async function signInWithEmail(email: string, password: string) {
-  const { data, error } = await supabase.auth.signInWithPassword({
-    email,
-    password,
-  });
+  try {
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
 
-  if (error) throw error;
-  return data;
+    if (error) {
+      // 提供更友好的错误消息
+      if (error.message.includes("Invalid login credentials")) {
+        throw new Error("邮箱或密码错误");
+      }
+      if (error.message.includes("Email not confirmed")) {
+        throw new Error("请先验证邮箱");
+      }
+      if (error.message.includes("fetch")) {
+        throw new Error("网络连接失败，请检查网络或Supabase配置");
+      }
+      throw error;
+    }
+    return data;
+  } catch (error: any) {
+    if (error.message === "Failed to fetch") {
+      throw new Error(
+        "无法连接到服务器，请检查:\n1. 网络连接\n2. .env.local 中的 Supabase URL 是否正确\n3. Supabase 项目是否正常运行"
+      );
+    }
+    throw error;
+  }
 }
 
 // 注册
@@ -63,7 +84,7 @@ export async function signUpWithEmail(
 
 // 社交登录
 export async function signInWithProvider(
-  provider: 'google' | 'github' | 'discord'
+  provider: "google" | "github" | "discord"
 ) {
   const { data, error } = await supabase.auth.signInWithOAuth({
     provider,
@@ -114,4 +135,3 @@ export async function updateProfile(updates: {
   if (error) throw error;
   return data;
 }
-

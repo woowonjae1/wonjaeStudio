@@ -294,36 +294,6 @@ const HomeComponent = () => {
             </div>
           </section>
 
-          {/* Phase 2 功能展示区 */}
-          <section id="features" className="py-12">
-            <div className="mb-12">
-              <h2 className="text-3xl font-bold mb-6">✨ 新增功能</h2>
-              <p className="text-gray-600 mb-8">
-                实时交互功能：点赞、评论、收藏
-              </p>
-
-              {/* 音乐库功能展示 */}
-              <div className="mb-12">
-                <h3 className="text-2xl font-bold mb-4">
-                  🎵 音乐库 (实时点赞/收藏)
-                </h3>
-                <div className="bg-white rounded-xl shadow-lg p-6">
-                  <AlbumListEnhanced />
-                </div>
-              </div>
-
-              {/* 文章功能展示 */}
-              <div>
-                <h3 className="text-2xl font-bold mb-4">
-                  📰 文章系统 (评论互动)
-                </h3>
-                <div className="bg-white rounded-xl shadow-lg p-6">
-                  <PostListAdvanced />
-                </div>
-              </div>
-            </div>
-          </section>
-
           <section id="about" className="py-12">
             <h2 className="text-3xl font-bold mb-4">About Me</h2>
             <div className="max-w-4xl mx-auto bg-white rounded-xl shadow-lg overflow-hidden">
