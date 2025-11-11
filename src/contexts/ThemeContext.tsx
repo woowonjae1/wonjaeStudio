@@ -52,15 +52,15 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
 
   // 当主题改变时，更新 HTML 属性和 localStorage
   useEffect(() => {
-    if (typeof window !== 'undefined') {
-      document.documentElement.setAttribute('data-theme', theme);
-      localStorage.setItem('theme', theme);
+    if (typeof window !== "undefined") {
+      document.documentElement.setAttribute("data-theme", theme);
+      localStorage.setItem("theme", theme);
     }
   }, [theme]);
 
   return (
-    <ThemeContext.Provider value={{ theme, isNightMode: theme === 'dark' }}>
+    <ThemeContext.Provider value={{ theme, isNightMode: theme === "dark" }}>
       {children}
     </ThemeContext.Provider>
   );
-} 
+}
