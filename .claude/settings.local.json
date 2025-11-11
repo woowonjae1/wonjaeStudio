@@ -1,0 +1,27 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(tree:*)",
+      "Bash(nul)",
+      "Bash(if [ -d \"src/components/instruments\" ])",
+      "Bash(then echo \"exists\")",
+      "Bash(else echo \"not exists\")",
+      "Bash(fi)",
+      "Bash(if [ -d \"src/app/api/chat\" ])",
+      "Bash(if [ -d \"src/app/api/music/generate\" ])",
+      "Bash(if [ -d \"src/app/api/posts\" ])",
+      "Bash(if [ -f \"src/components/Instruments.tsx\" ])",
+      "Bash(if [ -f \"src/types/react-piano.d.ts\" ])",
+      "Bash(rm:*)",
+      "Bash(rmdir:*)",
+      "Bash(npm install:*)",
+      "Bash(npm run dev:*)",
+      "Bash(dir:*)",
+      "Bash(echo:*)",
+      "Bash(cat:*)",
+      "Bash(python -m json.tool:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
