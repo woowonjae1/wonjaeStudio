@@ -32,12 +32,6 @@ const codeSnippets: CodeSnippet[] = [
     category: "AI",
   },
   {
-    title: "Qwen2.5-Max",
-    description: "阿里通义，性能超越Claude 3.5",
-    code: 'import { Qwen } from "@alicloud/qwen";\n\nconst client = new Qwen();\nconst completion = await client.chat.completions.create({\n  model: "qwen2.5-max",\n  messages: [{ role: "user", content: "Hello" }]\n});',
-    category: "AI",
-  },
-  {
     title: "Gemini 2.0 Flash",
     description: "Google多模态AI，支持实时视频理解",
     code: 'import { GoogleGenerativeAI } from "@google/generative-ai";\n\nconst genAI = new GoogleGenerativeAI();\nconst model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });\nconst result = await model.generateContent("Hello");',
