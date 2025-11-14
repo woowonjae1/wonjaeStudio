@@ -44,13 +44,13 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ album, isPlaying, onPlayPause
     <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4 shadow-lg">
       <div className="container mx-auto flex items-center justify-between">
         <div className="flex items-center space-x-4">
-          <img 
-            src={album.coverUrl} 
-            alt={album.title} 
+          <img
+            src={album.coverUrl}
+            alt={album.title}
             className="w-16 h-16 object-cover rounded-lg shadow-md"
           />
           <div>
-            <h3 className="font-semibold text-lg">{album.title}</h3>
+            <h3 className="font-bold text-lg text-black">{album.title}</h3>
             <p className="text-gray-600">{album.artist}</p>
           </div>
         </div>
@@ -63,11 +63,11 @@ const AudioPlayer: React.FC<AudioPlayerProps> = ({ album, isPlaying, onPlayPause
             >
               {isPlaying ? (
                 <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/>
+                  <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
                 </svg>
               ) : (
                 <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M8 5v14l11-7z"/>
+                  <path d="M8 5v14l11-7z" />
                 </svg>
               )}
             </button>

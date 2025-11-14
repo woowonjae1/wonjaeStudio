@@ -126,7 +126,7 @@ const AlbumGrid: React.FC<AlbumGridProps> = ({ albums, onPlayAlbum, currentAlbum
             className="w-[400px] h-[400px] relative rounded-lg overflow-hidden"
           />
           <div className="mt-4 text-center">
-            <h3 className="text-lg font-medium">{album.title}</h3>
+            <h3 className="text-lg font-bold text-black">{album.title}</h3>
             <button
               onClick={() => onPlayAlbum(album)}
               className="mt-2 px-4 py-2 bg-black text-white rounded hover:bg-gray-800 transition-colors"
