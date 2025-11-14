@@ -26,7 +26,7 @@ export default function ThreeDBackground() {
     // 初始化Three.js - 质量优先
     const scene = new THREE.Scene();
     sceneRef.current = scene;
-    
+
     const camera = new THREE.PerspectiveCamera(
       75,
       window.innerWidth / window.innerHeight,
@@ -42,21 +42,21 @@ export default function ThreeDBackground() {
       stencil: true,
     });
     rendererRef.current = renderer;
-    
+
     // 质量优先设置
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setPixelRatio(window.devicePixelRatio); // 保持原始像素比以获得最佳质量
     renderer.outputColorSpace = THREE.SRGBColorSpace;
     renderer.shadowMap.enabled = true;
-    renderer.shadowMap.type = THREE.PCFShadowShadowMap;
+    renderer.shadowMap.type = THREE.PCFShadowMap;
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
     renderer.toneMappingExposure = 1;
-    
+
     // 禁用所有交互事件
     renderer.domElement.style.touchAction = 'none';
     renderer.domElement.style.userSelect = 'none';
     renderer.domElement.style.cursor = 'default';
-    
+
     containerRef.current.appendChild(renderer.domElement);
 
     // 创建高质量粒子纹理
@@ -175,7 +175,7 @@ export default function ThreeDBackground() {
       });
       const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
       sphere.position.copy(position);
-      
+
       // 添加发光效果
       const haloGeometry = new THREE.SphereGeometry(radius * 1.3, 32, 32);
       const haloMaterial = new THREE.MeshBasicMaterial({
@@ -187,7 +187,7 @@ export default function ThreeDBackground() {
       const halo = new THREE.Mesh(haloGeometry, haloMaterial);
       halo.position.copy(position);
       sphere.userData.halo = halo;
-      
+
       scene.add(sphere);
       scene.add(halo);
       return sphere;
@@ -260,7 +260,7 @@ export default function ThreeDBackground() {
         }
 
         // 轻微的轨道运动
-        const orbitAngle = elapsedTime * 0.2 + i * (Math.PI * 2 / spheres.length);
+        const orbitAngle = elapsedTime * 0.2 + i * ((Math.PI * 2) / spheres.length);
         const orbitRadius = 2 + i * 0.5;
         sphere.position.x += Math.cos(orbitAngle) * 0.003 * orbitRadius;
         sphere.position.y += Math.sin(orbitAngle) * 0.002 * orbitRadius;
@@ -270,7 +270,7 @@ export default function ThreeDBackground() {
       glowLayers.forEach((layer, i) => {
         const layerPulse = Math.sin(elapsedTime * (0.2 - i * 0.05)) * 0.15 + 1;
         layer.scale.set(layerPulse, layerPulse, 1);
-        
+
         // 轻微旋转
         layer.rotation.z = elapsedTime * (0.02 - i * 0.005);
       });
