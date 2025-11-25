@@ -7,12 +7,9 @@ import AlbumGrid from "@/components/album/AlbumGrid";
 import AudioPlayer from "@/components/audio/AudioPlayer";
 import NotificationBanner from "@/components/NotificationBanner";
 import { ALBUMS } from "@/utils/constants";
-import CodeShowcase from "@/components/CodeShowcase";
 import Image from "next/image";
-import MusicProduction from "@/components/MusicProduction";
 import { useRouter } from "next/navigation";
 import Banner from "@/components/Banner";
-import { MeteorsCard } from "@/components/MeteorsDemo";
 import { AlbumListEnhanced } from "@/components/album/AlbumListEnhanced";
 import { PostListAdvanced } from "@/components/blog/PostListAdvanced";
 
