@@ -1,21 +1,12 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import "@/styles/theme.css";
-import { ThemeProvider as CustomThemeProvider } from "@/contexts/ThemeContext";
-import { ThemeProvider } from "@/components/providers/ThemeProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Woowonjae Blog",
-  description: "探索音乐制作的无限可能",
-  icons: {
-    icon: [
-      { url: '/image/manchester_city_logo.jpg', sizes: '32x32', type: 'image/jpeg' },
-    ],
-    apple: '/image/manchester_city_logo.jpg',
-  }
+  title: "WOOWONJAE - 音乐创作者",
+  description: "探索音乐与技术的交汇点，创造独特的声音体验",
 };
 
 export default function RootLayout({
@@ -24,14 +15,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className={inter.className}>
-        <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
-          <CustomThemeProvider>
-            {children}
-          </CustomThemeProvider>
-        </ThemeProvider>
-      </body>
+    <html lang="zh-CN" suppressHydrationWarning>
+      <body className={inter.className}>{children}</body>
     </html>
   );
 }

@@ -1,104 +1,86 @@
 # Woowonjae Studio
 
-A Next.js application with music production, football news, and personal blog features.
+> 音乐创作者个人平台 - 专注音乐内容价值展示
 
-## Project Structure
+## 🎵 关于项目
 
-This project follows the Next.js App Router structure:
+Woowonjae Studio 是一个现代化的音乐创作者平台，专注于展示音乐作品和创作理念。网站采用简洁专业的设计风格，为访客提供流畅的音乐欣赏体验。
 
-```
-src/
-├── app/ - Main Next.js app directory (routes)
-│   ├── page.tsx - Landing page (/)
-│   ├── landing.tsx - Landing page component
-│   ├── home/ - Home route (/home)
-│   │   └── page.tsx - Home page component
-│   └── not-found.tsx - Custom 404 page
-├── components/ - Reusable components
-│   └── HomeComponent.tsx - Main home page content
-├── contexts/ - React contexts
-│   └── ThemeContext.tsx - Theme provider
-├── types/ - TypeScript type definitions
-├── utils/ - Utility functions and constants
-└── styles/ - Global styles
-```
+**网站地址**: [woowonjae.top](https://woowonjae.top)
 
-## Routing
+## ✨ 核心功能
 
-The project uses Next.js App Router for routing. Each directory inside `src/app/` represents a route, with `page.tsx` files defining the route's content:
+- 🎼 **音乐作品展示** - 专辑和单曲的精美展示
+- 🎨 **3D 专辑渲染** - 基于 Three.js 的交互式 3D 专辑封面
+- 🎧 **在线音频播放** - 流畅的音乐播放体验
+- 🌓 **Dark/Light 主题** - 自适应主题切换
 
-- `/` - Landing page
-- `/home` - Home page
-- `/debug-route` - Debugging tool for routes
+## 🛠️ 技术栈
 
-## Fixing 404 Errors
+- **框架**: Next.js 14 (App Router)
+- **语言**: TypeScript
+- **样式**: Tailwind CSS
+- **3D渲染**: Three.js + React Three Fiber
+- **动画**: Framer Motion
+- **部署**: Vercel + Cloudflare
 
-If you encounter 404 errors, check the following:
+## 🚀 快速开始
 
-1. **Make sure you're navigating to valid routes**:
-   - The main routes are `/` and `/home`
-
-2. **Check for routing conflicts**:
-   - Ensure you don't have both `app/home.tsx` and `app/home/page.tsx`
-   - Only one app directory should exist (in `src/app`, not a root-level `app/`)
-
-3. **Verify imports**:
-   - Make sure all dynamic imports use `{ ssr: false }` for client components with browser APIs
-
-4. **Check the Next.js config**:
-   - Ensure `next.config.js` is set up correctly
-
-## Development
+### 安装依赖
 
 ```bash
-# Install dependencies
 npm install
+```
 
-# Run development server
+### 本地开发
+
+```bash
 npm run dev
+```
 
-# Build for production
+访问 [http://localhost:3000](http://localhost:3000) 查看网站
+
+### 构建生产版本
+
+```bash
 npm run build
-
-# Start production server
 npm start
 ```
 
-## Troubleshooting
+## 📁 项目结构
 
-If you encounter a 404 error:
+```
+src/
+├── app/              # Next.js 路由
+│   ├── page.tsx      # 首页
+│   ├── music/        # 音乐作品页
+│   └── about/        # 关于页面
+├── components/       # React 组件
+│   ├── album/        # 专辑相关组件
+│   ├── layout/       # 布局组件
+│   └── ui/           # UI 组件库
+└── styles/           # 全局样式
+```
 
-1. Check the URL in your browser's address bar
-2. Visit the debug route at `/debug-route` to see available routes
-3. Make sure the server is running (`npm run dev`)
-4. Check the console for any errors
+## 🎨 设计理念
 
-## 技术栈
+- **极简主义**: 简洁、专业、现代
+- **内容优先**: 让音乐作品成为焦点
+- **流畅体验**: 平滑的动画和交互
+- **性能优化**: 快速加载，流畅运行
 
-- Next.js 14 (React Framework)
-- TypeScript
-- Tailwind CSS
-- Three.js
-- Framer Motion (动画效果)
-- React Three Fiber (Three.js React 渲染器)
+## 📝 开发规范
 
-## 功能特点
+- 遵循 TypeScript 严格模式
+- 使用 ESLint + Prettier 格式化代码
+- 组件采用函数式编程
+- 样式使用 Tailwind CSS utility classes
 
-- 响应式设计
-- 3D 专辑展示
-- 音频播放器
-- 博客文章展示
-- 滚动动画效果
-- SEO 优化
+## 📄 许可证
 
-## 项目结构
+MIT License
 
-项目采用模块化设计，主要分为以下几个部分：
-- 布局组件 (Header, Footer, Navigation)
-- 页面部分 (About, Blog, Music, Albums)
-- 专辑展示 (3D 渲染, 播放控制)
-- 音频播放器
+---
 
-## 开发指南
-
-1. 安装依赖：
+**Developer**: WooWonJae  
+**Contact**: [通过网站联系](https://woowonjae.top/about)

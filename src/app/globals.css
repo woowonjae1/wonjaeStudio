@@ -2,152 +2,518 @@
 @tailwind components;
 @tailwind utilities;
 
-@layer utilities {
-  @keyframes shine {
-    0% {
-      background-position: -200% 0;
-    }
-    100% {
-      background-position: 200% 0;
-    }
-  }
-}
-
-@import '../styles/theme.css';
+/* ========================================
+   融合设计系统 - Apple × Spotify
+   ======================================== */
 
 :root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
+  /* ===== 颜色系统 ===== */
+
+  /* Spotify 核心色 */
+  --spotify-green: #1db954;
+  --spotify-green-hover: #1ed760;
+  --spotify-green-dark: #169c46;
+
+  /* 深色主题（默认） - Spotify 风格 */
+  --bg-base: #000000;
+  --bg-elevated-base: #121212;
+  --bg-elevated: #181818;
+  --bg-elevated-highlight: #282828;
+  --bg-elevated-press: #3e3e3e;
+
+  /* Apple 启发 - 浅色辅助色 */
+  --bg-light: #ffffff;
+  --bg-light-secondary: #f5f5f7;
+  --bg-light-tertiary: #e8e8ed;
+
+  /* 文本颜色 */
+  --text-base: #ffffff;
+  --text-subdued: #b3b3b3;
+  --text-muted: #6a6a6a;
+  --text-black: #000000;
+
+  /* 边框和分隔线 */
+  --essential-base: #ffffff;
+  --essential-subdued: #878787;
+  --decorative-subdued: #292929;
+  --border-light: rgba(255, 255, 255, 0.1);
+
+  /* 状态色 */
+  --text-negative: #f15e6c;
+  --text-warning: #ffa42b;
+  --text-positive: #1db954;
+
+  /* 字体家族 */
+  --font-display:
+    "Inter", -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
+  --font-text:
+    "Inter", -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+  --font-mono: "SF Mono", "Courier New", monospace;
+
+  /* 圆角 */
+  --radius-xs: 2px;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-2xl: 24px;
+  --radius-full: 500px;
+
+  /* 阴影 */
+  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.15);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.2);
+  --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.3);
+  --shadow-2xl: 0 24px 64px rgba(0, 0, 0, 0.4);
+  --shadow-image: 0 4px 60px rgba(0, 0, 0, 0.5);
+
+  /* 过渡时间 */
+  --transition-fast: 150ms;
+  --transition-normal: 250ms;
+  --transition-slow: 350ms;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+/* Light Theme (可选) */
+[data-theme="light"] {
+  --bg-base: #ffffff;
+  --bg-elevated-base: #f6f6f6;
+  --bg-elevated: #ebebeb;
+  --bg-elevated-highlight: #e0e0e0;
+  --bg-elevated-press: #d0d0d0;
+
+  --text-base: #000000;
+  --text-subdued: #6a6a6a;
+  --text-muted: #b3b3b3;
+
+  --decorative-subdued: #e5e5e5;
+}
+
+/* ========================================
+   基础样式
+   ======================================== */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: rgb(var(--background-start-rgb));
+  font-family: var(--font-display);
+  background-color: var(--bg-base);
+  color: var(--text-base);
+  line-height: 1.6;
+  overflow-x: hidden;
 }
 
-.fade-in {
+/* ========================================
+   卡片样式系统
+   ======================================== */
+
+.spotify-card {
+  background-color: var(--bg-elevated-base);
+  border-radius: var(--radius-md);
+  padding: 16px;
+  transition: background-color var(--transition-fast);
+  cursor: pointer;
+}
+
+.spotify-card:hover {
+  background-color: var(--bg-elevated-highlight);
+}
+
+.spotify-card-shadow {
+  box-shadow: var(--shadow-lg);
+}
+
+/* Apple 风格特色卡片 */
+.card-featured {
+  background-color: var(--bg-elevated);
+  border-radius: var(--radius-xl);
+  overflow: hidden;
+  transition:
+    transform var(--transition-normal),
+    box-shadow var(--transition-normal);
+}
+
+.card-featured:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-2xl);
+}
+
+/* Hero 卡片 */
+.card-hero {
+  position: relative;
+  min-height: 500px;
+  border-radius: var(--radius-2xl);
+  overflow: hidden;
+  background: linear-gradient(
+    135deg,
+    var(--bg-elevated-base) 0%,
+    var(--bg-elevated-highlight) 100%
+  );
+}
+
+/* ========================================
+   按钮样式
+   ======================================== */
+
+.btn-spotify {
+  background-color: var(--spotify-green);
+  color: var(--text-base);
+  border: none;
+  border-radius: var(--radius-full);
+  padding: 12px 32px;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-spotify:hover {
+  background-color: var(--spotify-green-hover);
+  transform: scale(1.04);
+}
+
+.btn-spotify:active {
+  background-color: var(--spotify-green-dark);
+  transform: scale(1);
+}
+
+.btn-play {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background-color: var(--spotify-green);
+  color: var(--bg-base);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+.btn-play:hover {
+  background-color: var(--spotify-green-hover);
+  transform: scale(1.06);
+}
+
+.btn-outline {
+  background-color: transparent;
+  color: var(--text-base);
+  border: 1px solid var(--essential-subdued);
+  border-radius: var(--radius-full);
+  padding: 8px 24px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.btn-outline:hover {
+  border-color: var(--text-base);
+  transform: scale(1.04);
+}
+
+/* ========================================
+   文本样式
+   ======================================== */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--text-base);
+  margin: 0;
+}
+
+h1 {
+  font-size: clamp(2rem, 6vw, 6rem);
+  font-weight: 900;
+  letter-spacing: -0.04em;
+}
+
+h2 {
+  font-size: clamp(1.5rem, 4vw, 3rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+h3 {
+  font-size: clamp(1.25rem, 3vw, 2rem);
+}
+
+.text-subdued {
+  color: var(--text-subdued);
+}
+
+.text-muted {
+  color: var(--text-muted);
+}
+
+/* ========================================
+   专辑封面样式
+   ======================================== */
+
+.album-cover {
+  width: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-image);
+}
+
+.album-cover-container {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-md);
+  background-color: var(--bg-elevated);
+}
+
+.album-cover-container::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(0, 0, 0, 0.5) 100%
+  );
   opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  transition: opacity var(--transition-normal);
+  z-index: 1;
 }
 
-.fade-in.visible {
+.album-cover-container:hover::before {
+  opacity: 1;
+}
+
+.album-cover-container .play-overlay {
+  position: absolute;
+  bottom: 8px;
+  right: 8px;
+  opacity: 0;
+  transform: translateY(8px);
+  transition: all var(--transition-normal);
+  z-index: 2;
+}
+
+.album-cover-container:hover .play-overlay {
   opacity: 1;
   transform: translateY(0);
 }
 
-.album-card:hover {
-  transform: translateY(-5px);
-}
+/* ========================================
+   滚动条样式 (Spotify风格)
+   ======================================== */
 
-.audio-player {
-  transition: all 0.3s ease;
-}
-
-/* 自定义滚动条样式 */
 ::-webkit-scrollbar {
-  width: 8px;
+  width: 12px;
+  height: 12px;
 }
 
 ::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #888;
-  border-radius: 4px;
+  background: var(--essential-subdued);
+  border-radius: 6px;
+  border: 3px solid var(--bg-base);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #555;
+  background: var(--text-subdued);
 }
 
-@keyframes float {
-  0% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-20px);
-  }
-  100% {
-    transform: translateY(0);
-  }
+/* ========================================
+   选择文本样式
+   ======================================== */
+
+::selection {
+  background-color: var(--spotify-green);
+  color: var(--bg-base);
 }
 
-/* Add any additional styles for 3D effects here */
-.cursor-3d {
-  cursor: grab;
+::-moz-selection {
+  background-color: var(--spotify-green);
+  color: var(--bg-base);
 }
 
-.cursor-3d:active {
-  cursor: grabbing;
-}
+/* ========================================
+   优化动画（GPU 加速）
+   ======================================== */
 
-/* Additional utility styles */
-.text-shadow {
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
-}
-
-.glow {
-  animation: glow 2s ease-in-out infinite alternate;
-}
-
-@keyframes glow {
+@keyframes fadeIn {
   from {
-    text-shadow: 0 0 5px #fff, 0 0 10px #fff, 0 0 15px #0073e6, 0 0 20px #0073e6;
+    opacity: 0;
+    transform: translateY(20px);
   }
+
   to {
-    text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #0073e6, 0 0 40px #0073e6;
+    opacity: 1;
+    transform: translateY(0);
   }
 }
 
-/* 3D Background enhancement */
-canvas {
-  touch-action: none;
-  display: block;
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-/* 确保3D背景覆盖整个屏幕并显示在背景层 */
-.fixed.inset-0.z-\[-1\] {
-  width: 100vw;
-  height: 100vh;
-  pointer-events: none;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
 }
 
-/* 确保文本在3D背景之上显示 */
-.z-10 {
-  z-index: 10;
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.6s ease-out forwards;
+}
+
+.animate-slide-up {
+  animation: slideUp 0.4s ease-out forwards;
+}
+
+.animate-scale-in {
+  animation: scaleIn 0.5s ease-out forwards;
+}
+
+.animate-spin {
+  animation: spin 1s linear infinite;
+}
+
+/* ========================================
+   工具类
+   ======================================== */
+
+.glass-effect {
+  background: rgba(18, 18, 18, 0.8);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.truncate-2-lines {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.hover-scale {
+  transition: transform var(--transition-normal);
+  will-change: transform;
+}
+
+.hover-scale:hover {
+  transform: scale(1.05);
+}
+
+/* ========================================
+   播放器进度条
+   ======================================== */
+
+.progress-bar {
   position: relative;
+  height: 4px;
+  background-color: var(--bg-elevated-highlight);
+  border-radius: 2px;
+  cursor: pointer;
+  overflow: hidden;
+  transition: height var(--transition-fast);
 }
 
-/* 使标题发光效果更明显 */
-h1.glow {
-  filter: drop-shadow(0 0 15px rgba(255, 255, 255, 0.7));
+.progress-bar:hover {
+  height: 6px;
 }
 
-/* 加强球体发光效果 */
-@keyframes sphereGlow {
-  0% {
-    filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.5));
-  }
-  50% {
-    filter: drop-shadow(0 0 15px rgba(120, 160, 255, 0.8));
-  }
-  100% {
-    filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.5));
-  }
+.progress-bar-fill {
+  height: 100%;
+  background-color: var(--spotify-green);
+  border-radius: 2px;
+  transition: width 100ms linear;
+  will-change: width;
+}
+
+.progress-bar:hover .progress-bar-fill {
+  background-color: var(--spotify-green-hover);
+}
+
+/* ========================================
+   焦点样式
+   ======================================== */
+
+*:focus-visible {
+  outline: 2px solid var(--spotify-green);
+  outline-offset: 2px;
+}
+
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid var(--spotify-green);
+  outline-offset: 4px;
+}
+
+/* ========================================
+   容器和布局工具
+   ======================================== */
+
+.container-wide {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.container-standard {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.container-narrow {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 0 24px;
 }

@@ -1,14 +1,17 @@
 "use client";
 
-import React, { useEffect } from "react";
-import Link from "next/link";
-import ThreeJSAlbumRenderer from "@/components/album/ThreeJSAlbumRenderer";
+import React, { useState } from "react";
+import Navigation from "@/components/layout/Navigation";
+import MusicPlayerBar from "@/components/player/MusicPlayerBar";
+import AlbumCard from "@/components/music/AlbumCard";
 
 export default function MusicPage() {
-  // 虚拟专辑数据
+  const [selectedAlbum, setSelectedAlbum] = useState<string | null>(null);
+
+  // 专辑数据 - 使用示例音频URL
   const albums = [
     {
-      id: 1,
+      id: "1",
       title: "午夜电台",
       artist: "WooWonJae",
       coverUrl:
@@ -16,29 +19,77 @@ export default function MusicPage() {
       year: 2023,
       genre: "电子",
       tracks: [
-        { title: "深夜思绪", duration: "3:45" },
-        { title: "城市回声", duration: "4:21" },
-        { title: "星光下的对话", duration: "5:12" },
-        { title: "雨后", duration: "3:56" },
+        {
+          id: "1-1",
+          title: "深夜思绪",
+          duration: "3:45",
+          audioUrl:
+            "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3",
+        },
+        {
+          id: "1-2",
+          title: "城市回声",
+          duration: "4:21",
+          audioUrl:
+            "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3",
+        },
+        {
+          id: "1-3",
+          title: "星光下的对话",
+          duration: "5:12",
+          audioUrl:
+            "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-3.mp3",
+        },
+        {
+          id: "1-4",
+          title: "雨后",
+          duration: "3:56",
+          audioUrl:
+            "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-4.mp3",
+        },
       ],
     },
     {
-      id: 2,
+      id: "2",
       title: "记忆碎片",
       artist: "WooWonJae",
       coverUrl:
-        "https://images.unsplash.com/photo-1581375383680-7101dc5cb5f4?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
+        "https://images.unsplash.com/photo-1581375383680- 7101dc5cb5f4?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3",
       year: 2022,
       genre: "流行",
       tracks: [
-        { title: "旧照片", duration: "4:10" },
-        { title: "夏日午后", duration: "3:40" },
-        { title: "遗忘的角落", duration: "4:25" },
-        { title: "重逢", duration: "3:55" },
+        {
+          id: "2-1",
+          title: "旧照片",
+          duration: "4:10",
+          audioUrl:
+            "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-5.mp3",
+        },
+        {
+          id: "2-2",
+          title: "夏日午后",
+          duration: "3:40",
+          audioUrl:
+            "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-6.mp3",
+        },
+        {
+          id: "2-3",
+          title: "遗忘的角落",
+          duration: "4:25",
+          audioUrl:
+            "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-7.mp3",
+        },
+        {
+          id: "2-4",
+          title: "重逢",
+          duration: "3:55",
+          audioUrl:
+            "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-8.mp3",
+        },
       ],
     },
     {
-      id: 3,
+      id: "3",
       title: "城市之声",
       artist: "WooWonJae",
       coverUrl:
@@ -46,14 +97,38 @@ export default function MusicPage() {
       year: 2021,
       genre: "嘻哈",
       tracks: [
-        { title: "都市节奏", duration: "3:25" },
-        { title: "霓虹灯下", duration: "4:05" },
-        { title: "黎明时分", duration: "3:50" },
-        { title: "地铁", duration: "4:15" },
+        {
+          id: "3-1",
+          title: "都市节奏",
+          duration: "3:25",
+          audioUrl:
+            "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-9.mp3",
+        },
+        {
+          id: "3-2",
+          title: "霓虹灯下",
+          duration: "4:05",
+          audioUrl:
+            "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-10.mp3",
+        },
+        {
+          id: "3-3",
+          title: "黎明时分",
+          duration: "3:50",
+          audioUrl:
+            "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-11.mp3",
+        },
+        {
+          id: "3-4",
+          title: "地铁",
+          duration: "4:15",
+          audioUrl:
+            "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-12.mp3",
+        },
       ],
     },
     {
-      id: 4,
+      id: "4",
       title: "冬日故事",
       artist: "WooWonJae",
       coverUrl:
@@ -61,167 +136,148 @@ export default function MusicPage() {
       year: 2020,
       genre: "民谣",
       tracks: [
-        { title: "雪夜", duration: "4:30" },
-        { title: "炉火", duration: "3:55" },
-        { title: "远山", duration: "5:10" },
-        { title: "归途", duration: "4:45" },
+        {
+          id: "4-1",
+          title: "雪夜",
+          duration: "4:30",
+          audioUrl:
+            "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-13.mp3",
+        },
+        {
+          id: "4-2",
+          title: "炉火",
+          duration: "3:55",
+          audioUrl:
+            "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-14.mp3",
+        },
+        {
+          id: "4-3",
+          title: "远山",
+          duration: "5:10",
+          audioUrl:
+            "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-15.mp3",
+        },
+        {
+          id: "4-4",
+          title: "归途",
+          duration: "4:45",
+          audioUrl:
+            "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-16.mp3",
+        },
       ],
-    },
-  ]; 
-
-  // 保存专辑数据到 localStorage 用于收藏功能
-  useEffect(() => {
-    albums.forEach(album => {
-      localStorage.setItem(`album_data_${album.id}`, JSON.stringify({
-        title: album.title,
-        artist: album.artist,
-        coverUrl: album.coverUrl,
-        year: album.year,
-        genre: album.genre
-      }));
-    });
-  }, []);
-
-  // AI音乐工具
-  const aiTools = [
-    {
-      name: "Suno AI",
-      description: "只需输入文本提示，就能生成高质量的歌曲，支持多种音乐风格",
-      url: "https://suno.ai",
-    },
-    {
-      name: "Stable Audio",
-      description: "专注于生成逼真的音效和音乐片段，特别适合创作背景音乐",
-      url: "https://stability.ai/stable-audio",
-    },
-    {
-      name: "Mubert",
-      description: "AI驱动的音乐生成平台，可以创建无限长度的背景音乐",
-      url: "https://mubert.com",
     },
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-purple-50 to-indigo-50 dark:from-gray-900 dark:to-purple-900 pt-16 pb-12">
-      {/* 导航栏 */}
-      <div className="fixed top-2 left-2 z-50 flex gap-2">
-        <Link
-          href="/"
-          className="inline-block bg-purple-600 text-white px-3 py-1 rounded text-sm hover:bg-purple-700 transition"
-        >
-          返回首页
-        </Link>
-        <Link
-          href="/home"
-          className="inline-block bg-green-600 text-white px-3 py-1 rounded text-sm hover:bg-green-700 transition"
-        >
-          主页
-        </Link>
-      </div>
+    <>
+      <Navigation />
+      <MusicPlayerBar />
 
-      <div className="container mx-auto px-4">
-        <header className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-purple-800 dark:text-purple-300 mb-4">
-            音乐作品集
-          </h1>
-          <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
-            探索我创作的音乐世界，包括个人专辑、单曲以及AI辅助音乐创作工具。
-          </p>
-        </header>
+      <div className="min-h-screen bg-[var(--bg-base)] pt-16 pb-24">
+        <div className="container mx-auto px-6 py-12">
+          {/* Header */}
+          <header className="mb-12 animate-fade-in">
+            <h1 className="text-5xl font-bold mb-4">音乐作品</h1>
+            <p className="text-lg text-[var(--text-subdued)]">
+              探索音乐创作的无限可能
+            </p>
+          </header>
 
-        <section className="mb-16">
-          <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-6">
-            专辑作品
-          </h2>
+          {/* Albums Grid */}
+          <section className="mb-16">
+            <h2 className="text-2xl font-bold mb-6">所有专辑</h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {albums.map((album) => (
-              <div
-                key={album.id}
-                className="bg-white dark:bg-gray-800 rounded-lg shadow-md overflow-hidden hover:shadow-xl transition-all duration-300"
-              >
-                <div className="relative h-64 w-full">
-                  <ThreeJSAlbumRenderer 
-                    imageSrc={album.coverUrl} 
-                    albumId={String(album.id)}
-                  />
-                </div>
-                <div className="p-4">
-                  <h3 className="text-xl font-bold text-purple-700 dark:text-purple-400">
-                    {album.title}
-                  </h3>
-                  <p className="text-gray-500 dark:text-gray-400 text-sm mb-3">
-                    {album.artist} · {album.year} · {album.genre}
-                  </p>
-
-                  <div className="mt-3 space-y-1.5">
-                    {album.tracks.map((track, idx) => (
-                      <div
-                        key={idx}
-                        className="flex justify-between text-sm hover:bg-purple-50 dark:hover:bg-gray-700 px-2 py-1 rounded transition-colors"
-                      >
-                        <span className="text-gray-700 dark:text-gray-300 truncate mr-2">
-                          {track.title}
-                        </span>
-                        <span className="text-gray-500 dark:text-gray-400 flex-shrink-0">
-                          {track.duration}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        <section className="mb-16">
-          <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-6">
-            AI音乐创作工具
-          </h2>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {aiTools.map((tool, index) => (
-              <div
-                key={index}
-                className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 hover:shadow-lg transition-shadow duration-300"
-              >
-                <h3 className="text-xl font-bold text-purple-700 dark:text-purple-400 mb-2">
-                  {tool.name}
-                </h3>
-                <p className="text-gray-600 dark:text-gray-300 mb-4">
-                  {tool.description}
-                </p>
-                <a
-                  href={tool.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-purple-600 dark:text-purple-400 hover:underline text-sm"
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+              {albums.map((album, index) => (
+                <div
+                  key={album.id}
+                  className="animate-fade-in"
+                  style={{ animationDelay: `${index * 50}ms` }}
+                  onClick={() =>
+                    setSelectedAlbum(
+                      selectedAlbum === album.id ? null : album.id
+                    )
+                  }
                 >
-                  访问网站 →
-                </a>
+                  <AlbumCard album={album} />
+                </div>
+              ))}
+            </div>
+          </section>
+
+          {/* Track Listing - 显示选中专辑的曲目 */}
+          {selectedAlbum && (
+            <section className="animate-slide-up">
+              {albums
+                .filter((a) => a.id === selectedAlbum)
+                .map((album) => (
+                  <div
+                    key={album.id}
+                    className="bg-[var(--bg-elevated-base)] rounded-lg p-6"
+                  >
+                    <div className="flex items-center gap-6 mb-6">
+                      <img
+                        src={album.coverUrl}
+                        alt={album.title}
+                        className="w-48 h-48 rounded-md shadow-lg"
+                      />
+                      <div>
+                        <h2 className="text-4xl font-bold mb-2">
+                          {album.title}
+                        </h2>
+                        <p className="text-lg text-[var(--text-subdued)] mb-2">
+                          {album.artist} · {album.year} · {album.genre}
+                        </p>
+                        <p className="text-sm text-[var(--text-muted)]">
+                          {album.tracks.length} 首歌曲
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="space-y-1">
+                      {album.tracks.map((track, idx) => (
+                        <div
+                          key={track.id}
+                          className="flex items-center gap-4 p-3 rounded hover:bg-[var(--bg-elevated-highlight)] group transition-colors cursor-pointer"
+                        >
+                          <span className="text-sm text-[var(--text-subdued)] w-8 text-right">
+                            {idx + 1}
+                          </span>
+                          <div className="flex-1 min-w-0">
+                            <p className="font-medium truncate group-hover:text-[var(--spotify-green)] transition-colors">
+                              {track.title}
+                            </p>
+                            <p className="text-sm text-[var(--text-subdued)] truncate">
+                              {album.artist}
+                            </p>
+                          </div>
+                          <span className="text-sm text-[var(--text-subdued)] font-mono">
+                            {track.duration}
+                          </span>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                ))}
+            </section>
+          )}
+
+          {/* Music Philosophy */}
+          <section className="mt-16 max-w-4xl mx-auto">
+            <div className="bg-[var(--bg-elevated-base)] rounded-2xl p-8 border border-[var(--decorative-subdued)]">
+              <h2 className="text-2xl font-bold mb-6">音乐创作理念</h2>
+
+              <div className="space-y-4 text-[var(--text-subdued)]">
+                <p>
+                  音乐对我而言是情感的直接表达。我的创作灵感来源于城市生活、自然风景以及人际关系中的微妙情感。
+                  我尝试将传统音乐元素与现代电子音乐技术相结合，创造出独特的音乐体验。
+                </p>
+                <p>每一首歌都是一次情感的旅程，希望能与听众产生共鸣。</p>
               </div>
-            ))}
-          </div>
-        </section>
-
-        <section>
-          <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-6">
-            音乐创作理念
-          </h2>
-
-          <div className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
-            <p className="text-gray-700 dark:text-gray-300 mb-4">
-              音乐对我而言是情感的直接表达。我的创作灵感来源于城市生活、自然风景以及人际关系中的微妙情感。
-              我尝试将传统音乐元素与现代电子音乐技术相结合，创造出独特的音乐体验。
-            </p>
-            <p className="text-gray-700 dark:text-gray-300">
-              在AI时代，我也积极探索人工智能在音乐创作中的应用，将人类情感与机器学习相结合，
-              探索音乐创作的新可能性。每一首歌都是一次情感的旅程，希望能与听众产生共鸣。
-            </p>
-          </div>
-        </section>
+            </div>
+          </section>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
