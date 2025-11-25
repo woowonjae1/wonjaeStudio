@@ -1,6 +1,7 @@
 "use client";
 
 import React from "react";
+import Image from "next/image";
 import { usePlayerStore } from "@/store/playerStore";
 
 interface Track {
@@ -17,16 +18,24 @@ interface Album {
   coverUrl: string;
   year: number;
   tracks: Track[];
+  genre?: string;
 }
 
 interface AlbumCardProps {
   album: Album;
+  size?: "small" | "medium" | "large";
+  onClick?: () => void;
 }
 
-export default function AlbumCard({ album }: AlbumCardProps) {
+export default function AlbumCard({
+  album,
+  size = "medium",
+  onClick,
+}: AlbumCardProps) {
   const { setCurrentTrack, addToQueue } = usePlayerStore();
 
-  const handlePlayAlbum = () => {
+  const handlePlayAlbum = (e: React.MouseEvent) => {
+    e.stopPropagation();
     if (album.tracks.length > 0) {
       const firstTrack = album.tracks[0];
       const trackWithAlbumInfo = {
@@ -60,17 +69,21 @@ export default function AlbumCard({ album }: AlbumCardProps) {
   };
 
   return (
-    <div className="spotify-card group p-4 transition-all hover:bg-[var(--bg-elevated-highlight)]">
+    <div className="album-card-enhanced" onClick={onClick}>
       {/* 专辑封面 */}
-      <div className="album-cover-container relative mb-4">
-        <img
+      <div className="album-card-cover-wrapper">
+        <Image
           src={album.coverUrl}
           alt={album.title}
-          className="w-full aspect-square object-cover rounded-md"
+          width={300}
+          height={300}
+          className="album-card-cover"
+          loading="lazy"
+          quality={85}
         />
 
         {/* 播放按钮叠加层 */}
-        <div className="play-overlay">
+        <div className="album-card-play-overlay">
           <button
             onClick={handlePlayAlbum}
             className="btn-play shadow-lg"
@@ -84,11 +97,9 @@ export default function AlbumCard({ album }: AlbumCardProps) {
       </div>
 
       {/* 专辑信息 */}
-      <div className="space-y-1">
-        <h3 className="font-bold truncate group-hover:text-[var(--text-base)] transition-colors">
-          {album.title}
-        </h3>
-        <p className="text-sm text-[var(--text-subdued)] truncate">
+      <div className="album-card-info">
+        <h3 className="album-card-title">{album.title}</h3>
+        <p className="album-card-subtitle">
           {album.year} · {album.artist}
         </p>
       </div>

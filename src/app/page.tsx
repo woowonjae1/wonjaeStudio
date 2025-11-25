@@ -2,8 +2,7 @@
 
 import React from "react";
 import Link from "next/link";
-import Navigation from "@/components/layout/Navigation";
-import MusicPlayerBar from "@/components/player/MusicPlayerBar";
+import MainLayout from "@/components/layout/MainLayout";
 import dynamic from "next/dynamic";
 
 const HeroSection = dynamic(() => import("@/components/sections/HeroSection"), {
@@ -25,57 +24,50 @@ export default function HomePage() {
   const albums = [
     {
       id: "1",
-      title: "午夜电台",
+      title: "浪漫傍晚",
       artist: "WooWonJae",
-      coverUrl:
-        "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?w=300&auto=format&fit=crop&q=60",
-      year: 2023,
+      coverUrl: "/image/Romantic.jpg",
+      year: 2024,
     },
     {
       id: "2",
-      title: "记忆碎片",
+      title: "Blue Groove",
       artist: "WooWonJae",
-      coverUrl:
-        "https://images.unsplash.com/photo-1581375383680-7101dc5cb5f4?w=300&auto=format&fit=crop&q=60",
-      year: 2022,
+      coverUrl: "/image/iambluegroove.jpg",
+      year: 2024,
     },
     {
       id: "3",
-      title: "城市之声",
+      title: "R&B Collection",
       artist: "WooWonJae",
-      coverUrl:
-        "https://images.unsplash.com/photo-1606676539940-12768ce0e762?w=300&auto=format&fit=crop&q=60",
-      year: 2021,
+      coverUrl: "/image/nobodygetsme.jpg",
+      year: 2024,
     },
     {
       id: "4",
-      title: "冬日故事",
+      title: "新篇章",
       artist: "WooWonJae",
-      coverUrl:
-        "https://images.unsplash.com/photo-1461784180009-21121be2d29e?w=300&auto=format&fit=crop&q=60",
-      year: 2020,
+      coverUrl: "/image/newalbum/woowonjae.jpg",
+      year: 2024,
     },
     {
       id: "5",
-      title: "新专辑",
-      artist: "WooWonJae",
-      coverUrl:
-        "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=300&auto=format&fit=crop&q=60",
-      year: 2024,
+      title: "Daniel Caesar",
+      artist: "Daniel Caesar",
+      coverUrl: "/image/newalbum/daniel caesar.jpg",
+      year: 2023,
     },
   ];
 
   return (
-    <>
-      <Navigation />
-      <MusicPlayerBar />
-      <main className="min-h-screen bg-[var(--bg-base)] pt-16 pb-24">
+    <MainLayout>
+      <main className="min-h-screen bg-[var(--bg-base)] pt-0 pb-12">
         {/* Hero Section */}
         <HeroSection
           title="WOOWONJAE"
           subtitle="音乐制作人 · 独立开发者"
           description="探索音乐与技术的交汇点，创造独特的声音体验"
-          backgroundImage="https://images.unsplash.com/photo-1516223725307-6f76b9ec8742?w=1920&auto=format&fit=crop&q=80"
+          backgroundImage="/image/collage.jpg"
           ctaText="探索音乐"
           ctaHref="/music"
           height="large"
@@ -87,19 +79,19 @@ export default function HomePage() {
             <h2 className="text-3xl font-bold mb-8">精选作品</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <FeaturedCard
-                title="午夜电台"
+                title="浪漫傍晚"
                 subtitle="最新专辑"
                 description="在深夜的电波中，寻找内心的声音"
-                imageUrl="https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?w=800&auto=format&fit=crop&q=80"
+                imageUrl="/image/Romantic.jpg"
                 href="/music"
                 size="large"
                 gradient="linear-gradient(to top, rgba(29,185,84,0.8) 0%, rgba(0,0,0,0.4) 50%, transparent 100%)"
               />
               <FeaturedCard
-                title="记忆碎片"
+                title="R&B Collection"
                 subtitle="经典回顾"
                 description="时间的碎片，拼凑成永恒的旋律"
-                imageUrl="https://images.unsplash.com/photo-1581375383680-7101dc5cb5f4?w=800&auto=format&fit=crop&q=80"
+                imageUrl="/image/nobodygetsme.jpg"
                 href="/music"
                 size="large"
                 gradient="linear-gradient(to top, rgba(102,126,234,0.8) 0%, rgba(0,0,0,0.4) 50%, transparent 100%)"
@@ -120,7 +112,7 @@ export default function HomePage() {
               <div className="grid md:grid-cols-2 gap-0">
                 <div className="h-64 md:h-auto relative">
                   <img
-                    src="https://images.unsplash.com/photo-1511379938547-c1f69419868d?w=800&auto=format&fit=crop&q=80"
+                    src="/image/banner.jpg"
                     alt="音乐制作"
                     className="w-full h-full object-cover"
                   />
@@ -136,9 +128,6 @@ export default function HomePage() {
                     </p>
                     <p>
                       音乐是情感的表达，技术是创造的工具。当两者相遇，便能创造出无限可能。
-                    </p>
-                    <p>
-                      这个网站就是这种理念的体现——用代码构建，用音乐填充，用设计点缀。
                     </p>
                   </div>
                   <Link
@@ -183,17 +172,17 @@ export default function HomePage() {
             <div className="max-w-3xl mx-auto bg-gradient-to-r from-[var(--bg-elevated)] to-[var(--bg-elevated-highlight)] rounded-2xl p-12 border border-[var(--decorative-subdued)]">
               <h2 className="text-4xl font-bold mb-4">准备好探索了吗?</h2>
               <p className="text-lg text-[var(--text-subdued)] mb-8">
-                沉浸在独特的音乐世界中，感受每一个音符的力量
+                沉浸在独特的音乐世界中
               </p>
               <Link href="/music">
                 <button className="btn-spotify text-lg px-10 py-4">
-                  开始聆听
+                  开始听听
                 </button>
               </Link>
             </div>
           </section>
         </div>
       </main>
-    </>
+    </MainLayout>
   );
 }

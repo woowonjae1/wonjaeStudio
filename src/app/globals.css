@@ -72,6 +72,29 @@
   --transition-fast: 150ms;
   --transition-normal: 250ms;
   --transition-slow: 350ms;
+
+  /* 渐变色 */
+  --gradient-hero: linear-gradient(
+    135deg,
+    rgba(29, 185, 84, 0.3) 0%,
+    rgba(0, 0, 0, 0.8) 100%
+  );
+  --gradient-card: linear-gradient(
+    to bottom,
+    transparent 0%,
+    rgba(0, 0, 0, 0.8) 100%
+  );
+  --gradient-overlay: linear-gradient(
+    to top,
+    rgba(0, 0, 0, 0.9) 0%,
+    rgba(0, 0, 0, 0.4) 50%,
+    transparent 100%
+  );
+
+  /* 半透明背景 */
+  --bg-modal: rgba(18, 18, 18, 0.95);
+  --bg-overlay: rgba(0, 0, 0, 0.6);
+  --bg-glass: rgba(18, 18, 18, 0.8);
 }
 
 /* Light Theme (可选) */
