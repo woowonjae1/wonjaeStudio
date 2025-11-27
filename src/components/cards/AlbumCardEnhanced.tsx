@@ -25,8 +25,8 @@ export default function AlbumCardEnhanced({
   size = "medium",
 }: AlbumCardEnhancedProps) {
   const sizeClasses = {
-    small: "w-40",
-    medium: "w-48",
+    small: "w-36",
+    medium: "w-44",
     large: "w-56",
   };
 
@@ -39,55 +39,57 @@ export default function AlbumCardEnhanced({
 
   return (
     <div className={`${sizeClasses[size]} flex-shrink-0 snap-start`}>
-      <div className="spotify-card group p-4 transition-all hover:bg-[var(--bg-elevated-highlight)]">
-        {/* 封面容器 */}
-        <div className="album-cover-container mb-4 relative">
+      <div className="card-base group p-3 hover:bg-[var(--bg-elevated-highlight)] transition-colors duration-300">
+        {/* Cover Container */}
+        <div className="relative aspect-square mb-3 rounded-md overflow-hidden shadow-lg group-hover:shadow-xl transition-shadow">
           <Image
             src={coverUrl}
             alt={`${title} by ${artist}`}
-            width={240}
-            height={240}
-            className="album-cover w-full"
+            fill
+            className="object-cover"
             loading="lazy"
+            sizes="(max-width: 768px) 150px, 250px"
           />
 
-          {/* 播放按钮叠加层 */}
-          <div className="play-overlay">
+          {/* Play Button Overlay */}
+          <div
+            className={`absolute bottom-2 right-2 transform transition-all duration-300 ${isPlaying ? "translate-y-0 opacity-100" : "translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100"}`}
+          >
             <button
               onClick={handlePlayClick}
-              className="btn-play shadow-xl"
-              aria-label={isPlaying ? "暂停" : "播放"}
+              className="w-10 h-10 rounded-full bg-[var(--spotify-green)] text-black flex items-center justify-center shadow-lg hover:scale-105 hover:bg-[var(--spotify-green-hover)] transition-all"
+              aria-label={isPlaying ? "Pause" : "Play"}
             >
               {isPlaying ? (
                 <svg
-                  width="20"
-                  height="20"
-                  viewBox="0 0 16 16"
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
                   fill="currentColor"
                 >
-                  <path d="M2.7 1a.7.7 0 00-.7.7v12.6a.7.7 0 00.7.7h2.6a.7.7 0 00.7-.7V1.7a.7.7 0 00-.7-.7H2.7zm8 0a.7.7 0 00-.7.7v12.6a.7.7 0 00.7.7h2.6a.7.7 0 00.7-.7V1.7a.7.7 0 00-.7-.7h-2.6z" />
+                  <path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z" />
                 </svg>
               ) : (
                 <svg
-                  width="20"
-                  height="20"
-                  viewBox="0 0 16 16"
+                  width="18"
+                  height="18"
+                  viewBox="0 0 24 24"
                   fill="currentColor"
                 >
-                  <path d="M3 1.713a.7.7 0 011.05-.607l10.89 6.288a.7.7 0 010 1.212L4.05 14.894A.7.7 0 013 14.288V1.713z" />
+                  <path d="M8 5v14l11-7z" />
                 </svg>
               )}
             </button>
           </div>
         </div>
 
-        {/* 信息 */}
-        <div>
-          <h3 className="font-semibold text-base mb-1 truncate group-hover:text-[var(--spotify-green)] transition-colors">
+        {/* Info */}
+        <div className="min-h-[60px]">
+          <h3 className="font-bold text-sm mb-1 truncate text-[var(--text-base)]">
             {title}
           </h3>
-          <p className="text-sm text-[var(--text-subdued)] truncate">
-            {year && `${year} · `}
+          <p className="text-xs text-[var(--text-subdued)] truncate line-clamp-2">
+            {year && <span className="mr-1">{year} •</span>}
             {artist}
           </p>
         </div>

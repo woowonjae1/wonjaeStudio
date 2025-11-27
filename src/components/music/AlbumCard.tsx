@@ -49,7 +49,7 @@ export default function AlbumCard({
 
       setCurrentTrack(trackWithAlbumInfo);
 
-      // 添加其他曲目到队列
+      // Add other tracks to queue
       album.tracks.slice(1).forEach((track) => {
         addToQueue({
           id: track.id,
@@ -69,37 +69,42 @@ export default function AlbumCard({
   };
 
   return (
-    <div className="album-card-enhanced" onClick={onClick}>
-      {/* 专辑封面 */}
-      <div className="album-card-cover-wrapper">
+    <div
+      className="card-base group p-4 hover:bg-[var(--bg-elevated-highlight)] transition-colors duration-300"
+      onClick={onClick}
+    >
+      {/* Album Cover */}
+      <div className="relative aspect-square mb-4 rounded-md overflow-hidden shadow-lg group-hover:shadow-xl transition-shadow">
         <Image
           src={album.coverUrl}
           alt={album.title}
-          width={300}
-          height={300}
-          className="album-card-cover"
+          fill
+          className="object-cover"
           loading="lazy"
           quality={85}
+          sizes="(max-width: 768px) 150px, 250px"
         />
 
-        {/* 播放按钮叠加层 */}
-        <div className="album-card-play-overlay">
+        {/* Play Button Overlay */}
+        <div className="absolute bottom-2 right-2 transform translate-y-2 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
           <button
             onClick={handlePlayAlbum}
-            className="btn-play shadow-lg"
-            aria-label={`播放 ${album.title}`}
+            className="w-12 h-12 rounded-full bg-[var(--spotify-green)] text-black flex items-center justify-center shadow-lg hover:scale-105 hover:bg-[var(--spotify-green-hover)] transition-all"
+            aria-label={`Play ${album.title}`}
           >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor">
               <path d="M8 5v14l11-7z" />
             </svg>
           </button>
         </div>
       </div>
 
-      {/* 专辑信息 */}
-      <div className="album-card-info">
-        <h3 className="album-card-title">{album.title}</h3>
-        <p className="album-card-subtitle">
+      {/* Album Info */}
+      <div className="min-h-[60px]">
+        <h3 className="font-bold text-base mb-1 truncate text-[var(--text-base)] group-hover:text-[var(--text-base)]">
+          {album.title}
+        </h3>
+        <p className="text-sm text-[var(--text-subdued)] truncate">
           {album.year} · {album.artist}
         </p>
       </div>

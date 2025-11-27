@@ -3,117 +3,74 @@
 @tailwind utilities;
 
 /* ========================================
-   融合设计系统 - Apple × Spotify
+   Design System - Spotify x Apple Hybrid
    ======================================== */
 
 :root {
-  /* ===== 颜色系统 ===== */
+  /* ===== Color System ===== */
 
-  /* Spotify 核心色 */
+  /* Spotify Core */
   --spotify-green: #1db954;
   --spotify-green-hover: #1ed760;
   --spotify-green-dark: #169c46;
 
-  /* 深色主题（默认） - Spotify 风格 */
+  /* Dark Theme Base (Spotify-like Deep Dark) */
   --bg-base: #000000;
   --bg-elevated-base: #121212;
   --bg-elevated: #181818;
   --bg-elevated-highlight: #282828;
   --bg-elevated-press: #3e3e3e;
 
-  /* Apple 启发 - 浅色辅助色 */
-  --bg-light: #ffffff;
-  --bg-light-secondary: #f5f5f7;
-  --bg-light-tertiary: #e8e8ed;
+  /* Apple-inspired Accents (Clean & Neutral) */
+  --accent-primary: #ffffff;
+  --accent-secondary: #a7a7a7;
+  --accent-subtle: #3a3a3c;
 
-  /* 文本颜色 */
+  /* Text Colors */
   --text-base: #ffffff;
   --text-subdued: #b3b3b3;
-  --text-muted: #6a6a6a;
+  --text-muted: #727272;
   --text-black: #000000;
 
-  /* 边框和分隔线 */
-  --essential-base: #ffffff;
-  --essential-subdued: #878787;
-  --decorative-subdued: #292929;
-  --border-light: rgba(255, 255, 255, 0.1);
+  /* Borders & Dividers */
+  --border-subtle: rgba(255, 255, 255, 0.08);
+  --border-highlight: rgba(255, 255, 255, 0.15);
 
-  /* 状态色 */
-  --text-negative: #f15e6c;
-  --text-warning: #ffa42b;
-  --text-positive: #1db954;
+  /* Status Colors */
+  --status-error: #ff3b30;
+  --status-warning: #ffcc00;
+  --status-success: #34c759;
 
-  /* 字体家族 */
+  /* Fonts */
   --font-display:
     "Inter", -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
   --font-text:
     "Inter", -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
-  --font-mono: "SF Mono", "Courier New", monospace;
+  --font-mono: "SF Mono", "Menlo", monospace;
 
-  /* 圆角 */
-  --radius-xs: 2px;
-  --radius-sm: 4px;
-  --radius-md: 8px;
-  --radius-lg: 12px;
-  --radius-xl: 16px;
-  --radius-2xl: 24px;
-  --radius-full: 500px;
+  /* Radius (Apple-like Smooth Corners) */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+  --radius-2xl: 32px;
+  --radius-full: 9999px;
 
-  /* 阴影 */
-  --shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.05);
-  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.1);
-  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.15);
-  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.2);
-  --shadow-xl: 0 16px 48px rgba(0, 0, 0, 0.3);
-  --shadow-2xl: 0 24px 64px rgba(0, 0, 0, 0.4);
-  --shadow-image: 0 4px 60px rgba(0, 0, 0, 0.5);
+  /* Shadows */
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.12);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.24);
+  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.32);
+  --shadow-xl: 0 12px 48px rgba(0, 0, 0, 0.45);
 
-  /* 过渡时间 */
-  --transition-fast: 150ms;
-  --transition-normal: 250ms;
-  --transition-slow: 350ms;
-
-  /* 渐变色 */
-  --gradient-hero: linear-gradient(
-    135deg,
-    rgba(29, 185, 84, 0.3) 0%,
-    rgba(0, 0, 0, 0.8) 100%
-  );
-  --gradient-card: linear-gradient(
-    to bottom,
-    transparent 0%,
-    rgba(0, 0, 0, 0.8) 100%
-  );
-  --gradient-overlay: linear-gradient(
-    to top,
-    rgba(0, 0, 0, 0.9) 0%,
-    rgba(0, 0, 0, 0.4) 50%,
-    transparent 100%
-  );
-
-  /* 半透明背景 */
-  --bg-modal: rgba(18, 18, 18, 0.95);
-  --bg-overlay: rgba(0, 0, 0, 0.6);
-  --bg-glass: rgba(18, 18, 18, 0.8);
-}
-
-/* Light Theme (可选) */
-[data-theme="light"] {
-  --bg-base: #ffffff;
-  --bg-elevated-base: #f6f6f6;
-  --bg-elevated: #ebebeb;
-  --bg-elevated-highlight: #e0e0e0;
-  --bg-elevated-press: #d0d0d0;
-
-  --text-base: #000000;
-  --text-subdued: #6a6a6a;
-  --text-muted: #b3b3b3;
-
-  --decorative-subdued: #e5e5e5;
+  /* Transitions */
+  --ease-apple: cubic-bezier(0.25, 0.1, 0.25, 1);
+  --duration-fast: 200ms;
+  --duration-normal: 300ms;
+  --duration-slow: 500ms;
 }
 
 /* ========================================
-   基础样式
+   Base Styles
    ======================================== */
 
 * {
@@ -129,228 +86,126 @@ html {
 }
 
 body {
-  font-family: var(--font-display);
+  font-family: var(--font-text);
   background-color: var(--bg-base);
   color: var(--text-base);
-  line-height: 1.6;
+  line-height: 1.5;
   overflow-x: hidden;
 }
 
 /* ========================================
-   卡片样式系统
+   Utilities & Effects
    ======================================== */
 
-.spotify-card {
-  background-color: var(--bg-elevated-base);
-  border-radius: var(--radius-md);
-  padding: 16px;
-  transition: background-color var(--transition-fast);
-  cursor: pointer;
+/* Glassmorphism */
+.glass {
+  background: rgba(18, 18, 18, 0.75);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
 }
 
-.spotify-card:hover {
-  background-color: var(--bg-elevated-highlight);
+.glass-heavy {
+  background: rgba(10, 10, 10, 0.85);
+  backdrop-filter: blur(40px) saturate(180%);
+  -webkit-backdrop-filter: blur(40px) saturate(180%);
 }
 
-.spotify-card-shadow {
-  box-shadow: var(--shadow-lg);
+/* Text Utilities */
+.text-balance {
+  text-wrap: balance;
 }
 
-/* Apple 风格特色卡片 */
-.card-featured {
-  background-color: var(--bg-elevated);
-  border-radius: var(--radius-xl);
-  overflow: hidden;
-  transition:
-    transform var(--transition-normal),
-    box-shadow var(--transition-normal);
-}
-
-.card-featured:hover {
-  transform: translateY(-4px);
-  box-shadow: var(--shadow-2xl);
-}
-
-/* Hero 卡片 */
-.card-hero {
-  position: relative;
-  min-height: 500px;
-  border-radius: var(--radius-2xl);
-  overflow: hidden;
-  background: linear-gradient(
-    135deg,
-    var(--bg-elevated-base) 0%,
-    var(--bg-elevated-highlight) 100%
-  );
+.text-gradient-subtle {
+  background: linear-gradient(to bottom right, #ffffff 0%, #a7a7a7 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 /* ========================================
-   按钮样式
+   Component Styles
    ======================================== */
 
-.btn-spotify {
+/* Buttons */
+.btn-primary {
   background-color: var(--spotify-green);
-  color: var(--text-base);
-  border: none;
+  color: var(--text-black);
+  font-weight: 700;
   border-radius: var(--radius-full);
   padding: 12px 32px;
-  font-size: 14px;
-  font-weight: 700;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
+  transition:
+    transform var(--duration-fast) var(--ease-apple),
+    background-color var(--duration-fast);
+  border: none;
   cursor: pointer;
-  transition: all var(--transition-fast);
   display: inline-flex;
   align-items: center;
-  gap: 8px;
+  justify-content: center;
+  letter-spacing: 0.02em;
 }
 
-.btn-spotify:hover {
+.btn-primary:hover {
   background-color: var(--spotify-green-hover);
   transform: scale(1.04);
 }
 
-.btn-spotify:active {
+.btn-primary:active {
+  transform: scale(0.98);
   background-color: var(--spotify-green-dark);
-  transform: scale(1);
 }
 
-.btn-play {
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  background-color: var(--spotify-green);
-  color: var(--bg-base);
+.btn-icon {
+  background: transparent;
+  border: none;
+  color: var(--text-subdued);
+  cursor: pointer;
+  transition:
+    color var(--duration-fast),
+    transform var(--duration-fast);
   display: flex;
   align-items: center;
   justify-content: center;
-  border: none;
-  cursor: pointer;
-  transition: all var(--transition-fast);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  padding: 8px;
+  border-radius: 50%;
 }
 
-.btn-play:hover {
-  background-color: var(--spotify-green-hover);
-  transform: scale(1.06);
-}
-
-.btn-outline {
-  background-color: transparent;
+.btn-icon:hover {
   color: var(--text-base);
-  border: 1px solid var(--essential-subdued);
-  border-radius: var(--radius-full);
-  padding: 8px 24px;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all var(--transition-fast);
+  transform: scale(1.1);
 }
 
-.btn-outline:hover {
-  border-color: var(--text-base);
-  transform: scale(1.04);
-}
-
-/* ========================================
-   文本样式
-   ======================================== */
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-weight: 700;
-  line-height: 1.2;
-  color: var(--text-base);
-  margin: 0;
-}
-
-h1 {
-  font-size: clamp(2rem, 6vw, 6rem);
-  font-weight: 900;
-  letter-spacing: -0.04em;
-}
-
-h2 {
-  font-size: clamp(1.5rem, 4vw, 3rem);
-  font-weight: 700;
-  letter-spacing: -0.02em;
-}
-
-h3 {
-  font-size: clamp(1.25rem, 3vw, 2rem);
-}
-
-.text-subdued {
-  color: var(--text-subdued);
-}
-
-.text-muted {
-  color: var(--text-muted);
-}
-
-/* ========================================
-   专辑封面样式
-   ======================================== */
-
-.album-cover {
-  width: 100%;
-  aspect-ratio: 1;
-  object-fit: cover;
+/* Cards */
+.card-base {
+  background-color: var(--bg-elevated);
   border-radius: var(--radius-md);
-  box-shadow: var(--shadow-image);
+  padding: 16px;
+  transition: background-color var(--duration-fast) ease;
+  cursor: pointer;
 }
 
-.album-cover-container {
+.card-base:hover {
+  background-color: var(--bg-elevated-highlight);
+}
+
+/* Featured Card (Apple Style) */
+.card-featured {
   position: relative;
   overflow: hidden;
-  border-radius: var(--radius-md);
-  background-color: var(--bg-elevated);
+  border-radius: var(--radius-lg);
+  background: var(--bg-elevated-base);
+  transition:
+    transform var(--duration-normal) var(--ease-apple),
+    box-shadow var(--duration-normal);
 }
 
-.album-cover-container::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    to bottom,
-    transparent 0%,
-    rgba(0, 0, 0, 0.5) 100%
-  );
-  opacity: 0;
-  transition: opacity var(--transition-normal);
-  z-index: 1;
+.card-featured:hover {
+  transform: scale(1.02);
+  box-shadow: var(--shadow-lg);
 }
 
-.album-cover-container:hover::before {
-  opacity: 1;
-}
-
-.album-cover-container .play-overlay {
-  position: absolute;
-  bottom: 8px;
-  right: 8px;
-  opacity: 0;
-  transform: translateY(8px);
-  transition: all var(--transition-normal);
-  z-index: 2;
-}
-
-.album-cover-container:hover .play-overlay {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-/* ========================================
-   滚动条样式 (Spotify风格)
-   ======================================== */
-
+/* Scrollbar */
 ::-webkit-scrollbar {
-  width: 12px;
-  height: 12px;
+  width: 10px;
 }
 
 ::-webkit-scrollbar-track {
@@ -358,185 +213,26 @@ h3 {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--essential-subdued);
-  border-radius: 6px;
-  border: 3px solid var(--bg-base);
+  background: var(--bg-elevated-highlight);
+  border-radius: 5px;
+  border: 2px solid var(--bg-base);
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--text-subdued);
+  background: var(--bg-elevated-press);
 }
 
-/* ========================================
-   选择文本样式
-   ======================================== */
-
-::selection {
-  background-color: var(--spotify-green);
-  color: var(--bg-base);
-}
-
-::-moz-selection {
-  background-color: var(--spotify-green);
-  color: var(--bg-base);
-}
-
-/* ========================================
-   优化动画（GPU 加速）
-   ======================================== */
-
+/* Animations */
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(20px);
   }
 
   to {
     opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes slideUp {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes scaleIn {
-  from {
-    opacity: 0;
-    transform: scale(0.95);
-  }
-
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-@keyframes spin {
-  from {
-    transform: rotate(0deg);
-  }
-
-  to {
-    transform: rotate(360deg);
   }
 }
 
 .animate-fade-in {
-  animation: fadeIn 0.6s ease-out forwards;
-}
-
-.animate-slide-up {
-  animation: slideUp 0.4s ease-out forwards;
-}
-
-.animate-scale-in {
-  animation: scaleIn 0.5s ease-out forwards;
-}
-
-.animate-spin {
-  animation: spin 1s linear infinite;
-}
-
-/* ========================================
-   工具类
-   ======================================== */
-
-.glass-effect {
-  background: rgba(18, 18, 18, 0.8);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-}
-
-.truncate-2-lines {
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.hover-scale {
-  transition: transform var(--transition-normal);
-  will-change: transform;
-}
-
-.hover-scale:hover {
-  transform: scale(1.05);
-}
-
-/* ========================================
-   播放器进度条
-   ======================================== */
-
-.progress-bar {
-  position: relative;
-  height: 4px;
-  background-color: var(--bg-elevated-highlight);
-  border-radius: 2px;
-  cursor: pointer;
-  overflow: hidden;
-  transition: height var(--transition-fast);
-}
-
-.progress-bar:hover {
-  height: 6px;
-}
-
-.progress-bar-fill {
-  height: 100%;
-  background-color: var(--spotify-green);
-  border-radius: 2px;
-  transition: width 100ms linear;
-  will-change: width;
-}
-
-.progress-bar:hover .progress-bar-fill {
-  background-color: var(--spotify-green-hover);
-}
-
-/* ========================================
-   焦点样式
-   ======================================== */
-
-*:focus-visible {
-  outline: 2px solid var(--spotify-green);
-  outline-offset: 2px;
-}
-
-button:focus-visible,
-a:focus-visible {
-  outline: 2px solid var(--spotify-green);
-  outline-offset: 4px;
-}
-
-/* ========================================
-   容器和布局工具
-   ======================================== */
-
-.container-wide {
-  max-width: 1440px;
-  margin: 0 auto;
-  padding: 0 24px;
-}
-
-.container-standard {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 24px;
-}
-
-.container-narrow {
-  max-width: 980px;
-  margin: 0 auto;
-  padding: 0 24px;
+  animation: fadeIn 0.5s var(--ease-apple) forwards;
 }

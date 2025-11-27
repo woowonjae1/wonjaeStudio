@@ -23,7 +23,7 @@ const Header: React.FC = () => {
   const scrollToSection = (id: string) => {
     const element = document.getElementById(id);
     if (element) {
-      const headerOffset = 80; // 头部导航栏的高度
+      const headerOffset = 80;
       const elementPosition = element.getBoundingClientRect().top;
       const offsetPosition =
         elementPosition + window.pageYOffset - headerOffset;
@@ -62,17 +62,13 @@ const Header: React.FC = () => {
     },
   ];
 
-  // 生成随机头像颜色
+  // Get avatar color (neutral/dark theme compatible)
   const getAvatarColor = (email: string) => {
     const colors = [
-      "bg-blue-500",
-      "bg-purple-500",
-      "bg-pink-500",
-      "bg-green-500",
-      "bg-yellow-500",
-      "bg-red-500",
-      "bg-indigo-500",
-      "bg-teal-500",
+      "bg-neutral-700",
+      "bg-neutral-600",
+      "bg-stone-700",
+      "bg-zinc-700",
     ];
     const index = email.charCodeAt(0) % colors.length;
     return colors[index];
@@ -80,13 +76,13 @@ const Header: React.FC = () => {
 
   return (
     <>
-      <header className="fixed top-0 left-0 right-0 bg-white/80 backdrop-blur-sm z-50">
+      <header className="fixed top-0 left-0 right-0 glass z-50 transition-all duration-300">
         <div className="container mx-auto px-4">
           <div className="flex justify-between items-center h-16">
-            {/* 左侧 Logo 和头像 */}
+            {/* Left: Logo & Avatar */}
             <div className="flex items-center">
               <div
-                className="w-8 h-8 mr-2 rounded-full overflow-hidden cursor-pointer"
+                className="w-8 h-8 mr-3 rounded-full overflow-hidden cursor-pointer border border-[var(--border-subtle)]"
                 onClick={() => setShowQRCode(true)}
               >
                 <img
@@ -95,74 +91,77 @@ const Header: React.FC = () => {
                   className="w-full h-full object-cover"
                 />
               </div>
-              <Link href="/" className="text-xl font-bold">
+              <Link
+                href="/"
+                className="text-lg font-bold tracking-tight text-[var(--text-base)]"
+              >
                 Woowonjae&ningning
               </Link>
             </div>
 
             <div className="flex items-center space-x-8">
-              {/* 右侧导航菜单 */}
-              <nav className="flex items-center space-x-8">
+              {/* Navigation */}
+              <nav className="hidden md:flex items-center space-x-6">
                 <button
                   onClick={() => scrollToSection("albums")}
-                  className="text-gray-600 hover:text-gray-900 transition-colors"
+                  className="text-[var(--text-subdued)] hover:text-[var(--text-base)] text-sm font-medium transition-colors"
                 >
                   Albums
                 </button>
                 <button
                   onClick={() => scrollToSection("manchester-city")}
-                  className="text-gray-600 hover:text-gray-900 transition-colors"
+                  className="text-[var(--text-subdued)] hover:text-[var(--text-base)] text-sm font-medium transition-colors"
                 >
                   Manchester City
                 </button>
                 <button
                   onClick={() => scrollToSection("code")}
-                  className="text-gray-600 hover:text-gray-900 transition-colors"
+                  className="text-[var(--text-subdued)] hover:text-[var(--text-base)] text-sm font-medium transition-colors"
                 >
                   Code
                 </button>
                 <button
                   onClick={() => scrollToSection("about")}
-                  className="text-gray-600 hover:text-gray-900 transition-colors"
+                  className="text-[var(--text-subdued)] hover:text-[var(--text-base)] text-sm font-medium transition-colors"
                 >
                   About
                 </button>
               </nav>
 
-              {/* 社交媒体图标 */}
-              <div className="hidden md:flex items-center space-x-4">
+              {/* Social Icons */}
+              <div className="hidden lg:flex items-center space-x-4 border-l border-[var(--border-subtle)] pl-6">
                 {socialLinks.map(({ href, icon: Icon, label, followers }) => (
                   <div key={label} className="relative group">
                     <a
                       href={href}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="text-gray-600 hover:text-gray-900 transition-colors"
+                      className="text-[var(--text-subdued)] hover:text-[var(--text-base)] transition-colors"
                     >
-                      <Icon className="w-5 h-5" />
+                      <Icon className="w-4 h-4" />
                     </a>
                     <div className="absolute left-1/2 -translate-x-1/2 top-8 z-50 hidden group-hover:flex flex-col items-center">
-                      <div className="bg-black/80 text-white text-xs rounded-lg px-3 py-1 shadow-lg backdrop-blur-sm min-w-[70px] text-center">
-                        {label} {followers} Subscribers
+                      <div className="bg-[var(--bg-elevated-highlight)] text-[var(--text-base)] text-xs rounded-md px-3 py-1 shadow-lg border border-[var(--border-subtle)] whitespace-nowrap">
+                        {label} • {followers} Subs
                       </div>
                     </div>
                   </div>
                 ))}
               </div>
 
-              {/* 登录/用户菜单 */}
+              {/* Auth / User */}
               <div className="flex items-center space-x-3">
                 {user ? (
                   <Link
                     href="/dashboard"
-                    className="flex items-center space-x-2 px-3 py-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-lg transition-all duration-200 group"
+                    className="flex items-center space-x-2 px-3 py-1.5 hover:bg-[var(--bg-elevated-highlight)] rounded-full transition-all duration-200 group border border-transparent hover:border-[var(--border-subtle)]"
                   >
                     <div
-                      className={`w-8 h-8 rounded-full ${getAvatarColor(user.email || "")} flex items-center justify-center text-white text-sm font-bold group-hover:scale-110 transition-transform`}
+                      className={`w-6 h-6 rounded-full ${getAvatarColor(user.email || "")} flex items-center justify-center text-white text-xs font-bold`}
                     >
                       {user.email?.[0].toUpperCase()}
                     </div>
-                    <span className="font-medium text-sm">
+                    <span className="font-medium text-sm text-[var(--text-base)]">
                       {user.email?.split("@")[0]}
                     </span>
                   </Link>
@@ -178,32 +177,42 @@ const Header: React.FC = () => {
         </div>
       </header>
 
-      {/* 微信二维码弹窗 */}
+      {/* QR Code Modal */}
       {showQRCode && (
         <div
-          className="fixed inset-0 bg-black/50 flex items-center justify-center z-[100]"
+          className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-[100]"
           onClick={() => setShowQRCode(false)}
         >
           <div
-            className="bg-white p-5 rounded-lg shadow-xl"
+            className="bg-[var(--bg-elevated)] p-6 rounded-xl shadow-2xl border border-[var(--border-subtle)] max-w-sm w-full mx-4"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="flex justify-end mb-2">
               <button
                 onClick={() => setShowQRCode(false)}
-                className="text-gray-500 hover:text-gray-700"
+                className="text-[var(--text-subdued)] hover:text-[var(--text-base)] transition-colors"
               >
-                ✕
+                <svg
+                  width="20"
+                  height="20"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                >
+                  <path d="M18 6L6 18M6 6l12 12" />
+                </svg>
               </button>
             </div>
-            <img
-              src="/image/微信二维码.jpg"
-              alt="WeChat QR Code"
-              style={{ width: "280px", height: "auto" }}
-              className="mx-auto"
-            />
-            <div className="mt-3 text-center text-gray-600">
-              微信扫一扫，联系我
+            <div className="bg-white p-2 rounded-lg mb-4">
+              <img
+                src="/image/微信二维码.jpg"
+                alt="WeChat QR Code"
+                className="w-full h-auto rounded"
+              />
+            </div>
+            <div className="text-center text-[var(--text-subdued)] font-medium">
+              Scan to connect on WeChat
             </div>
           </div>
         </div>

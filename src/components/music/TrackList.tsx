@@ -24,15 +24,15 @@ export default function TrackList({
   showHeader = true,
 }: TrackListProps) {
   return (
-    <div className="w-full">
-      <table className="track-list">
+    <div className="w-full overflow-x-auto">
+      <table className="w-full text-left border-collapse">
         {showHeader && (
-          <thead className="track-list-header">
-            <tr>
-              <th>#</th>
-              <th>标题</th>
-              <th>艺术家</th>
-              <th>时长</th>
+          <thead>
+            <tr className="border-b border-[var(--border-subtle)] text-[var(--text-subdued)] text-sm uppercase tracking-wider">
+              <th className="px-4 py-3 font-medium w-12 text-center">#</th>
+              <th className="px-4 py-3 font-medium">Title</th>
+              <th className="px-4 py-3 font-medium">Artist</th>
+              <th className="px-4 py-3 font-medium text-right">Duration</th>
             </tr>
           </thead>
         )}
@@ -43,37 +43,45 @@ export default function TrackList({
             return (
               <tr
                 key={track.id}
-                className={`track-list-row ${isPlaying ? "playing" : ""}`}
+                className={`group hover:bg-[var(--bg-elevated-highlight)] transition-colors cursor-pointer rounded-md ${isPlaying ? "bg-[var(--bg-elevated-highlight)]" : ""}`}
                 onClick={() => onTrackClick(track)}
               >
-                <td className="track-number">
+                <td className="px-4 py-3 text-center text-[var(--text-subdued)] w-12 relative group-hover:text-[var(--text-base)]">
                   {isPlaying ? (
-                    <div className="playing-icon">
-                      <div className="playing-bar" style={{ height: "6px" }} />
-                      <div className="playing-bar" style={{ height: "12px" }} />
-                      <div className="playing-bar" style={{ height: "8px" }} />
+                    <div className="flex items-end justify-center gap-[2px] h-4 w-4 mx-auto">
+                      <div className="w-[3px] bg-[var(--spotify-green)] animate-[bounce_1s_infinite] h-2" />
+                      <div className="w-[3px] bg-[var(--spotify-green)] animate-[bounce_1.2s_infinite] h-3" />
+                      <div className="w-[3px] bg-[var(--spotify-green)] animate-[bounce_0.8s_infinite] h-1" />
                     </div>
                   ) : (
-                    <span>{index + 1}</span>
+                    <>
+                      <span className="group-hover:hidden">{index + 1}</span>
+                      <svg
+                        className="hidden group-hover:block w-4 h-4 mx-auto text-[var(--text-base)]"
+                        viewBox="0 0 24 24"
+                        fill="currentColor"
+                      >
+                        <path d="M8 5v14l11-7z" />
+                      </svg>
+                    </>
                   )}
-                  <svg
-                    className="track-play-icon"
-                    width="16"
-                    height="16"
-                    viewBox="0 0 24 24"
-                    fill="currentColor"
+                </td>
+                <td className="px-4 py-3">
+                  <div
+                    className={`font-medium ${isPlaying ? "text-[var(--spotify-green)]" : "text-[var(--text-base)]"}`}
                   >
-                    <path d="M8 5v14l11-7z" />
-                  </svg>
+                    {track.title}
+                  </div>
                 </td>
-                <td className="track-title-cell">
-                  <div className="track-title">{track.title}</div>
+                <td className="px-4 py-3">
+                  <div className="text-[var(--text-subdued)] group-hover:text-[var(--text-base)] transition-colors">
+                    {track.artist}
+                  </div>
                 </td>
-                <td>
-                  <div className="track-artist">{track.artist}</div>
-                </td>
-                <td>
-                  <div className="track-duration">{track.duration}</div>
+                <td className="px-4 py-3 text-right">
+                  <div className="text-[var(--text-subdued)] font-mono text-xs">
+                    {track.duration}
+                  </div>
                 </td>
               </tr>
             );
