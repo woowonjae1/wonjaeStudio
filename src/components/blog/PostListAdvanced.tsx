@@ -4,7 +4,6 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useAuth } from "@/hooks/useAuth";
-import { CommentSectionAdvanced } from "@/components/social/CommentSectionAdvanced";
 
 interface Post {
   id: string;
@@ -307,11 +306,12 @@ export function PostListAdvanced({
         </div>
 
         {/* 评论区 */}
-        <CommentSectionAdvanced
+        {/* TODO: 实现评论功能 */}
+        {/* <CommentSectionAdvanced
           itemType="post"
           itemId={selectedPost.id}
           title="评论"
-        />
+        /> */}
       </article>
     );
   }
