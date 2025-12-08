@@ -1,0 +1,86 @@
+.transition-section {
+  position: relative;
+  height: 40vh;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.transition-fade {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 120px;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #000 100%);
+  pointer-events: none;
+}
+
+.transition-content {
+  text-align: center;
+  z-index: 1;
+}
+
+.transition-quote {
+  max-width: 600px;
+  padding: 0 2rem;
+}
+
+.quote-mark {
+  display: block;
+  font-size: 4rem;
+  line-height: 1;
+  color: rgba(255, 255, 255, 0.1);
+  font-family: Georgia, serif;
+  margin-bottom: -1rem;
+}
+
+.quote-text {
+  font-size: clamp(1.25rem, 3vw, 1.75rem);
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.8);
+  letter-spacing: 0.05em;
+  line-height: 1.6;
+  margin: 0;
+  font-style: italic;
+}
+
+.quote-author {
+  display: block;
+  margin-top: 1.5rem;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.4);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+.scroll-indicator {
+  margin-top: 3rem;
+  display: flex;
+  justify-content: center;
+}
+
+.scroll-line {
+  width: 1px;
+  height: 60px;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.3) 0%,
+    transparent 100%
+  );
+  animation: scrollPulse 2s ease-in-out infinite;
+}
+
+@keyframes scrollPulse {
+  0%,
+  100% {
+    opacity: 0.3;
+    transform: scaleY(1);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scaleY(1.2);
+  }
+}

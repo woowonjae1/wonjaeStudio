@@ -2,237 +2,30 @@
 @tailwind components;
 @tailwind utilities;
 
-/* ========================================
-   Design System - Spotify x Apple Hybrid
-   ======================================== */
-
-:root {
-  /* ===== Color System ===== */
-
-  /* Spotify Core */
-  --spotify-green: #1db954;
-  --spotify-green-hover: #1ed760;
-  --spotify-green-dark: #169c46;
-
-  /* Dark Theme Base (Spotify-like Deep Dark) */
-  --bg-base: #000000;
-  --bg-elevated-base: #121212;
-  --bg-elevated: #181818;
-  --bg-elevated-highlight: #282828;
-  --bg-elevated-press: #3e3e3e;
-
-  /* Apple-inspired Accents (Clean & Neutral) */
-  --accent-primary: #ffffff;
-  --accent-secondary: #a7a7a7;
-  --accent-subtle: #3a3a3c;
-
-  /* Text Colors */
-  --text-base: #ffffff;
-  --text-subdued: #b3b3b3;
-  --text-muted: #727272;
-  --text-black: #000000;
-
-  /* Borders & Dividers */
-  --border-subtle: rgba(255, 255, 255, 0.08);
-  --border-highlight: rgba(255, 255, 255, 0.15);
-
-  /* Status Colors */
-  --status-error: #ff3b30;
-  --status-warning: #ffcc00;
-  --status-success: #34c759;
-
-  /* Fonts */
-  --font-display:
-    "Inter", -apple-system, BlinkMacSystemFont, "SF Pro Display", sans-serif;
-  --font-text:
-    "Inter", -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
-  --font-mono: "SF Mono", "Menlo", monospace;
-
-  /* Radius (Apple-like Smooth Corners) */
-  --radius-sm: 6px;
-  --radius-md: 10px;
-  --radius-lg: 14px;
-  --radius-xl: 20px;
-  --radius-2xl: 32px;
-  --radius-full: 9999px;
-
-  /* Shadows */
-  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.12);
-  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.24);
-  --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.32);
-  --shadow-xl: 0 12px 48px rgba(0, 0, 0, 0.45);
-
-  /* Transitions */
-  --ease-apple: cubic-bezier(0.25, 0.1, 0.25, 1);
-  --duration-fast: 200ms;
-  --duration-normal: 300ms;
-  --duration-slow: 500ms;
-}
-
-/* ========================================
-   Base Styles
-   ======================================== */
-
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-html {
-  scroll-behavior: smooth;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+html,
+body {
+  width: 100%;
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  background-color: #000000;
 }
 
 body {
-  font-family: var(--font-text);
-  background-color: var(--bg-base);
-  color: var(--text-base);
-  line-height: 1.5;
-  overflow-x: hidden;
-}
-
-/* ========================================
-   Utilities & Effects
-   ======================================== */
-
-/* Glassmorphism */
-.glass {
-  background: rgba(18, 18, 18, 0.75);
-  backdrop-filter: blur(20px) saturate(180%);
-  -webkit-backdrop-filter: blur(20px) saturate(180%);
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.glass-heavy {
-  background: rgba(10, 10, 10, 0.85);
-  backdrop-filter: blur(40px) saturate(180%);
-  -webkit-backdrop-filter: blur(40px) saturate(180%);
-}
-
-/* Text Utilities */
-.text-balance {
-  text-wrap: balance;
-}
-
-.text-gradient-subtle {
-  background: linear-gradient(to bottom right, #ffffff 0%, #a7a7a7 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-/* ========================================
-   Component Styles
-   ======================================== */
-
-/* Buttons */
-.btn-primary {
-  background-color: var(--spotify-green);
-  color: var(--text-black);
-  font-weight: 700;
-  border-radius: var(--radius-full);
-  padding: 12px 32px;
-  transition:
-    transform var(--duration-fast) var(--ease-apple),
-    background-color var(--duration-fast);
-  border: none;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  letter-spacing: 0.02em;
-}
-
-.btn-primary:hover {
-  background-color: var(--spotify-green-hover);
-  transform: scale(1.04);
-}
-
-.btn-primary:active {
-  transform: scale(0.98);
-  background-color: var(--spotify-green-dark);
-}
-
-.btn-icon {
-  background: transparent;
-  border: none;
-  color: var(--text-subdued);
-  cursor: pointer;
-  transition:
-    color var(--duration-fast),
-    transform var(--duration-fast);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 8px;
-  border-radius: 50%;
-}
-
-.btn-icon:hover {
-  color: var(--text-base);
-  transform: scale(1.1);
-}
-
-/* Cards */
-.card-base {
-  background-color: var(--bg-elevated);
-  border-radius: var(--radius-md);
-  padding: 16px;
-  transition: background-color var(--duration-fast) ease;
-  cursor: pointer;
-}
-
-.card-base:hover {
-  background-color: var(--bg-elevated-highlight);
-}
-
-/* Featured Card (Apple Style) */
-.card-featured {
-  position: relative;
-  overflow: hidden;
-  border-radius: var(--radius-lg);
-  background: var(--bg-elevated-base);
-  transition:
-    transform var(--duration-normal) var(--ease-apple),
-    box-shadow var(--duration-normal);
-}
-
-.card-featured:hover {
-  transform: scale(1.02);
-  box-shadow: var(--shadow-lg);
-}
-
-/* Scrollbar */
-::-webkit-scrollbar {
-  width: 10px;
-}
-
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-::-webkit-scrollbar-thumb {
-  background: var(--bg-elevated-highlight);
-  border-radius: 5px;
-  border: 2px solid var(--bg-base);
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: var(--bg-elevated-press);
-}
-
-/* Animations */
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
-}
-
-.animate-fade-in {
-  animation: fadeIn 0.5s var(--ease-apple) forwards;
+  font-family:
+    "Inter",
+    -apple-system,
+    BlinkMacSystemFont,
+    sans-serif;
+  color: #ffffff;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
