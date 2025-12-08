@@ -7,7 +7,7 @@
 
 .music-cards-header {
   text-align: center;
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
 }
 
 .music-cards-title {
@@ -31,13 +31,15 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 0;
-  max-width: 1600px;
+  gap: 1rem;
+  max-width: 1400px;
   margin: 0 auto;
+  padding: 0 1rem;
 }
 
 .music-card-wrapper {
   transition: transform 0.3s ease;
+  flex: 0 0 auto;
 }
 
 .music-card {
@@ -55,38 +57,86 @@
     0 0 60px rgba(255, 255, 255, 0.03);
 }
 
+.music-card.is-playing {
+  border-color: rgba(255, 255, 255, 0.3) !important;
+  box-shadow: 0 0 30px rgba(255, 255, 255, 0.1);
+}
+
 .music-card-title {
   font-weight: 500 !important;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  font-size: 1rem !important;
+  font-size: 0.95rem !important;
 }
 
 .music-card-description {
   opacity: 0.6;
-  font-size: 0.75rem !important;
-  letter-spacing: 0.05em;
+  font-size: 0.7rem !important;
+  letter-spacing: 0.03em;
+  line-height: 1.4;
 }
 
 .music-card-image {
-  border-radius: 8px !important;
+  border-radius: 6px !important;
   transition: all 0.3s ease;
+}
+
+.music-card-image.playing {
+  box-shadow: 0 0 30px rgba(255, 255, 255, 0.15);
 }
 
 .music-card:hover .music-card-image {
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
 }
 
-.listen-link {
-  opacity: 0.6;
-  transition: opacity 0.3s ease;
-  font-size: 0.7rem !important;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
+/* Now Playing Indicator */
+.now-playing-indicator {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  height: 20px;
+  padding: 4px 8px;
+  background: rgba(0, 0, 0, 0.7);
+  border-radius: 4px;
 }
 
-.listen-link:hover {
-  opacity: 1;
+.now-playing-indicator .bar {
+  width: 3px;
+  background: #fff;
+  border-radius: 2px;
+  animation: soundBars 0.5s ease-in-out infinite alternate;
+}
+
+.now-playing-indicator .bar:nth-child(1) {
+  height: 60%;
+  animation-delay: 0s;
+}
+
+.now-playing-indicator .bar:nth-child(2) {
+  height: 100%;
+  animation-delay: 0.1s;
+}
+
+.now-playing-indicator .bar:nth-child(3) {
+  height: 40%;
+  animation-delay: 0.2s;
+}
+
+.now-playing-indicator .bar:nth-child(4) {
+  height: 80%;
+  animation-delay: 0.3s;
+}
+
+@keyframes soundBars {
+  0% {
+    transform: scaleY(0.3);
+  }
+  100% {
+    transform: scaleY(1);
+  }
 }
 
 .play-button {
@@ -97,6 +147,8 @@
   font-size: 0.7rem !important;
   letter-spacing: 0.1em;
   text-transform: uppercase;
+  min-width: 100px;
+  justify-content: center;
 }
 
 .play-button:hover {
@@ -105,9 +157,14 @@
   box-shadow: 0 0 20px rgba(255, 255, 255, 0.1);
 }
 
-@media (max-width: 768px) {
+.play-button.playing {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border-color: rgba(255, 255, 255, 0.5) !important;
+}
+
+@media (max-width: 640px) {
   .music-cards-section {
-    padding: 4rem 1rem;
+    padding: 3rem 1rem;
   }
 
   .music-cards-title {
