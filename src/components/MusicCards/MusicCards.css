@@ -1,5 +1,5 @@
 .music-cards-section {
-  background: #000;
+  background: transparent;
   padding: 4rem 2rem 6rem;
   min-height: auto;
   position: relative;
@@ -25,6 +25,28 @@
   margin-top: 1rem;
   letter-spacing: 0.15em;
   text-transform: uppercase;
+}
+
+.play-all-button {
+  margin-top: 1.5rem;
+  padding: 0.75rem 2rem;
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: #fff;
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.play-all-button:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.5);
+  transform: translateY(-2px);
 }
 
 .music-cards-grid {
@@ -74,6 +96,13 @@
   font-size: 0.7rem !important;
   letter-spacing: 0.03em;
   line-height: 1.4;
+}
+
+.music-card-plays {
+  opacity: 0.5;
+  font-size: 0.65rem !important;
+  letter-spacing: 0.05em;
+  font-variant-numeric: tabular-nums;
 }
 
 .music-card-image {
@@ -162,12 +191,31 @@
   border-color: rgba(255, 255, 255, 0.5) !important;
 }
 
-@media (max-width: 640px) {
+@media (max-width: 768px) {
   .music-cards-section {
     padding: 3rem 1rem;
   }
 
   .music-cards-title {
+    font-size: 1.75rem;
     letter-spacing: 0.15em;
+  }
+
+  .music-cards-subtitle {
+    font-size: 0.75rem;
+  }
+
+  .play-all-button {
+    font-size: 0.7rem;
+    padding: 0.6rem 1.5rem;
+  }
+
+  .music-cards-grid {
+    gap: 1rem;
+  }
+
+  .music-card-wrapper {
+    width: 100%;
+    max-width: 400px;
   }
 }

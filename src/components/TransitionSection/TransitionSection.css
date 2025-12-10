@@ -1,7 +1,7 @@
 .transition-section {
   position: relative;
   height: 40vh;
-  background: #000;
+  background: transparent;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -82,5 +82,46 @@
   50% {
     opacity: 0.6;
     transform: scaleY(1.2);
+  }
+}
+
+@media (max-width: 768px) {
+  .transition-section {
+    height: 30vh;
+  }
+
+  .quote-text {
+    font-size: 1.125rem;
+  }
+
+  .quote-author {
+    font-size: 0.7rem;
+  }
+
+  .scroll-indicator {
+    margin-top: 2rem;
+  }
+
+  .scroll-line {
+    height: 50px;
+  }
+}
+
+@media (max-width: 480px) {
+  .transition-section {
+    height: 25vh;
+  }
+
+  .quote-mark {
+    font-size: 3rem;
+  }
+
+  .quote-text {
+    font-size: 1rem;
+  }
+
+  .quote-author {
+    font-size: 0.65rem;
+    margin-top: 1rem;
   }
 }

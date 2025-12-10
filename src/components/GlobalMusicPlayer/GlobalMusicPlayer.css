@@ -1,0 +1,311 @@
+.global-player {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: rgba(0, 0, 0, 0.95);
+  backdrop-filter: blur(20px);
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 1rem 2rem;
+  transform: translateY(100%);
+  transition: transform 0.3s ease;
+  overflow: hidden;
+}
+
+.player-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.global-player.visible {
+  transform: translateY(0);
+}
+
+.player-container {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  gap: 2rem;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+}
+
+/* Track Info */
+.player-track-info {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  min-width: 0;
+}
+
+.player-album-art {
+  width: 50px;
+  height: 50px;
+  border-radius: 4px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.player-track-details {
+  min-width: 0;
+  flex: 1;
+}
+
+.player-track-title {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: #fff;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  letter-spacing: 0.05em;
+}
+
+.player-track-artist {
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.6);
+  margin: 0.25rem 0 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Controls */
+.player-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.player-buttons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+
+.player-btn {
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.7);
+  cursor: pointer;
+  padding: 0.5rem;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.player-btn:hover {
+  color: #fff;
+  transform: scale(1.1);
+}
+
+.player-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.player-btn.play-pause {
+  width: 40px;
+  height: 40px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+}
+
+.player-btn.play-pause:hover {
+  border-color: rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.player-btn.active {
+  color: #fff;
+}
+
+/* Progress Bar */
+.player-progress {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.player-time {
+  font-size: 0.7rem;
+  color: rgba(255, 255, 255, 0.5);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0.05em;
+  min-width: 40px;
+}
+
+.progress-bar-container {
+  flex: 1;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.progress-bar-container:hover .progress-bar {
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.progress-bar {
+  height: 100%;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 2px;
+  transition:
+    width 0.1s linear,
+    background 0.2s ease;
+  position: relative;
+}
+
+.progress-bar::after {
+  content: "";
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 8px;
+  height: 8px;
+  background: #fff;
+  border-radius: 50%;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.progress-bar-container:hover .progress-bar::after {
+  opacity: 1;
+}
+
+/* Volume Control */
+.player-volume {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  justify-content: flex-end;
+}
+
+.volume-slider {
+  width: 100px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.volume-slider:hover .volume-bar {
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.volume-bar {
+  height: 100%;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 2px;
+  transition: background 0.2s ease;
+}
+
+/* Loading Indicator */
+.loading-indicator {
+  position: absolute;
+  top: -2px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.5),
+    transparent
+  );
+  animation: loading 1.5s ease-in-out infinite;
+}
+
+@keyframes loading {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .player-container {
+    grid-template-columns: 1fr 1.5fr 0.5fr;
+    gap: 1rem;
+  }
+
+  .volume-slider {
+    width: 60px;
+  }
+}
+
+@media (max-width: 768px) {
+  .global-player {
+    padding: 0.75rem 1rem;
+  }
+
+  .player-container {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+
+  .player-track-info {
+    order: 1;
+  }
+
+  .player-controls {
+    order: 2;
+    gap: 0.5rem;
+  }
+
+  .player-volume {
+    order: 3;
+    justify-content: center;
+  }
+
+  .player-buttons {
+    gap: 0.75rem;
+  }
+
+  .player-btn {
+    padding: 0.4rem;
+  }
+
+  .player-btn.play-pause {
+    width: 36px;
+    height: 36px;
+  }
+
+  .player-time {
+    font-size: 0.65rem;
+    min-width: 35px;
+  }
+
+  .volume-slider {
+    width: 80px;
+  }
+
+  .player-album-art {
+    width: 45px;
+    height: 45px;
+  }
+
+  .player-track-title {
+    font-size: 0.8rem;
+  }
+
+  .player-track-artist {
+    font-size: 0.7rem;
+  }
+}

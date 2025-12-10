@@ -1,8 +1,12 @@
 "use client";
 
+import { useMusicPlayer } from "@/contexts/MusicPlayerContext";
+import { formatPlayCount } from "@/lib/playCountStorage";
 import "./AboutSection.css";
 
 const AboutSection = () => {
+  const { totalPlays } = useMusicPlayer();
+
   return (
     <section className="about-section">
       <div className="about-container">
@@ -11,6 +15,7 @@ const AboutSection = () => {
             <img
               src="/image/Romantic.jpg"
               alt="Romantic"
+              loading="lazy"
               className="about-image"
             />
           </div>
@@ -35,7 +40,9 @@ const AboutSection = () => {
               <span className="stat-label">Tracks</span>
             </div>
             <div className="stat-item">
-              <span className="stat-number">50K+</span>
+              <span className="stat-number">
+                {formatPlayCount(totalPlays)}+
+              </span>
               <span className="stat-label">Plays</span>
             </div>
           </div>

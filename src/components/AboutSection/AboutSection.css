@@ -1,5 +1,5 @@
 .about-section {
-  background: #000;
+  background: transparent;
   padding: 8rem 2rem;
   position: relative;
 }
@@ -102,6 +102,10 @@
 }
 
 @media (max-width: 768px) {
+  .about-section {
+    padding: 4rem 1.5rem;
+  }
+
   .about-container {
     grid-template-columns: 1fr;
     gap: 2rem;
@@ -112,11 +116,32 @@
     text-align: center;
   }
 
+  .about-label {
+    font-size: 0.65rem;
+  }
+
+  .about-title {
+    font-size: 1.5rem;
+  }
+
+  .about-text {
+    font-size: 0.85rem;
+  }
+
   .about-stats {
     justify-content: center;
+    gap: 2rem;
   }
 
   .stat-item {
     text-align: center;
+  }
+
+  .stat-number {
+    font-size: 1.5rem;
+  }
+
+  .stat-label {
+    font-size: 0.6rem;
   }
 }

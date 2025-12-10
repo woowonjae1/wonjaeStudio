@@ -1,5 +1,5 @@
 .contact-section {
-  background: #000;
+  background: transparent;
   padding: 8rem 2rem;
   position: relative;
 }
@@ -97,4 +97,64 @@
   color: rgba(255, 255, 255, 0.3);
   letter-spacing: 0.1em;
   text-transform: uppercase;
+}
+
+@media (max-width: 768px) {
+  .contact-section {
+    padding: 4rem 1.5rem;
+  }
+
+  .contact-label {
+    font-size: 0.65rem;
+  }
+
+  .contact-title {
+    font-size: 1.5rem;
+  }
+
+  .contact-text {
+    font-size: 0.85rem;
+  }
+
+  .contact-email {
+    font-size: 0.85rem;
+    padding: 0.85rem 2rem;
+  }
+
+  .contact-social {
+    gap: 1.5rem;
+    margin-top: 2.5rem;
+  }
+
+  .social-link {
+    font-size: 0.65rem;
+  }
+
+  .footer {
+    margin-top: 4rem;
+  }
+
+  .footer-text {
+    font-size: 0.6rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .contact-section {
+    padding: 3rem 1rem;
+  }
+
+  .contact-title {
+    font-size: 1.25rem;
+  }
+
+  .contact-email {
+    font-size: 0.75rem;
+    padding: 0.75rem 1.5rem;
+  }
+
+  .contact-social {
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
 }

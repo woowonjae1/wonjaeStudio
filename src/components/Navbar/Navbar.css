@@ -56,11 +56,34 @@
     padding: 1rem 1.5rem;
   }
 
+  .navbar-logo {
+    font-size: 1rem;
+    letter-spacing: 0.1em;
+  }
+
   .navbar-menu {
-    gap: 1.5rem;
+    gap: 1rem;
   }
 
   .navbar-menu li a {
-    font-size: 0.75rem;
+    font-size: 0.7rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar {
+    padding: 0.75rem 1rem;
+  }
+
+  .navbar-logo {
+    font-size: 0.9rem;
+  }
+
+  .navbar-menu {
+    gap: 0.75rem;
+  }
+
+  .navbar-menu li a {
+    font-size: 0.65rem;
   }
 }
