@@ -4,7 +4,13 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import Navbar from "@/components/Navbar";
-import { getUserIdentity, UserIdentity } from "@/lib/userIdentity";
+import NicknameModal from "@/components/NicknameModal";
+import {
+  getUserIdentity,
+  setUserIdentity,
+  updateUsername,
+  UserIdentity,
+} from "@/lib/userIdentity";
 import { getPosts, Post, formatTime } from "@/lib/communityStorage";
 import "./community.css";
 
@@ -24,11 +30,30 @@ export default function CommunityPage() {
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [user, setUser] = useState<UserIdentity | null>(null);
   const [posts, setPosts] = useState<Post[]>([]);
+  const [showNicknameModal, setShowNicknameModal] = useState(false);
 
   useEffect(() => {
-    setUser(getUserIdentity());
+    const existingUser = getUserIdentity();
+    if (existingUser) {
+      setUser(existingUser);
+    } else {
+      setShowNicknameModal(true);
+    }
     getPosts().then(setPosts);
   }, []);
+
+  const handleSetNickname = (nickname: string) => {
+    if (user) {
+      // 修改昵称
+      const updated = updateUsername(nickname);
+      if (updated) setUser(updated);
+    } else {
+      // 新用户
+      const newUser = setUserIdentity(nickname);
+      setUser(newUser);
+    }
+    setShowNicknameModal(false);
+  };
 
   const filteredPosts = posts.filter(
     (post) => selectedCategory === "all" || post.category === selectedCategory
@@ -46,6 +71,13 @@ export default function CommunityPage() {
   return (
     <div className="community-page">
       <Navbar />
+
+      <NicknameModal
+        isOpen={showNicknameModal}
+        onSubmit={handleSetNickname}
+        currentName={user?.username}
+        onClose={() => setShowNicknameModal(false)}
+      />
 
       <div className="community-layout">
         {/* Sidebar */}
@@ -77,6 +109,13 @@ export default function CommunityPage() {
             <div className="sidebar-user">
               <span className="user-initial">{user.username[0]}</span>
               <span className="user-name">{user.username}</span>
+              <button
+                className="edit-name-btn"
+                onClick={() => setShowNicknameModal(true)}
+                title="修改昵称"
+              >
+                ✎
+              </button>
             </div>
           )}
         </aside>

@@ -120,6 +120,26 @@
 .user-name {
   font-size: 0.8rem;
   color: rgba(255, 255, 255, 0.5);
+  flex: 1;
+}
+
+.edit-name-btn {
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.25);
+  font-size: 0.75rem;
+  cursor: pointer;
+  padding: 0.25rem;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+
+.sidebar-user:hover .edit-name-btn {
+  opacity: 1;
+}
+
+.edit-name-btn:hover {
+  color: rgba(255, 255, 255, 0.6);
 }
 
 /* Main */

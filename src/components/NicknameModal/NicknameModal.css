@@ -1,0 +1,110 @@
+.nickname-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+}
+
+.nickname-modal {
+  background: #111;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  padding: 2rem;
+  width: 100%;
+  max-width: 320px;
+  text-align: center;
+  position: relative;
+}
+
+.close-btn {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  background: none;
+  border: none;
+  color: rgba(255, 255, 255, 0.3);
+  font-size: 1.25rem;
+  cursor: pointer;
+  padding: 0.25rem;
+  line-height: 1;
+}
+
+.close-btn:hover {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.nickname-modal h2 {
+  font-size: 1.1rem;
+  font-weight: 500;
+  color: #fff;
+  margin: 0 0 0.5rem;
+}
+
+.nickname-modal > p {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.4);
+  margin: 0 0 1.5rem;
+}
+
+.nickname-modal form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.nickname-modal input {
+  padding: 0.75rem 1rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 4px;
+  color: #fff;
+  font-size: 0.95rem;
+  text-align: center;
+}
+
+.nickname-modal input:focus {
+  outline: none;
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.nickname-modal input::placeholder {
+  color: rgba(255, 255, 255, 0.25);
+}
+
+.nickname-modal .error {
+  font-size: 0.75rem;
+  color: #ef4444;
+}
+
+.nickname-modal button {
+  padding: 0.65rem 1rem;
+  background: rgba(255, 255, 255, 0.1);
+  border: none;
+  border-radius: 4px;
+  color: #fff;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.nickname-modal button:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.nickname-modal button:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.nickname-modal .hint {
+  font-size: 0.7rem;
+  color: rgba(255, 255, 255, 0.25);
+  margin: 1rem 0 0;
+}
