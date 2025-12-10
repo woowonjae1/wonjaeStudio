@@ -1,135 +1,66 @@
--- ====================================
--- 新增表: AI 生成历史
--- ====================================
-CREATE TABLE IF NOT EXISTS public.ai_generations (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  user_id UUID REFERENCES public.profiles(id) ON DELETE CASCADE,
-  type TEXT NOT NULL CHECK (type IN ('music', 'image', 'voice', 'text')),
-  parameters JSONB,
-  result_url TEXT,
+-- 社区功能数据库表
+
+-- 社区话题表
+CREATE TABLE IF NOT EXISTS public.community_topics (
+  id BIGSERIAL PRIMARY KEY,
+  title TEXT NOT NULL,
+  content TEXT NOT NULL,
+  category TEXT NOT NULL,
+  author_name TEXT NOT NULL,
+  author_id TEXT NOT NULL,
+  views INTEGER DEFAULT 0,
+  pinned BOOLEAN DEFAULT false,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
   updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
-CREATE INDEX IF NOT EXISTS idx_ai_generations_user_id ON public.ai_generations(user_id);
-CREATE INDEX IF NOT EXISTS idx_ai_generations_created_at ON public.ai_generations(created_at DESC);
-
--- ====================================
--- 新增表: 用户关注关系
--- ====================================
-CREATE TABLE IF NOT EXISTS public.follows (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  follower_id UUID REFERENCES public.profiles(id) ON DELETE CASCADE NOT NULL,
-  following_id UUID REFERENCES public.profiles(id) ON DELETE CASCADE NOT NULL,
-  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-  UNIQUE(follower_id, following_id)
+-- 社区回复表
+CREATE TABLE IF NOT EXISTS public.community_replies (
+  id BIGSERIAL PRIMARY KEY,
+  topic_id BIGINT REFERENCES public.community_topics(id) ON DELETE CASCADE,
+  content TEXT NOT NULL,
+  author_name TEXT NOT NULL,
+  author_id TEXT NOT NULL,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 
-CREATE INDEX IF NOT EXISTS idx_follows_follower_id ON public.follows(follower_id);
-CREATE INDEX IF NOT EXISTS idx_follows_following_id ON public.follows(following_id);
+-- 创建索引
+CREATE INDEX IF NOT EXISTS idx_topics_created_at ON public.community_topics(created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_topics_category ON public.community_topics(category);
+CREATE INDEX IF NOT EXISTS idx_replies_topic_id ON public.community_replies(topic_id);
 
--- ====================================
--- 新增表: 内容点赞
--- ====================================
-CREATE TABLE IF NOT EXISTS public.likes (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  user_id UUID REFERENCES public.profiles(id) ON DELETE CASCADE NOT NULL,
-  item_type TEXT NOT NULL CHECK (item_type IN ('album', 'post', 'track', 'comment')),
-  item_id UUID NOT NULL,
-  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-  UNIQUE(user_id, item_type, item_id)
-);
+-- 启用 RLS
+ALTER TABLE public.community_topics ENABLE ROW LEVEL SECURITY;
+ALTER TABLE public.community_replies ENABLE ROW LEVEL SECURITY;
 
-CREATE INDEX IF NOT EXISTS idx_likes_user_id ON public.likes(user_id);
-CREATE INDEX IF NOT EXISTS idx_likes_item ON public.likes(item_type, item_id);
-
--- ====================================
--- 新增表: 用户偏好设置
--- ====================================
-CREATE TABLE IF NOT EXISTS public.user_preferences (
-  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  user_id UUID REFERENCES public.profiles(id) ON DELETE CASCADE UNIQUE,
-  favorite_genres TEXT[],
-  language TEXT DEFAULT 'en',
-  theme TEXT DEFAULT 'light',
-  notifications_enabled BOOLEAN DEFAULT true,
-  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
-  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
-);
-
-CREATE INDEX IF NOT EXISTS idx_user_preferences_user_id ON public.user_preferences(user_id);
-
--- ====================================
--- 启用 RLS（行级安全）
--- ====================================
-ALTER TABLE public.ai_generations ENABLE ROW LEVEL SECURITY;
-ALTER TABLE public.follows ENABLE ROW LEVEL SECURITY;
-ALTER TABLE public.likes ENABLE ROW LEVEL SECURITY;
-ALTER TABLE public.user_preferences ENABLE ROW LEVEL SECURITY;
-
--- ====================================
--- RLS 策略：生成历史（用户只能查看自己的）
--- ====================================
-CREATE POLICY "Users can view their own generations"
-  ON public.ai_generations FOR SELECT
-  USING (auth.uid() = user_id);
-
-CREATE POLICY "Users can create their own generations"
-  ON public.ai_generations FOR INSERT
-  WITH CHECK (auth.uid() = user_id);
-
-CREATE POLICY "Users can delete their own generations"
-  ON public.ai_generations FOR DELETE
-  USING (auth.uid() = user_id);
-
--- ====================================
--- RLS 策略：关注关系（任何人可以查看）
--- ====================================
-CREATE POLICY "Anyone can view follows"
-  ON public.follows FOR SELECT
+-- RLS 策略：所有人可读
+CREATE POLICY "Topics are viewable by everyone" 
+  ON public.community_topics FOR SELECT 
   USING (true);
 
-CREATE POLICY "Users can create follows"
-  ON public.follows FOR INSERT
-  WITH CHECK (auth.uid() = follower_id);
-
-CREATE POLICY "Users can delete their follows"
-  ON public.follows FOR DELETE
-  USING (auth.uid() = follower_id);
-
--- ====================================
--- RLS 策略：点赞（任何人可以查看）
--- ====================================
-CREATE POLICY "Anyone can view likes"
-  ON public.likes FOR SELECT
+CREATE POLICY "Replies are viewable by everyone" 
+  ON public.community_replies FOR SELECT 
   USING (true);
 
-CREATE POLICY "Users can create likes"
-  ON public.likes FOR INSERT
-  WITH CHECK (auth.uid() = user_id);
+-- RLS 策略：所有人可写（匿名社区）
+CREATE POLICY "Anyone can create topics" 
+  ON public.community_topics FOR INSERT 
+  WITH CHECK (true);
 
-CREATE POLICY "Users can delete their likes"
-  ON public.likes FOR DELETE
-  USING (auth.uid() = user_id);
+CREATE POLICY "Anyone can create replies" 
+  ON public.community_replies FOR INSERT 
+  WITH CHECK (true);
 
--- ====================================
--- RLS 策略：用户偏好（用户只能查看自己的）
--- ====================================
-CREATE POLICY "Users can view their own preferences"
-  ON public.user_preferences FOR SELECT
-  USING (auth.uid() = user_id);
+-- 创建函数：获取话题回复数
+CREATE OR REPLACE FUNCTION get_topic_reply_count(topic_id BIGINT)
+RETURNS INTEGER AS $$
+  SELECT COUNT(*)::INTEGER FROM public.community_replies WHERE community_replies.topic_id = $1;
+$$ LANGUAGE SQL STABLE;
 
-CREATE POLICY "Users can create their preferences"
-  ON public.user_preferences FOR INSERT
-  WITH CHECK (auth.uid() = user_id);
-
-CREATE POLICY "Users can update their preferences"
-  ON public.user_preferences FOR UPDATE
-  USING (auth.uid() = user_id)
-  WITH CHECK (auth.uid() = user_id);
-
--- 测试：检查新表是否创建成功
-SELECT EXISTS(
-  SELECT 1 FROM information_schema.tables 
-  WHERE table_name IN ('ai_generations', 'follows', 'likes', 'user_preferences')
-);
+-- 创建视图：话题列表（包含回复数）
+CREATE OR REPLACE VIEW public.community_topics_with_counts AS
+SELECT 
+  t.*,
+  COALESCE((SELECT COUNT(*) FROM public.community_replies r WHERE r.topic_id = t.id), 0) AS replies_count
+FROM public.community_topics t
+ORDER BY t.pinned DESC, t.created_at DESC;
