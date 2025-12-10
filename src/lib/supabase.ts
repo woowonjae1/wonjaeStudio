@@ -1,9 +1,18 @@
-import { createClient } from "@supabase/supabase-js";
+import { createClient, SupabaseClient } from "@supabase/supabase-js";
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "";
 const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "";
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+// 只在有配置时创建客户端
+export const supabase: SupabaseClient | null =
+  supabaseUrl && supabaseAnonKey
+    ? createClient(supabaseUrl, supabaseAnonKey)
+    : null;
+
+// 检查是否可用
+export function isSupabaseAvailable(): boolean {
+  return supabase !== null;
+}
 
 // 类型定义
 export interface Topic {
@@ -31,6 +40,8 @@ export interface Reply {
 
 // 获取所有话题
 export async function getTopics(category?: string): Promise<Topic[]> {
+  if (!supabase) return [];
+
   let query = supabase
     .from("community_topics")
     .select("*, replies_count:community_replies(count)")
@@ -56,6 +67,8 @@ export async function getTopics(category?: string): Promise<Topic[]> {
 
 // 获取单个话题
 export async function getTopic(id: number): Promise<Topic | null> {
+  if (!supabase) return null;
+
   const { data, error } = await supabase
     .from("community_topics")
     .select("*")
@@ -79,6 +92,8 @@ export async function createTopic(topic: {
   author_name: string;
   author_id: string;
 }): Promise<Topic | null> {
+  if (!supabase) return null;
+
   const { data, error } = await supabase
     .from("community_topics")
     .insert([topic])
@@ -95,8 +110,9 @@ export async function createTopic(topic: {
 
 // 增加浏览数
 export async function incrementViews(id: number): Promise<void> {
+  if (!supabase) return;
+
   try {
-    // 简单地获取当前值并+1
     const { data } = await supabase
       .from("community_topics")
       .select("views")
@@ -116,6 +132,8 @@ export async function incrementViews(id: number): Promise<void> {
 
 // 获取话题的回复
 export async function getReplies(topicId: number): Promise<Reply[]> {
+  if (!supabase) return [];
+
   const { data, error } = await supabase
     .from("community_replies")
     .select("*")
@@ -137,6 +155,8 @@ export async function createReply(reply: {
   author_name: string;
   author_id: string;
 }): Promise<Reply | null> {
+  if (!supabase) return null;
+
   const { data, error } = await supabase
     .from("community_replies")
     .insert([reply])

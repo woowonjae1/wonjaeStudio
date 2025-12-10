@@ -1,23 +1,18 @@
 // 社区数据存储 - 支持 Supabase 和 localStorage 双模式
 
 import {
-  supabase,
+  isSupabaseAvailable,
   getTopics as getSupabaseTopics,
   getTopic as getSupabaseTopic,
   createTopic as createSupabaseTopic,
   getReplies as getSupabaseReplies,
   createReply as createSupabaseReply,
   formatTime as supabaseFormatTime,
-  Topic as SupabaseTopic,
-  Reply as SupabaseReply,
 } from "./supabase";
 
 // 检查 Supabase 是否配置
 const isSupabaseConfigured = () => {
-  return !!(
-    process.env.NEXT_PUBLIC_SUPABASE_URL &&
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
-  );
+  return isSupabaseAvailable();
 };
 
 // 统一的类型定义
