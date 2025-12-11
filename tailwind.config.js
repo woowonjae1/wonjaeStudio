@@ -9,62 +9,44 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        // Map to our new CSS variables
-        background: "var(--bg-base)",
-        foreground: "var(--text-base)",
+        background: "hsl(var(--background))",
+        foreground: "hsl(var(--foreground))",
         card: {
-          DEFAULT: "var(--bg-elevated)",
-          foreground: "var(--text-base)",
+          DEFAULT: "hsl(var(--card))",
+          foreground: "hsl(var(--card-foreground))",
         },
         popover: {
-          DEFAULT: "var(--bg-elevated-highlight)",
-          foreground: "var(--text-base)",
+          DEFAULT: "hsl(var(--popover))",
+          foreground: "hsl(var(--popover-foreground))",
         },
         primary: {
-          DEFAULT: "var(--spotify-green)",
-          foreground: "var(--text-black)",
+          DEFAULT: "hsl(var(--primary))",
+          foreground: "hsl(var(--primary-foreground))",
         },
         secondary: {
-          DEFAULT: "var(--bg-elevated-highlight)",
-          foreground: "var(--text-base)",
+          DEFAULT: "hsl(var(--secondary))",
+          foreground: "hsl(var(--secondary-foreground))",
         },
         muted: {
-          DEFAULT: "var(--bg-elevated-press)",
-          foreground: "var(--text-muted)",
+          DEFAULT: "hsl(var(--muted))",
+          foreground: "hsl(var(--muted-foreground))",
         },
         accent: {
-          DEFAULT: "var(--accent-primary)",
-          foreground: "var(--text-black)",
+          DEFAULT: "hsl(var(--accent))",
+          foreground: "hsl(var(--accent-foreground))",
         },
         destructive: {
-          DEFAULT: "var(--status-error)",
-          foreground: "#ffffff",
+          DEFAULT: "hsl(var(--destructive))",
+          foreground: "hsl(var(--destructive-foreground))",
         },
-        border: "var(--border-subtle)",
-        input: "var(--bg-elevated-press)",
-        ring: "var(--spotify-green)",
-
-        // Custom names
-        spotify: {
-          green: "var(--spotify-green)",
-          dark: "var(--spotify-green-dark)",
-          hover: "var(--spotify-green-hover)",
-        },
-        apple: {
-          gray: "var(--bg-elevated-base)",
-        },
+        border: "hsl(var(--border))",
+        input: "hsl(var(--input))",
+        ring: "hsl(var(--ring))",
       },
       borderRadius: {
-        lg: "var(--radius-lg)",
-        md: "var(--radius-md)",
-        sm: "var(--radius-sm)",
-        xl: "var(--radius-xl)",
-        "2xl": "var(--radius-2xl)",
-        full: "var(--radius-full)",
-      },
-      fontFamily: {
-        sans: ["var(--font-text)"],
-        display: ["var(--font-display)"],
+        lg: "var(--radius)",
+        md: "calc(var(--radius) - 2px)",
+        sm: "calc(var(--radius) - 4px)",
       },
       animation: {
         "fade-in": "fadeIn 0.5s cubic-bezier(0.25, 0.1, 0.25, 1) forwards",

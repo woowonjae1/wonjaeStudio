@@ -124,58 +124,15 @@ const MusicCard = ({
   );
 };
 
-const musicData = [
-  // With audio - placed first
-  {
-    title: "Crush",
-    description: "Heart breaking emotions in every beat",
-    imageSrc: "/image/HeartBreaking.jpg",
-    audioSrc: "/audio/禹元宰 - Crush.mp3",
-  },
-  {
-    title: "傍晚的 Romantic",
-    description: "Evening romance, Qixi vibes",
-    imageSrc: "/image/Romantic.jpg",
-    audioSrc: "/audio/禹元宰 - 傍晚的Romantic.mp3",
-  },
-  {
-    title: "Nobody Gets Me",
-    description: "R&B type beat, deep connection",
-    imageSrc: "/image/nobodygetsme.jpg",
-    audioSrc: "/audio/禹元宰 - Nobody Gets Me Like u R&B TYPE BEAT.mp3",
-  },
-  {
-    title: "Can't Chat With You",
-    description: "Unspoken feelings, silent nights",
-    imageSrc: "/image/Artlife.jpg",
-    audioSrc: "/audio/禹元宰 - [Free]%23cant chat with you.mp3",
-  },
-  // Without audio - display only
-  {
-    title: "Summer",
-    description: "Feel the warmth of summer vibes",
-    imageSrc: "/image/Summer.jpg",
-    audioSrc: "",
-  },
-  {
-    title: "Pink Blue",
-    description: "Dreamy aesthetic soundscapes",
-    imageSrc: "/image/PinkBlue.jpg",
-    audioSrc: "",
-  },
-  {
-    title: "Entity Life",
-    description: "Explore the essence of life",
-    imageSrc: "/image/entityLife.jpg",
-    audioSrc: "",
-  },
-  {
-    title: "Blue Groove",
-    description: "Chill blue groove beats",
-    imageSrc: "/image/iambluegroove.jpg",
-    audioSrc: "",
-  },
-];
+// Fallback data when API is unavailable
+const fallbackMusicData: Track[] = [];
+
+interface Track {
+  title: string;
+  description: string;
+  imageSrc: string;
+  audioSrc: string;
+}
 
 const MusicCards = () => {
   const {
@@ -187,20 +144,43 @@ const MusicCards = () => {
     playAll,
     totalPlays,
   } = useMusicPlayer();
+  const [musicData, setMusicData] = useState<Track[]>(fallbackMusicData);
   const [playCounts, setPlayCounts] = useState<{ [key: string]: number }>({});
+  const [loading, setLoading] = useState(true);
 
   const tracksWithAudio = musicData.filter((track) => track.audioSrc);
 
+  // Fetch tracks from API
   useEffect(() => {
-    setPlaylist(tracksWithAudio);
+    const fetchTracks = async () => {
+      try {
+        const res = await fetch("/api/music");
+        const data = await res.json();
+        if (data.tracks && data.tracks.length > 0) {
+          setMusicData(data.tracks);
+        }
+      } catch (error) {
+        console.error("Failed to fetch tracks, using fallback:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-    // Load play counts for all tracks
-    const counts: { [key: string]: number } = {};
-    musicData.forEach((track) => {
-      counts[track.title] = getTrackPlayCount(track.title);
-    });
-    setPlayCounts(counts);
+    fetchTracks();
   }, []);
+
+  useEffect(() => {
+    if (!loading) {
+      setPlaylist(tracksWithAudio);
+
+      // Load play counts for all tracks
+      const counts: { [key: string]: number } = {};
+      musicData.forEach((track) => {
+        counts[track.title] = getTrackPlayCount(track.title);
+      });
+      setPlayCounts(counts);
+    }
+  }, [loading, musicData]);
 
   // Update play counts when totalPlays changes
   useEffect(() => {
@@ -209,7 +189,7 @@ const MusicCards = () => {
       counts[track.title] = getTrackPlayCount(track.title);
     });
     setPlayCounts(counts);
-  }, [totalPlays]);
+  }, [totalPlays, musicData]);
 
   const handlePlay = (index: number) => {
     if (currentTrackIndex === index && isPlaying) {
