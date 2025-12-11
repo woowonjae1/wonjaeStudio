@@ -11,7 +11,7 @@ interface Category {
   count: number;
 }
 
-function CommunityLeftSidebarContent() {
+function CommunityLeftSidebarContentInner() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const currentCategory = searchParams.get("category") || "all";
@@ -96,7 +96,7 @@ function CommunityLeftSidebarContent() {
   );
 }
 
-function SidebarFallback() {
+function SidebarContentFallback() {
   return (
     <>
       <div className="sidebar-section">
@@ -111,12 +111,10 @@ function SidebarFallback() {
   );
 }
 
-export default function CommunityLeftSidebar() {
+export default function CommunityLeftSidebarContent() {
   return (
-    <aside className="community-left-sidebar">
-      <Suspense fallback={<SidebarFallback />}>
-        <CommunityLeftSidebarContent />
-      </Suspense>
-    </aside>
+    <Suspense fallback={<SidebarContentFallback />}>
+      <CommunityLeftSidebarContentInner />
+    </Suspense>
   );
 }
