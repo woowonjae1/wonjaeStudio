@@ -11,16 +11,7 @@ import {
   Music,
   Loader2,
 } from "lucide-react";
-
-interface MusicTrack {
-  id: number;
-  title: string;
-  description: string;
-  image_url: string;
-  audio_url: string | null;
-  display_order: number;
-  play_count: number;
-}
+import { MusicTrack } from "@/types/music";
 
 export default function MusicManagementPage() {
   const [tracks, setTracks] = useState<MusicTrack[]>([]);
@@ -223,7 +214,17 @@ export default function MusicManagementPage() {
             onClick={(e) => e.stopPropagation()}
           >
             <MusicForm
-              track={editTrack || undefined}
+              track={
+                editTrack
+                  ? {
+                      id: editTrack.id,
+                      title: editTrack.title,
+                      description: editTrack.description,
+                      image_url: editTrack.image_url,
+                      audio_url: editTrack.audio_url,
+                    }
+                  : undefined
+              }
               onSubmit={editTrack ? handleUpdate : handleCreate}
               onCancel={() => {
                 setShowForm(false);

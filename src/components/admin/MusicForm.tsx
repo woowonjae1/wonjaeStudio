@@ -3,17 +3,10 @@
 import { useState } from "react";
 import { Loader2 } from "lucide-react";
 import FileUpload from "./FileUpload";
-
-interface MusicTrack {
-  id?: number;
-  title: string;
-  description: string;
-  image_url?: string;
-  audio_url?: string;
-}
+import { MusicFormData } from "@/types/music";
 
 interface MusicFormProps {
-  track?: MusicTrack;
+  track?: MusicFormData;
   onSubmit: (formData: FormData) => Promise<void>;
   onCancel: () => void;
 }
@@ -123,7 +116,7 @@ export default function MusicForm({
         label="音频文件"
         accept="audio/*"
         onChange={setAudioFile}
-        preview={track?.audio_url}
+        preview={track?.audio_url || undefined}
       />
 
       <div className="flex gap-3 justify-end pt-4 border-t border-border">
