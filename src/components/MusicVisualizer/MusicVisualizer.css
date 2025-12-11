@@ -1,0 +1,56 @@
+.music-visualizer {
+  display: flex;
+  align-items: flex-end;
+  gap: 2px;
+  opacity: 0.6;
+}
+
+.music-visualizer.small {
+  height: 16px;
+  gap: 1px;
+}
+
+.music-visualizer.medium {
+  height: 24px;
+  gap: 2px;
+}
+
+.music-visualizer.large {
+  height: 32px;
+  gap: 3px;
+}
+
+.visualizer-bar {
+  background: linear-gradient(
+    to top,
+    rgba(255, 255, 255, 0.8),
+    rgba(255, 255, 255, 0.3)
+  );
+  border-radius: 1px;
+  transition: height 0.3s ease;
+  animation: pulse 1.5s ease-in-out infinite alternate;
+}
+
+.music-visualizer.small .visualizer-bar {
+  width: 2px;
+  min-height: 4px;
+}
+
+.music-visualizer.medium .visualizer-bar {
+  width: 3px;
+  min-height: 6px;
+}
+
+.music-visualizer.large .visualizer-bar {
+  width: 4px;
+  min-height: 8px;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 0.6;
+  }
+  100% {
+    opacity: 1;
+  }
+}

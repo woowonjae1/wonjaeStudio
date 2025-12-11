@@ -28,6 +28,9 @@ export interface Post {
   time: string;
   pinned?: boolean;
   createdAt: number;
+  imageUrl?: string;
+  musicUrl?: string;
+  musicTitle?: string;
 }
 
 export interface Reply {
@@ -213,7 +216,10 @@ function incrementLocalViews(postId: number): void {
 
 // ============ 统一导出接口 ============
 
-export async function getPosts(category?: string): Promise<Post[]> {
+export async function getPosts(
+  category?: string,
+  sortBy: "latest" | "popular" | "activity" = "latest"
+): Promise<Post[]> {
   if (isSupabaseConfigured()) {
     try {
       const topics = await getSupabaseTopics(category);
@@ -234,11 +240,45 @@ export async function getPosts(category?: string): Promise<Post[]> {
     }
   }
 
-  const posts = getLocalPosts();
+  let posts = getLocalPosts();
   if (category && category !== "all") {
-    return posts.filter((p) => p.category === category);
+    posts = posts.filter((p) => p.category === category);
   }
-  return posts;
+
+  // Sort posts
+  return sortPosts(posts, sortBy);
+}
+
+function sortPosts(
+  posts: Post[],
+  sortBy: "latest" | "popular" | "activity"
+): Post[] {
+  const sorted = [...posts];
+
+  switch (sortBy) {
+    case "popular":
+      // Sort by views + replies (weighted)
+      sorted.sort((a, b) => {
+        const scoreA = a.views + a.replies * 2;
+        const scoreB = b.views + b.replies * 2;
+        return scoreB - scoreA;
+      });
+      break;
+    case "activity":
+      // Sort by most recent activity (replies or creation)
+      sorted.sort((a, b) => b.createdAt - a.createdAt);
+      break;
+    case "latest":
+    default:
+      // Sort by creation time
+      sorted.sort((a, b) => b.createdAt - a.createdAt);
+      break;
+  }
+
+  // Pinned posts always come first
+  const pinned = sorted.filter((p) => p.pinned);
+  const unpinned = sorted.filter((p) => !p.pinned);
+  return [...pinned, ...unpinned];
 }
 
 export async function getPost(id: number): Promise<Post | undefined> {
@@ -275,6 +315,9 @@ export async function addPost(post: {
   content: string;
   time: string;
   authorId: string;
+  imageUrl?: string;
+  musicUrl?: string;
+  musicTitle?: string;
 }): Promise<Post> {
   if (isSupabaseConfigured()) {
     try {

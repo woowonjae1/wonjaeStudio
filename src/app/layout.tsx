@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { MusicPlayerProvider } from "@/contexts/MusicPlayerContext";
+import { CurvedLoopProvider } from "@/contexts/CurvedLoopContext";
 import GlobalMusicPlayer from "@/components/GlobalMusicPlayer";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -109,10 +110,12 @@ export default function RootLayout({
         />
       </head>
       <body className={inter.className}>
-        <MusicPlayerProvider>
-          {children}
-          <GlobalMusicPlayer />
-        </MusicPlayerProvider>
+        <CurvedLoopProvider>
+          <MusicPlayerProvider>
+            {children}
+            <GlobalMusicPlayer />
+          </MusicPlayerProvider>
+        </CurvedLoopProvider>
       </body>
     </html>
   );
