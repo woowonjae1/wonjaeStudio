@@ -40,8 +40,8 @@
 }
 
 .topic-row.pinned {
-  background: rgba(59, 130, 246, 0.03);
-  border-left: 3px solid #3b82f6;
+  background: rgba(16, 185, 129, 0.03);
+  border-left: 3px solid #10b981;
   margin-left: -3px;
 }
 
@@ -92,8 +92,8 @@
 .pinned-badge {
   font-size: 0.625rem;
   font-weight: 700;
-  color: #3b82f6;
-  background: rgba(59, 130, 246, 0.15);
+  color: #10b981;
+  background: rgba(16, 185, 129, 0.15);
   padding: 0.125rem 0.375rem;
   border-radius: 3px;
   text-transform: uppercase;
@@ -112,7 +112,7 @@
 }
 
 .topic-row:hover .topic-title {
-  color: #3b82f6;
+  color: #10b981;
 }
 
 .topic-meta {
@@ -144,8 +144,8 @@
 }
 
 .category-pill[data-category="plugins"] {
-  color: #8b5cf6;
-  background: rgba(139, 92, 246, 0.12);
+  color: #f59e0b;
+  background: rgba(245, 158, 11, 0.12);
 }
 
 .category-pill[data-category="showcase"] {
@@ -154,8 +154,8 @@
 }
 
 .category-pill[data-category="help"] {
-  color: #3b82f6;
-  background: rgba(59, 130, 246, 0.12);
+  color: #10b981;
+  background: rgba(16, 185, 129, 0.12);
 }
 
 .topic-tags {
@@ -213,7 +213,7 @@
   width: 32px;
   height: 32px;
   border: 3px solid rgba(255, 255, 255, 0.1);
-  border-top-color: #3b82f6;
+  border-top-color: #10b981;
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
 }
@@ -317,9 +317,9 @@
 }
 
 .page-num.active {
-  background: #3b82f6;
+  background: #10b981;
   color: #fff;
-  border-color: #3b82f6;
+  border-color: #10b981;
 }
 
 /* Mobile Responsive */
@@ -366,4 +366,88 @@
     height: 32px;
     min-width: 32px;
   }
+}
+/* Empty State Button */
+.empty-state-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1.5rem;
+  padding: 0.75rem 1.5rem;
+  background: #10b981;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: all 0.2s ease;
+}
+
+.empty-state-btn:hover {
+  background: #059669;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+/* Floating New Topic Button */
+.floating-new-topic-btn {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem 1.5rem;
+  background: #10b981;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  box-shadow: 0 4px 20px rgba(16, 185, 129, 0.4);
+  transition: all 0.3s ease;
+  z-index: 100;
+}
+
+.floating-new-topic-btn:hover {
+  background: #059669;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(16, 185, 129, 0.5);
+}
+
+.floating-new-topic-btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+  .floating-new-topic-btn {
+    bottom: 1rem;
+    right: 1rem;
+    padding: 0.75rem 1rem;
+    font-size: 0.85rem;
+  }
+
+  .floating-new-topic-btn span {
+    display: none;
+  }
+
+  .floating-new-topic-btn {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    justify-content: center;
+    padding: 0;
+  }
+
+  .floating-new-topic-btn svg {
+    width: 24px;
+    height: 24px;
+  }
+}
+
+/* Hide floating button on new post page */
+body:has(.modern-post-editor) .floating-new-topic-btn {
+  display: none;
 }

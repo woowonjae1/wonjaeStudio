@@ -17,11 +17,15 @@ import "./CommunityLayout.css";
 interface CommunityLayoutProps {
   children: ReactNode;
   showSidebars?: boolean;
+  selectedCategory?: string;
+  onCategoryChange?: (category: string) => void;
 }
 
 export default function CommunityLayout({
   children,
   showSidebars = true,
+  selectedCategory,
+  onCategoryChange,
 }: CommunityLayoutProps) {
   const [user, setUser] = useState<UserIdentity | null>(null);
   const [showNicknameModal, setShowNicknameModal] = useState(false);
@@ -61,7 +65,12 @@ export default function CommunityLayout({
       />
 
       <div className="discourse-container">
-        {showSidebars && <CommunityLeftSidebar />}
+        {showSidebars && (
+          <CommunityLeftSidebar
+            selectedCategory={selectedCategory}
+            onCategoryChange={onCategoryChange}
+          />
+        )}
 
         <main className="discourse-main">{children}</main>
 

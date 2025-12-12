@@ -37,6 +37,9 @@ export default function PostPage() {
   const [previewMode, setPreviewMode] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
+  const [pastedImages, setPastedImages] = useState<string[]>([]);
+  const [uploading, setUploading] = useState(false);
+  const [dragOver, setDragOver] = useState(false);
 
   useEffect(() => {
     setUser(getUserIdentity());
@@ -66,6 +69,7 @@ export default function PostPage() {
     );
     setReplies([...replies, newReply]);
     setReplyText("");
+    setPastedImages([]);
     setSubmitting(false);
   };
 
@@ -77,7 +81,108 @@ export default function PostPage() {
     return text
       .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
       .replace(/\*(.*?)\*/g, "<em>$1</em>")
-      .replace(/`(.*?)`/g, "<code>$1</code>");
+      .replace(/`(.*?)`/g, "<code>$1</code>")
+      .replace(
+        /(https?:\/\/[^\s]+)/g,
+        '<a href="$1" target="_blank" rel="noopener noreferrer">$1</a>'
+      );
+  };
+
+  const uploadImage = async (file: File): Promise<string> => {
+    // 创建一个简单的本地URL用于演示
+    // 在实际应用中，你需要上传到云存储服务
+    return new Promise((resolve) => {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        resolve(e.target?.result as string);
+      };
+      reader.readAsDataURL(file);
+    });
+  };
+
+  const handlePaste = async (e: React.ClipboardEvent) => {
+    const items = e.clipboardData.items;
+
+    for (let i = 0; i < items.length; i++) {
+      const item = items[i];
+
+      // 处理图片粘贴
+      if (item.type.indexOf("image") !== -1) {
+        e.preventDefault();
+        const file = item.getAsFile();
+        if (file) {
+          await handleImageUpload(file);
+        }
+      }
+    }
+  };
+
+  const handleImageUpload = async (file: File) => {
+    setUploading(true);
+    try {
+      const imageUrl = await uploadImage(file);
+      setPastedImages((prev) => [...prev, imageUrl]);
+      setReplyText((prev) => prev + `\n![图片](${imageUrl})\n`);
+    } catch (error) {
+      console.error("图片上传失败:", error);
+    } finally {
+      setUploading(false);
+    }
+  };
+
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+    setDragOver(true);
+  };
+
+  const handleDragLeave = (e: React.DragEvent) => {
+    e.preventDefault();
+    setDragOver(false);
+  };
+
+  const handleDrop = async (e: React.DragEvent) => {
+    e.preventDefault();
+    setDragOver(false);
+
+    const files = Array.from(e.dataTransfer.files);
+    const imageFiles = files.filter((file) => file.type.startsWith("image/"));
+
+    for (const file of imageFiles) {
+      await handleImageUpload(file);
+    }
+  };
+
+  const renderContent = (content: string) => {
+    const lines = content.split("\n");
+    return lines.map((line, i) => {
+      // 检查是否是图片链接
+      const imageMatch = line.match(/!\[.*?\]\((.*?)\)/);
+      if (imageMatch) {
+        return (
+          <div key={i} className="content-image">
+            <img src={imageMatch[1]} alt="用户上传的图片" />
+          </div>
+        );
+      }
+
+      // 检查是否是链接
+      const linkMatch = line.match(/(https?:\/\/[^\s]+)/);
+      if (linkMatch) {
+        return (
+          <p
+            key={i}
+            dangerouslySetInnerHTML={{
+              __html: line.replace(
+                linkMatch[0],
+                `<a href="${linkMatch[0]}" target="_blank" rel="noopener noreferrer">${linkMatch[0]}</a>`
+              ),
+            }}
+          />
+        );
+      }
+
+      return line ? <p key={i}>{line}</p> : <br key={i} />;
+    });
   };
 
   if (!post) {
@@ -93,325 +198,166 @@ export default function PostPage() {
 
   return (
     <CommunityLayout showSidebars={false}>
-      {/* Progress Bar */}
-      <div className="thread-progress">
-        <div className="progress-bar">
-          <div className="progress-fill" style={{ width: "20%" }} />
-        </div>
-        <span className="progress-text">1 / {replies.length + 1}</span>
-      </div>
-
-      {/* Breadcrumb */}
-      <nav className="post-breadcrumb">
-        <Link href="/" className="breadcrumb-link">
-          首页
+      {/* Simplified Header */}
+      <div className="post-header-simple">
+        <Link href="/community" className="back-link">
+          ← 返回社区
         </Link>
-        <span className="breadcrumb-sep">/</span>
-        <Link href="/community" className="breadcrumb-link">
-          社区
-        </Link>
-        <span className="breadcrumb-sep">/</span>
-        <span className="breadcrumb-current">{post.title}</span>
-      </nav>
-
-      {/* Post Header */}
-      <header className="post-page-header">
-        <h1 className="post-page-title">{post.title}</h1>
-        <div className="post-page-meta">
+        <div className="post-meta-simple">
           <span className="category-pill" data-category={post.category}>
             {categories[post.category] || post.category}
           </span>
-          {post.tags && post.tags.length > 0 && (
-            <span className="meta-tags">
-              {post.tags.map((tag) => (
-                <span key={tag} className="meta-tag">
-                  {tag}
-                </span>
-              ))}
-            </span>
-          )}
+          <span className="post-stats-simple">
+            {post.views} 浏览 · {replies.length} 回复
+          </span>
         </div>
-      </header>
-
-      {/* Thread Container */}
-      <div className="thread-container">
-        {/* Original Post */}
-        <article className="thread-post original-post">
-          <div className="post-sidebar">
-            <div className="post-avatar">
-              {post.author.charAt(0).toUpperCase()}
-            </div>
-            <div className="post-meta-sidebar">
-              <div className="post-author">{post.author}</div>
-              <div className="post-time">{formatTime(post.createdAt)}</div>
-              <div className="post-stats">
-                <span>{post.views} 浏览</span>
-              </div>
-            </div>
-          </div>
-
-          <div className="post-content-area">
-            {post.imageUrl && (
-              <div className="post-media">
-                <img src={post.imageUrl} alt={post.title} />
-              </div>
-            )}
-
-            {post.musicUrl && (
-              <div className="post-music-player">
-                <div className="music-info">
-                  <span className="music-name">
-                    {post.musicTitle || "音频文件"}
-                  </span>
-                </div>
-                <audio controls>
-                  <source src={post.musicUrl} />
-                </audio>
-              </div>
-            )}
-
-            <div className="post-content">
-              {post.content
-                .split("\n")
-                .map((line, i) =>
-                  line ? <p key={i}>{line}</p> : <br key={i} />
-                )}
-            </div>
-
-            <div className="post-actions">
-              <button className="action-btn like-btn">
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                >
-                  <path d="M7 10v12l5-3 5 3V10" />
-                  <path d="M12 2L9.09 8.26l-6.91 1L7 14l-1.27 6.74L12 17.77l6.27 3.23L17 14l4.82-4.74-6.91-1L12 2z" />
-                </svg>
-                <span>赞</span>
-              </button>
-              <button className="action-btn reply-btn">
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                >
-                  <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
-                </svg>
-                <span>回复</span>
-              </button>
-              <button className="action-btn share-btn">
-                <svg
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                >
-                  <circle cx="18" cy="5" r="3" />
-                  <circle cx="6" cy="12" r="3" />
-                  <circle cx="18" cy="19" r="3" />
-                  <line x1="8.59" y1="13.51" x2="15.42" y2="17.49" />
-                  <line x1="15.41" y1="6.51" x2="8.59" y2="10.49" />
-                </svg>
-                <span>分享</span>
-              </button>
-            </div>
-          </div>
-        </article>
-
-        {/* Replies */}
-        {replies.map((reply, index) => (
-          <article key={reply.id} className="thread-post reply-post">
-            <div className="post-sidebar">
-              <div className="post-avatar small">
-                {reply.author.charAt(0).toUpperCase()}
-              </div>
-              <div className="post-meta-sidebar">
-                <div className="post-author">{reply.author}</div>
-                <div className="post-time">{formatTime(reply.createdAt)}</div>
-                <div className="post-number">#{index + 1}</div>
-              </div>
-            </div>
-
-            <div className="post-content-area">
-              <div className="post-content">
-                {reply.content
-                  .split("\n")
-                  .map((line, i) =>
-                    line ? <p key={i}>{line}</p> : <br key={i} />
-                  )}
-              </div>
-
-              <div className="post-actions">
-                <button className="action-btn like-btn">
-                  <svg
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                  >
-                    <path d="M7 10v12l5-3 5 3V10" />
-                  </svg>
-                  <span>赞</span>
-                </button>
-                <button className="action-btn reply-btn">
-                  <svg
-                    viewBox="0 0 24 24"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                  >
-                    <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
-                  </svg>
-                  <span>回复</span>
-                </button>
-              </div>
-            </div>
-          </article>
-        ))}
-
-        {replies.length === 0 && (
-          <div className="no-replies">
-            <p>暂无回复，来发表第一条吧</p>
-          </div>
-        )}
       </div>
 
-      {/* Modern Reply Editor */}
-      <section className="modern-reply-editor">
-        <div className="editor-header">
-          {user && (
-            <div className="editor-user-info">
-              <div className="editor-avatar">
-                {user.username.charAt(0).toUpperCase()}
-              </div>
-              <span>
-                以 <strong>{user.username}</strong> 身份回复
-              </span>
+      <h1 className="post-title-simple">{post.title}</h1>
+
+      {/* Simplified Main Post */}
+      <article className="main-post-simple">
+        <div className="post-author-info">
+          <div className="author-avatar">
+            {post.author.charAt(0).toUpperCase()}
+          </div>
+          <div className="author-details">
+            <span className="author-name">{post.author}</span>
+            <span className="post-time">{formatTime(post.createdAt)}</span>
+          </div>
+        </div>
+
+        <div className="post-content-simple">
+          {post.imageUrl && (
+            <div className="post-image">
+              <img src={post.imageUrl} alt={post.title} />
             </div>
           )}
-          <div className="editor-mode-toggle">
-            <button
-              className={`mode-btn ${!previewMode ? "active" : ""}`}
-              onClick={() => setPreviewMode(false)}
-            >
-              编辑
-            </button>
-            <button
-              className={`mode-btn ${previewMode ? "active" : ""}`}
-              onClick={() => setPreviewMode(true)}
-            >
-              预览
-            </button>
-          </div>
+
+          {post.musicUrl && (
+            <div className="post-audio">
+              <div className="audio-title">{post.musicTitle || "音频文件"}</div>
+              <audio controls>
+                <source src={post.musicUrl} />
+              </audio>
+            </div>
+          )}
+
+          <div className="post-text">{renderContent(post.content)}</div>
         </div>
 
-        <div className="editor-container">
-          <div className="editor-toolbar">
-            <button className="toolbar-btn" title="粗体">
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-              >
-                <path d="M6 4h8a4 4 0 0 1 4 4 4 4 0 0 1-4 4H6z" />
-                <path d="M6 12h9a4 4 0 0 1 4 4 4 4 0 0 1-4 4H6z" />
-              </svg>
-            </button>
-            <button className="toolbar-btn" title="斜体">
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-              >
-                <line x1="19" y1="4" x2="10" y2="4" />
-                <line x1="14" y1="20" x2="5" y2="20" />
-                <line x1="15" y1="4" x2="9" y2="20" />
-              </svg>
-            </button>
-            <button className="toolbar-btn" title="代码">
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-              >
-                <polyline points="16 18 22 12 16 6" />
-                <polyline points="8 6 2 12 8 18" />
-              </svg>
-            </button>
-            <div className="toolbar-divider" />
-            <button className="toolbar-btn" title="上传文件">
-              <svg
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-              >
-                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
-                <polyline points="7 10 12 15 17 10" />
-                <line x1="12" y1="15" x2="12" y2="3" />
-              </svg>
-            </button>
-            <button
-              className="toolbar-btn emoji-trigger"
-              onClick={() => setShowEmojiPicker(true)}
-              title="表情"
-            >
-              😊
-            </button>
-          </div>
+        <div className="post-actions-simple">
+          <button className="action-btn-simple">👍 赞</button>
+          <button className="action-btn-simple">💬 回复</button>
+          <button className="action-btn-simple">📤 分享</button>
+        </div>
+      </article>
 
-          <div className="editor-content">
-            {!previewMode ? (
-              <textarea
-                className="editor-textarea"
-                placeholder="写下你的回复... 支持 Markdown 格式"
-                value={replyText}
-                onChange={(e) => setReplyText(e.target.value)}
-                rows={6}
-              />
-            ) : (
-              <div className="editor-preview">
-                {replyText ? (
-                  <div
-                    dangerouslySetInnerHTML={{
-                      __html: formatMarkdown(replyText),
-                    }}
-                  />
-                ) : (
-                  <p className="preview-placeholder">预览将在这里显示...</p>
-                )}
+      {/* Simplified Replies */}
+      <div className="replies-section">
+        <h3 className="replies-title">
+          {replies.length > 0 ? `${replies.length} 条回复` : "暂无回复"}
+        </h3>
+
+        {replies.map((reply, index) => (
+          <div key={reply.id} className="reply-simple">
+            <div className="reply-header">
+              <div className="reply-avatar">
+                {reply.author.charAt(0).toUpperCase()}
               </div>
-            )}
+              <div className="reply-info">
+                <span className="reply-author">{reply.author}</span>
+                <span className="reply-time">
+                  {formatTime(reply.createdAt)}
+                </span>
+                <span className="reply-number">#{index + 1}</span>
+              </div>
+            </div>
+
+            <div className="reply-content">{renderContent(reply.content)}</div>
+
+            <div className="reply-actions">
+              <button className="reply-action-btn">👍</button>
+              <button className="reply-action-btn">💬</button>
+            </div>
           </div>
+        ))}
+      </div>
+
+      {/* Simplified Reply Editor */}
+      <div className="reply-editor-simple">
+        {user && (
+          <div className="editor-user-simple">
+            <div className="user-avatar-simple">
+              {user.username.charAt(0).toUpperCase()}
+            </div>
+            <span>以 {user.username} 身份回复</span>
+          </div>
+        )}
+
+        <div className="textarea-container">
+          <textarea
+            className={`reply-textarea-simple ${dragOver ? "drag-over" : ""}`}
+            placeholder="写下你的回复... 支持粘贴图片和链接，也可以拖拽图片到这里"
+            value={replyText}
+            onChange={(e) => setReplyText(e.target.value)}
+            onPaste={handlePaste}
+            onDragOver={handleDragOver}
+            onDragLeave={handleDragLeave}
+            onDrop={handleDrop}
+            rows={4}
+          />
+          {uploading && (
+            <div className="upload-indicator">
+              <div className="upload-spinner" />
+              <span>上传图片中...</span>
+            </div>
+          )}
         </div>
 
-        <div className="editor-footer">
-          <div className="editor-hints">
-            <span>支持 **粗体** *斜体* `代码` 格式</span>
+        {/* 预览粘贴的图片 */}
+        {pastedImages.length > 0 && (
+          <div className="pasted-images-preview">
+            <div className="preview-title">已添加的图片:</div>
+            <div className="images-grid">
+              {pastedImages.map((imageUrl, index) => (
+                <div key={index} className="preview-image">
+                  <img src={imageUrl} alt={`预览图片 ${index + 1}`} />
+                  <button
+                    className="remove-image-btn"
+                    onClick={() => {
+                      setPastedImages((prev) =>
+                        prev.filter((_, i) => i !== index)
+                      );
+                      setReplyText((prev) =>
+                        prev.replace(`![图片](${imageUrl})`, "")
+                      );
+                    }}
+                  >
+                    ×
+                  </button>
+                </div>
+              ))}
+            </div>
           </div>
-          <div className="editor-actions">
-            <button
-              className="cancel-reply-btn"
-              onClick={() => setReplyText("")}
-            >
-              取消
-            </button>
-            <button
-              className="submit-reply-btn"
-              disabled={!replyText.trim() || submitting}
-              onClick={handleSubmitReply}
-            >
-              {submitting ? "发布中..." : "发布回复"}
-            </button>
-          </div>
+        )}
+
+        <div className="editor-hints">
+          <span>
+            💡 提示: 可以直接粘贴图片和链接 (Ctrl+V)，或拖拽图片到输入框
+          </span>
         </div>
-      </section>
+
+        <div className="reply-actions-simple">
+          <button
+            className="reply-submit-btn"
+            disabled={!replyText.trim() || submitting}
+            onClick={handleSubmitReply}
+          >
+            {submitting ? "发布中..." : "发布回复"}
+          </button>
+        </div>
+      </div>
 
       <EmojiPicker
         isOpen={showEmojiPicker}

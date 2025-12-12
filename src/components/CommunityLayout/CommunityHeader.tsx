@@ -32,7 +32,7 @@ export default function CommunityHeader({
       <div className="header-container">
         {/* Logo / Brand */}
         <Link href="/community" className="header-brand">
-          <span className="brand-text">音乐社区</span>
+          <span className="brand-text">COMMUNITY</span>
         </Link>
 
         {/* Search Bar */}

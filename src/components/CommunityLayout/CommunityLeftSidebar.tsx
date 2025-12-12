@@ -11,10 +11,16 @@ interface Category {
   count: number;
 }
 
-function CommunityLeftSidebarContent() {
+interface CommunityLeftSidebarContentProps {
+  selectedCategory?: string;
+  onCategoryChange?: (category: string) => void;
+}
+
+function CommunityLeftSidebarContent({
+  selectedCategory = "all",
+  onCategoryChange,
+}: CommunityLeftSidebarContentProps) {
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const currentCategory = searchParams.get("category") || "all";
 
   const [categories, setCategories] = useState<Category[]>([
     { id: "all", name: "全部话题", icon: "", count: 0 },
@@ -50,11 +56,7 @@ function CommunityLeftSidebarContent() {
   };
 
   const handleCategoryClick = (categoryId: string) => {
-    if (categoryId === "all") {
-      router.push("/community");
-    } else {
-      router.push(`/community?category=${categoryId}`);
-    }
+    onCategoryChange?.(categoryId);
   };
 
   return (
@@ -65,7 +67,7 @@ function CommunityLeftSidebarContent() {
           {categories.map((category) => (
             <button
               key={category.id}
-              className={`nav-item ${currentCategory === category.id ? "active" : ""}`}
+              className={`nav-item ${selectedCategory === category.id ? "active" : ""}`}
               onClick={() => handleCategoryClick(category.id)}
             >
               <span className="nav-icon">{category.icon}</span>
@@ -111,11 +113,22 @@ function SidebarFallback() {
   );
 }
 
-export default function CommunityLeftSidebar() {
+interface CommunityLeftSidebarProps {
+  selectedCategory?: string;
+  onCategoryChange?: (category: string) => void;
+}
+
+export default function CommunityLeftSidebar({
+  selectedCategory,
+  onCategoryChange,
+}: CommunityLeftSidebarProps) {
   return (
     <aside className="community-left-sidebar">
       <Suspense fallback={<SidebarFallback />}>
-        <CommunityLeftSidebarContent />
+        <CommunityLeftSidebarContent
+          selectedCategory={selectedCategory}
+          onCategoryChange={onCategoryChange}
+        />
       </Suspense>
     </aside>
   );

@@ -29,7 +29,7 @@ export default function StatsCards({
       title: "话题总数",
       value: totalTopics,
       icon: IconMessage,
-      color: "#8b5cf6",
+      color: "#f59e0b",
     },
     {
       title: "回复总数",

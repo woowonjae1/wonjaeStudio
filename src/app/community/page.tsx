@@ -23,17 +23,19 @@ export default function CommunityPage() {
   const [sortBy, setSortBy] = useState<"latest" | "popular" | "activity">(
     "latest"
   );
+  const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [allPosts, setAllPosts] = useState<Post[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     loadPosts();
-  }, []);
+  }, [selectedCategory, sortBy]);
 
   const loadPosts = async () => {
     setLoading(true);
-    const posts = await getPosts(undefined, "latest");
+    const category = selectedCategory === "all" ? undefined : selectedCategory;
+    const posts = await getPosts(category, sortBy);
     setAllPosts(posts);
     setLoading(false);
   };
@@ -43,10 +45,11 @@ export default function CommunityPage() {
   ) => {
     setSortBy(newSort);
     setCurrentPage(1);
-    setLoading(true);
-    const posts = await getPosts(undefined, newSort);
-    setAllPosts(posts);
-    setLoading(false);
+  };
+
+  const handleCategoryChange = (category: string) => {
+    setSelectedCategory(category);
+    setCurrentPage(1);
   };
 
   const totalPages = Math.ceil(allPosts.length / POSTS_PER_PAGE);
@@ -56,7 +59,10 @@ export default function CommunityPage() {
   );
 
   return (
-    <CommunityLayout>
+    <CommunityLayout
+      selectedCategory={selectedCategory}
+      onCategoryChange={handleCategoryChange}
+    >
       <CommunityTopTabs
         activeTab={sortBy}
         onTabChange={(tab) =>
@@ -83,6 +89,9 @@ export default function CommunityPage() {
             <div className="empty-icon">💬</div>
             <p>暂无话题</p>
             <span>成为第一个发起讨论的人</span>
+            <Link href="/community/new" className="empty-state-btn">
+              创建新话题
+            </Link>
           </div>
         ) : (
           paginatedPosts.map((post) => (
@@ -194,6 +203,19 @@ export default function CommunityPage() {
           </button>
         </div>
       )}
+
+      {/* Floating New Topic Button */}
+      <Link href="/community/new" className="floating-new-topic-btn">
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="2"
+        >
+          <path d="M12 5v14M5 12h14" />
+        </svg>
+        <span>新话题</span>
+      </Link>
     </CommunityLayout>
   );
 }
