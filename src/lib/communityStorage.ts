@@ -49,7 +49,7 @@ export interface Reply {
 const POSTS_KEY = "community_posts";
 const REPLIES_KEY = "community_replies";
 const VERSION_KEY = "community_data_version";
-const CURRENT_VERSION = "1.1"; // 增加版本号以支持嵌套回复
+const CURRENT_VERSION = "1.2"; // 强制重置数据以修复嵌套回复
 
 const defaultPosts: Post[] = [
   {
@@ -235,6 +235,10 @@ function addLocalReply(
     parentId,
     authorId,
   };
+
+  console.log("=== addLocalReply ===");
+  console.log("创建新回复:", newReply);
+  console.log("parentId:", parentId);
 
   replies.push(newReply);
   localStorage.setItem(REPLIES_KEY, JSON.stringify(replies));

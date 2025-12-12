@@ -62,6 +62,11 @@ export default function PostPage() {
   const handleSubmitReply = async () => {
     if (!replyText.trim() || !user) return;
 
+    console.log("=== 提交回复 ===");
+    console.log("回复内容:", replyText.trim());
+    console.log("回复目标ID:", replyingTo);
+    console.log("用户信息:", user);
+
     setSubmitting(true);
     const newReply = await addReply(
       postId,
@@ -70,6 +75,9 @@ export default function PostPage() {
       user.id,
       replyingTo || undefined
     );
+
+    console.log("新回复数据:", newReply);
+
     setReplies([...replies, newReply]);
     setReplyText("");
     setPastedImages([]);
@@ -79,6 +87,10 @@ export default function PostPage() {
   };
 
   const handleReplyToComment = (replyId: number, authorName: string) => {
+    console.log("=== 点击回复按钮 ===");
+    console.log("回复目标ID:", replyId);
+    console.log("回复目标作者:", authorName);
+
     setReplyingTo(replyId);
     setReplyingToAuthor(authorName);
     // 滚动到回复框
@@ -211,13 +223,34 @@ export default function PostPage() {
     const topLevel = replies.filter((reply) => !reply.parentId);
     const nested = replies.filter((reply) => reply.parentId);
 
-    return topLevel.map((reply) => ({
+    console.log("=== organizeReplies ===");
+    console.log("顶级回复:", topLevel);
+    console.log("嵌套回复:", nested);
+
+    const organized = topLevel.map((reply) => ({
       ...reply,
       children: nested.filter((child) => child.parentId === reply.id),
     }));
+
+    console.log("组织后结果:", organized);
+    return organized;
   };
 
   const organizedReplies = organizeReplies(replies);
+
+  // 临时调试信息
+  console.log("=== 调试信息 ===");
+  console.log("原始回复数据:", replies);
+  console.log("组织后的回复:", organizedReplies);
+  console.log("当前回复目标:", replyingTo, replyingToAuthor);
+
+  // 临时清理localStorage的函数（仅用于调试）
+  const clearLocalStorage = () => {
+    localStorage.removeItem("community_posts");
+    localStorage.removeItem("community_replies");
+    localStorage.removeItem("community_data_version");
+    window.location.reload();
+  };
 
   if (!post) {
     return (
@@ -244,6 +277,21 @@ export default function PostPage() {
           <span className="post-stats-simple">
             {post.views} 浏览 · {replies.length} 回复
           </span>
+          {/* 临时调试按钮 */}
+          <button
+            onClick={clearLocalStorage}
+            style={{
+              background: "#ef4444",
+              color: "white",
+              padding: "4px 8px",
+              borderRadius: "4px",
+              border: "none",
+              fontSize: "12px",
+              cursor: "pointer",
+            }}
+          >
+            重置数据
+          </button>
         </div>
       </div>
 
