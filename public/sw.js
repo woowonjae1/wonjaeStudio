@@ -1,4 +1,4 @@
-const CACHE_NAME = 'woowonjae-music-v1';
+const CACHE_NAME = 'woowonjae-music-v2';
 const urlsToCache = [
   '/',
   '/image/HeartBreaking.jpg',

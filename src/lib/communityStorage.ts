@@ -40,7 +40,7 @@ export interface Reply {
   content: string;
   time: string;
   createdAt: number;
-  parentId?: number; // 父回复ID，用于嵌套回复
+  parentId?: number | null; // 父回复ID，用于嵌套回复
   authorId?: string; // 作者ID
 }
 
@@ -49,7 +49,7 @@ export interface Reply {
 const POSTS_KEY = "community_posts";
 const REPLIES_KEY = "community_replies";
 const VERSION_KEY = "community_data_version";
-const CURRENT_VERSION = "1.2"; // 强制重置数据以修复嵌套回复
+const CURRENT_VERSION = "1.5"; // 修复parentId存储问题
 
 const defaultPosts: Post[] = [
   {
@@ -107,6 +107,7 @@ const defaultReplies: Reply[] = [
     time: "45分钟前",
     createdAt: Date.now() - 2700000,
     authorId: "audioeng-001",
+    parentId: null,
   },
   {
     id: 2,
@@ -116,6 +117,7 @@ const defaultReplies: Reply[] = [
     time: "30分钟前",
     createdAt: Date.now() - 1800000,
     authorId: "beatmaker-001",
+    parentId: null,
   },
   {
     id: 3,
@@ -183,11 +185,19 @@ function getLocalReplies(postId: number): Reply[] {
 
   // 检查数据版本，如果版本不匹配则重置数据
   const currentVersion = localStorage.getItem(VERSION_KEY);
+  console.log("=== 版本检查 ===");
+  console.log("当前版本:", currentVersion);
+  console.log("期望版本:", CURRENT_VERSION);
+
   if (currentVersion !== CURRENT_VERSION) {
+    console.log("版本不匹配，重置数据");
+    console.log("默认回复数据:", defaultReplies);
     localStorage.setItem(POSTS_KEY, JSON.stringify(defaultPosts));
     localStorage.setItem(REPLIES_KEY, JSON.stringify(defaultReplies));
     localStorage.setItem(VERSION_KEY, CURRENT_VERSION);
-    return defaultReplies.filter((r) => r.postId === postId);
+    const filteredReplies = defaultReplies.filter((r) => r.postId === postId);
+    console.log("返回的过滤回复:", filteredReplies);
+    return filteredReplies;
   }
 
   const stored = localStorage.getItem(REPLIES_KEY);
@@ -198,9 +208,23 @@ function getLocalReplies(postId: number): Reply[] {
 
   try {
     const replies: Reply[] = JSON.parse(stored);
-    return replies.filter((r) => r.postId === postId);
+    console.log("=== 从localStorage读取的数据 ===");
+    console.log("所有回复:", replies);
+    console.log("检查parentId字段:");
+    replies.forEach((reply, index) => {
+      console.log(`回复${index}:`, {
+        id: reply.id,
+        parentId: reply.parentId,
+        parentIdType: typeof reply.parentId,
+        hasParentId: reply.parentId !== undefined && reply.parentId !== null,
+      });
+    });
+    const filteredReplies = replies.filter((r) => r.postId === postId);
+    console.log("过滤后的回复:", filteredReplies);
+    return filteredReplies;
   } catch {
     // 如果解析失败，重置为默认数据
+    console.log("localStorage解析失败，重置为默认数据");
     localStorage.setItem(REPLIES_KEY, JSON.stringify(defaultReplies));
     return defaultReplies.filter((r) => r.postId === postId);
   }
@@ -211,7 +235,7 @@ function addLocalReply(
   author: string,
   content: string,
   authorId?: string,
-  parentId?: number
+  parentId?: number | null
 ): Reply {
   let replies: Reply[] = [];
   const stored = localStorage.getItem(REPLIES_KEY);
@@ -225,6 +249,12 @@ function addLocalReply(
     replies = [...defaultReplies];
   }
 
+  // 确保 parentId 的正确处理
+  const finalParentId =
+    parentId !== undefined && parentId !== null && parentId > 0
+      ? parentId
+      : null;
+
   const newReply: Reply = {
     id: Date.now(),
     postId,
@@ -232,13 +262,14 @@ function addLocalReply(
     content,
     time: "刚刚",
     createdAt: Date.now(),
-    parentId,
+    parentId: finalParentId,
     authorId,
   };
 
   console.log("=== addLocalReply ===");
+  console.log("输入参数:", { postId, author, content, authorId, parentId });
+  console.log("处理后的parentId:", finalParentId);
   console.log("创建新回复:", newReply);
-  console.log("parentId:", parentId);
 
   replies.push(newReply);
   localStorage.setItem(REPLIES_KEY, JSON.stringify(replies));
@@ -413,7 +444,7 @@ export async function getReplies(postId: number): Promise<Reply[]> {
         content: r.content,
         time: supabaseFormatTime(r.created_at),
         createdAt: new Date(r.created_at).getTime(),
-        parentId: r.parent_id || undefined,
+        parentId: r.parent_id || null, // 使用 null 而不是 undefined
         authorId: r.author_id,
       }));
     } catch (error) {
@@ -429,8 +460,14 @@ export async function addReply(
   author: string,
   content: string,
   authorId: string,
-  parentId?: number
+  parentId?: number | null
 ): Promise<Reply> {
+  console.log("=== addReply 函数调用 ===");
+  console.log("参数:", { postId, author, content, authorId, parentId });
+  console.log("parentId类型:", typeof parentId);
+  console.log("parentId是否为null:", parentId === null);
+  console.log("parentId是否为undefined:", parentId === undefined);
+
   if (isSupabaseConfigured()) {
     try {
       const reply = await createSupabaseReply({
@@ -448,7 +485,7 @@ export async function addReply(
           content: reply.content,
           time: "刚刚",
           createdAt: Date.now(),
-          parentId,
+          parentId: parentId || null,
           authorId,
         };
       }
@@ -457,6 +494,8 @@ export async function addReply(
     }
   }
 
+  console.log("=== 调用 addLocalReply ===");
+  console.log("传递的参数:", { postId, author, content, authorId, parentId });
   return addLocalReply(postId, author, content, authorId, parentId);
 }
 

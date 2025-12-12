@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useRouter, useParams } from "next/navigation";
+import { useParams } from "next/navigation";
 import Link from "next/link";
 import CommunityLayout from "@/components/CommunityLayout";
 import EmojiPicker from "@/components/EmojiPicker";
@@ -26,7 +26,6 @@ const categories: Record<string, string> = {
 };
 
 export default function PostPage() {
-  const router = useRouter();
   const params = useParams();
   const postId = Number(params.id);
 
@@ -34,7 +33,6 @@ export default function PostPage() {
   const [post, setPost] = useState<Post | null>(null);
   const [replies, setReplies] = useState<Reply[]>([]);
   const [replyText, setReplyText] = useState("");
-  const [previewMode, setPreviewMode] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [showEmojiPicker, setShowEmojiPicker] = useState(false);
   const [pastedImages, setPastedImages] = useState<string[]>([]);
@@ -62,37 +60,39 @@ export default function PostPage() {
   const handleSubmitReply = async () => {
     if (!replyText.trim() || !user) return;
 
-    console.log("=== 提交回复 ===");
-    console.log("回复内容:", replyText.trim());
-    console.log("回复目标ID:", replyingTo);
-    console.log("用户信息:", user);
-
     setSubmitting(true);
-    const newReply = await addReply(
-      postId,
-      user.username,
-      replyText.trim(),
-      user.id,
-      replyingTo || undefined
-    );
 
-    console.log("新回复数据:", newReply);
+    try {
+      // 确保 parentId 正确传递
+      const parentId = replyingTo && replyingTo > 0 ? replyingTo : null;
 
-    setReplies([...replies, newReply]);
-    setReplyText("");
-    setPastedImages([]);
-    setReplyingTo(null);
-    setReplyingToAuthor("");
-    setSubmitting(false);
+      await addReply(
+        postId,
+        user.username,
+        replyText.trim(),
+        user.id,
+        parentId
+      );
+
+      // 重新获取所有回复数据，确保嵌套结构正确
+      const updatedReplies = await getReplies(postId);
+      setReplies(updatedReplies);
+
+      setReplyText("");
+      setPastedImages([]);
+      setReplyingTo(null);
+      setReplyingToAuthor("");
+    } catch (error) {
+      console.error("提交回复失败:", error);
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   const handleReplyToComment = (replyId: number, authorName: string) => {
-    console.log("=== 点击回复按钮 ===");
-    console.log("回复目标ID:", replyId);
-    console.log("回复目标作者:", authorName);
-
     setReplyingTo(replyId);
     setReplyingToAuthor(authorName);
+
     // 滚动到回复框
     const replyEditor = document.querySelector(".reply-editor-simple");
     if (replyEditor) {
@@ -108,17 +108,6 @@ export default function PostPage() {
 
   const handleEmojiSelect = (emoji: string) => {
     setReplyText((prev) => prev + emoji);
-  };
-
-  const formatMarkdown = (text: string) => {
-    return text
-      .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
-      .replace(/\*(.*?)\*/g, "<em>$1</em>")
-      .replace(/`(.*?)`/g, "<code>$1</code>")
-      .replace(
-        /(https?:\/\/[^\s]+)/g,
-        '<a href="$1" target="_blank" rel="noopener noreferrer">$1</a>'
-      );
   };
 
   const uploadImage = async (file: File): Promise<string> => {
@@ -220,37 +209,30 @@ export default function PostPage() {
 
   // 组织嵌套回复结构
   const organizeReplies = (replies: Reply[]) => {
-    const topLevel = replies.filter((reply) => !reply.parentId);
-    const nested = replies.filter((reply) => reply.parentId);
+    // 确保所有回复都有正确的数据结构
+    const validReplies = replies.filter(
+      (reply) => reply && reply.id && reply.author && reply.content
+    );
 
-    console.log("=== organizeReplies ===");
-    console.log("顶级回复:", topLevel);
-    console.log("嵌套回复:", nested);
+    const topLevel = validReplies.filter(
+      (reply) => !reply.parentId || reply.parentId === null
+    );
+    const nested = validReplies.filter(
+      (reply) => reply.parentId && reply.parentId !== null
+    );
 
-    const organized = topLevel.map((reply) => ({
-      ...reply,
-      children: nested.filter((child) => child.parentId === reply.id),
-    }));
+    const organized = topLevel.map((reply) => {
+      const children = nested.filter((child) => child.parentId === reply.id);
+      return {
+        ...reply,
+        children: children || [], // 确保children始终是数组
+      };
+    });
 
-    console.log("组织后结果:", organized);
     return organized;
   };
 
   const organizedReplies = organizeReplies(replies);
-
-  // 临时调试信息
-  console.log("=== 调试信息 ===");
-  console.log("原始回复数据:", replies);
-  console.log("组织后的回复:", organizedReplies);
-  console.log("当前回复目标:", replyingTo, replyingToAuthor);
-
-  // 临时清理localStorage的函数（仅用于调试）
-  const clearLocalStorage = () => {
-    localStorage.removeItem("community_posts");
-    localStorage.removeItem("community_replies");
-    localStorage.removeItem("community_data_version");
-    window.location.reload();
-  };
 
   if (!post) {
     return (
@@ -277,21 +259,6 @@ export default function PostPage() {
           <span className="post-stats-simple">
             {post.views} 浏览 · {replies.length} 回复
           </span>
-          {/* 临时调试按钮 */}
-          <button
-            onClick={clearLocalStorage}
-            style={{
-              background: "#ef4444",
-              color: "white",
-              padding: "4px 8px",
-              borderRadius: "4px",
-              border: "none",
-              fontSize: "12px",
-              cursor: "pointer",
-            }}
-          >
-            重置数据
-          </button>
         </div>
       </div>
 
@@ -374,44 +341,64 @@ export default function PostPage() {
             </div>
 
             {/* 嵌套回复 */}
-            {reply.children && reply.children.length > 0 && (
-              <div className="nested-replies">
-                {reply.children.map((childReply, childIndex) => (
-                  <div key={childReply.id} className="reply-simple nested">
-                    <div className="reply-header">
-                      <div className="reply-avatar small">
-                        {childReply.author.charAt(0).toUpperCase()}
-                      </div>
-                      <div className="reply-info">
-                        <span className="reply-author">
-                          {childReply.author}
-                        </span>
-                        <span className="reply-time">
-                          {formatTime(childReply.createdAt)}
-                        </span>
-                        <span className="reply-to">回复 @{reply.author}</span>
-                      </div>
-                    </div>
+            {reply.children &&
+              Array.isArray(reply.children) &&
+              reply.children.length > 0 && (
+                <div className="nested-replies">
+                  {reply.children.map((childReply) => {
+                    // 确保childReply存在且有必要的属性
+                    if (
+                      !childReply ||
+                      !childReply.id ||
+                      !childReply.author ||
+                      !childReply.content
+                    ) {
+                      console.warn("无效的子回复数据:", childReply);
+                      return null;
+                    }
 
-                    <div className="reply-content">
-                      {renderContent(childReply.content)}
-                    </div>
+                    return (
+                      <div key={childReply.id} className="reply-simple nested">
+                        <div className="reply-header">
+                          <div className="reply-avatar small">
+                            {childReply.author.charAt(0).toUpperCase()}
+                          </div>
+                          <div className="reply-info">
+                            <span className="reply-author">
+                              {childReply.author}
+                            </span>
+                            <span className="reply-time">
+                              {formatTime(childReply.createdAt)}
+                            </span>
+                            <span className="reply-to">
+                              回复 @{reply.author}
+                            </span>
+                          </div>
+                        </div>
 
-                    <div className="reply-actions">
-                      <button className="reply-action-btn">👍</button>
-                      <button
-                        className="reply-action-btn"
-                        onClick={() =>
-                          handleReplyToComment(childReply.id, childReply.author)
-                        }
-                      >
-                        💬 回复
-                      </button>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
+                        <div className="reply-content">
+                          {renderContent(childReply.content)}
+                        </div>
+
+                        <div className="reply-actions">
+                          <button className="reply-action-btn">👍</button>
+                          <button
+                            className="reply-action-btn"
+                            onClick={() =>
+                              handleReplyToComment(
+                                childReply.id,
+                                childReply.author
+                              )
+                            }
+                          >
+                            💬 回复
+                          </button>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
           </div>
         ))}
       </div>
