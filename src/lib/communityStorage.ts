@@ -48,6 +48,8 @@ export interface Reply {
 
 const POSTS_KEY = "community_posts";
 const REPLIES_KEY = "community_replies";
+const VERSION_KEY = "community_data_version";
+const CURRENT_VERSION = "1.1"; // 增加版本号以支持嵌套回复
 
 const defaultPosts: Post[] = [
   {
@@ -104,6 +106,7 @@ const defaultReplies: Reply[] = [
 - 开启动态模式`,
     time: "45分钟前",
     createdAt: Date.now() - 2700000,
+    authorId: "audioeng-001",
   },
   {
     id: 2,
@@ -112,6 +115,27 @@ const defaultReplies: Reply[] = [
     content: `也可以考虑用多段压缩，Pro-MB 效果也不错。`,
     time: "30分钟前",
     createdAt: Date.now() - 1800000,
+    authorId: "beatmaker-001",
+  },
+  {
+    id: 3,
+    postId: 1,
+    author: "MixMaster",
+    content: `@AudioEng 谢谢建议！我试试动态 EQ，Q 值设置多少比较合适？`,
+    time: "20分钟前",
+    createdAt: Date.now() - 1200000,
+    parentId: 1,
+    authorId: "mixmaster-001",
+  },
+  {
+    id: 4,
+    postId: 1,
+    author: "AudioEng",
+    content: `@MixMaster 建议从 Q=3 开始，太窄会不自然，太宽会影响其他频率。`,
+    time: "15分钟前",
+    createdAt: Date.now() - 900000,
+    parentId: 1,
+    authorId: "audioeng-001",
   },
 ];
 
@@ -157,6 +181,15 @@ function getLocalReplies(postId: number): Reply[] {
     return defaultReplies.filter((r) => r.postId === postId);
   }
 
+  // 检查数据版本，如果版本不匹配则重置数据
+  const currentVersion = localStorage.getItem(VERSION_KEY);
+  if (currentVersion !== CURRENT_VERSION) {
+    localStorage.setItem(POSTS_KEY, JSON.stringify(defaultPosts));
+    localStorage.setItem(REPLIES_KEY, JSON.stringify(defaultReplies));
+    localStorage.setItem(VERSION_KEY, CURRENT_VERSION);
+    return defaultReplies.filter((r) => r.postId === postId);
+  }
+
   const stored = localStorage.getItem(REPLIES_KEY);
   if (!stored) {
     localStorage.setItem(REPLIES_KEY, JSON.stringify(defaultReplies));
@@ -167,7 +200,9 @@ function getLocalReplies(postId: number): Reply[] {
     const replies: Reply[] = JSON.parse(stored);
     return replies.filter((r) => r.postId === postId);
   } catch {
-    return [];
+    // 如果解析失败，重置为默认数据
+    localStorage.setItem(REPLIES_KEY, JSON.stringify(defaultReplies));
+    return defaultReplies.filter((r) => r.postId === postId);
   }
 }
 
@@ -374,6 +409,8 @@ export async function getReplies(postId: number): Promise<Reply[]> {
         content: r.content,
         time: supabaseFormatTime(r.created_at),
         createdAt: new Date(r.created_at).getTime(),
+        parentId: r.parent_id || undefined,
+        authorId: r.author_id,
       }));
     } catch (error) {
       console.error("Supabase error, falling back to localStorage:", error);

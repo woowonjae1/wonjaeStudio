@@ -36,6 +36,7 @@ export interface Reply {
   author_name: string;
   author_id: string;
   created_at: string;
+  parent_id?: number;
 }
 
 // 获取所有话题
