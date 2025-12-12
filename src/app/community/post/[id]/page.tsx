@@ -40,6 +40,8 @@ export default function PostPage() {
   const [pastedImages, setPastedImages] = useState<string[]>([]);
   const [uploading, setUploading] = useState(false);
   const [dragOver, setDragOver] = useState(false);
+  const [replyingTo, setReplyingTo] = useState<number | null>(null);
+  const [replyingToAuthor, setReplyingToAuthor] = useState<string>("");
 
   useEffect(() => {
     setUser(getUserIdentity());
@@ -65,12 +67,31 @@ export default function PostPage() {
       postId,
       user.username,
       replyText.trim(),
-      user.id
+      user.id,
+      replyingTo || undefined
     );
     setReplies([...replies, newReply]);
     setReplyText("");
     setPastedImages([]);
+    setReplyingTo(null);
+    setReplyingToAuthor("");
     setSubmitting(false);
+  };
+
+  const handleReplyToComment = (replyId: number, authorName: string) => {
+    setReplyingTo(replyId);
+    setReplyingToAuthor(authorName);
+    // 滚动到回复框
+    const replyEditor = document.querySelector(".reply-editor-simple");
+    if (replyEditor) {
+      replyEditor.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+  };
+
+  const cancelReply = () => {
+    setReplyingTo(null);
+    setReplyingToAuthor("");
+    setReplyText("");
   };
 
   const handleEmojiSelect = (emoji: string) => {
@@ -185,6 +206,19 @@ export default function PostPage() {
     });
   };
 
+  // 组织嵌套回复结构
+  const organizeReplies = (replies: Reply[]) => {
+    const topLevel = replies.filter((reply) => !reply.parentId);
+    const nested = replies.filter((reply) => reply.parentId);
+
+    return topLevel.map((reply) => ({
+      ...reply,
+      children: nested.filter((child) => child.parentId === reply.id),
+    }));
+  };
+
+  const organizedReplies = organizeReplies(replies);
+
   if (!post) {
     return (
       <CommunityLayout showSidebars={false}>
@@ -259,39 +293,101 @@ export default function PostPage() {
           {replies.length > 0 ? `${replies.length} 条回复` : "暂无回复"}
         </h3>
 
-        {replies.map((reply, index) => (
-          <div key={reply.id} className="reply-simple">
-            <div className="reply-header">
-              <div className="reply-avatar">
-                {reply.author.charAt(0).toUpperCase()}
+        {organizedReplies.map((reply, index) => (
+          <div key={reply.id} className="reply-thread">
+            {/* 主回复 */}
+            <div className="reply-simple">
+              <div className="reply-header">
+                <div className="reply-avatar">
+                  {reply.author.charAt(0).toUpperCase()}
+                </div>
+                <div className="reply-info">
+                  <span className="reply-author">{reply.author}</span>
+                  <span className="reply-time">
+                    {formatTime(reply.createdAt)}
+                  </span>
+                  <span className="reply-number">#{index + 1}</span>
+                </div>
               </div>
-              <div className="reply-info">
-                <span className="reply-author">{reply.author}</span>
-                <span className="reply-time">
-                  {formatTime(reply.createdAt)}
-                </span>
-                <span className="reply-number">#{index + 1}</span>
+
+              <div className="reply-content">
+                {renderContent(reply.content)}
+              </div>
+
+              <div className="reply-actions">
+                <button className="reply-action-btn">👍</button>
+                <button
+                  className="reply-action-btn"
+                  onClick={() => handleReplyToComment(reply.id, reply.author)}
+                >
+                  💬 回复
+                </button>
               </div>
             </div>
 
-            <div className="reply-content">{renderContent(reply.content)}</div>
+            {/* 嵌套回复 */}
+            {reply.children && reply.children.length > 0 && (
+              <div className="nested-replies">
+                {reply.children.map((childReply, childIndex) => (
+                  <div key={childReply.id} className="reply-simple nested">
+                    <div className="reply-header">
+                      <div className="reply-avatar small">
+                        {childReply.author.charAt(0).toUpperCase()}
+                      </div>
+                      <div className="reply-info">
+                        <span className="reply-author">
+                          {childReply.author}
+                        </span>
+                        <span className="reply-time">
+                          {formatTime(childReply.createdAt)}
+                        </span>
+                        <span className="reply-to">回复 @{reply.author}</span>
+                      </div>
+                    </div>
 
-            <div className="reply-actions">
-              <button className="reply-action-btn">👍</button>
-              <button className="reply-action-btn">💬</button>
-            </div>
+                    <div className="reply-content">
+                      {renderContent(childReply.content)}
+                    </div>
+
+                    <div className="reply-actions">
+                      <button className="reply-action-btn">👍</button>
+                      <button
+                        className="reply-action-btn"
+                        onClick={() =>
+                          handleReplyToComment(childReply.id, childReply.author)
+                        }
+                      >
+                        💬 回复
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         ))}
       </div>
 
       {/* Simplified Reply Editor */}
       <div className="reply-editor-simple">
+        {replyingTo && (
+          <div className="replying-to-info">
+            <span>正在回复 @{replyingToAuthor}</span>
+            <button className="cancel-reply-btn" onClick={cancelReply}>
+              ✕
+            </button>
+          </div>
+        )}
+
         {user && (
           <div className="editor-user-simple">
             <div className="user-avatar-simple">
               {user.username.charAt(0).toUpperCase()}
             </div>
-            <span>以 {user.username} 身份回复</span>
+            <span>
+              以 {user.username} 身份
+              {replyingTo ? `回复 @${replyingToAuthor}` : "回复"}
+            </span>
           </div>
         )}
 

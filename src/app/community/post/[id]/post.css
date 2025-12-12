@@ -1185,3 +1185,97 @@
     font-size: 0.75rem;
   }
 }
+/* Nested Replies Support */
+.reply-thread {
+  margin-bottom: 1.5rem;
+}
+
+.nested-replies {
+  margin-left: 2rem;
+  margin-top: 1rem;
+  padding-left: 1rem;
+  border-left: 2px solid rgba(255, 255, 255, 0.1);
+}
+
+.reply-simple.nested {
+  background: rgba(255, 255, 255, 0.01);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  margin-bottom: 0.75rem;
+}
+
+.reply-avatar.small {
+  width: 28px;
+  height: 28px;
+  font-size: 0.75rem;
+}
+
+.reply-to {
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 0.7rem;
+  margin-left: 0.5rem;
+}
+
+.reply-action-btn {
+  background: transparent;
+  border: none;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 0.8rem;
+}
+
+.reply-action-btn:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: rgba(255, 255, 255, 0.8);
+}
+
+/* Replying To Info */
+.replying-to-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  background: rgba(16, 185, 129, 0.1);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+  border-radius: 8px;
+  margin-bottom: 1rem;
+  color: #10b981;
+  font-size: 0.85rem;
+}
+
+.cancel-reply-btn {
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.6);
+  cursor: pointer;
+  padding: 0.25rem;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.cancel-reply-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+/* Mobile responsive for nested replies */
+@media (max-width: 768px) {
+  .nested-replies {
+    margin-left: 1rem;
+    padding-left: 0.75rem;
+  }
+
+  .reply-avatar.small {
+    width: 24px;
+    height: 24px;
+    font-size: 0.7rem;
+  }
+
+  .reply-to {
+    display: block;
+    margin-left: 0;
+    margin-top: 0.25rem;
+  }
+}

@@ -40,6 +40,8 @@ export interface Reply {
   content: string;
   time: string;
   createdAt: number;
+  parentId?: number; // 父回复ID，用于嵌套回复
+  authorId?: string; // 作者ID
 }
 
 // ============ localStorage 实现 ============
@@ -169,7 +171,13 @@ function getLocalReplies(postId: number): Reply[] {
   }
 }
 
-function addLocalReply(postId: number, author: string, content: string): Reply {
+function addLocalReply(
+  postId: number,
+  author: string,
+  content: string,
+  authorId?: string,
+  parentId?: number
+): Reply {
   let replies: Reply[] = [];
   const stored = localStorage.getItem(REPLIES_KEY);
   if (stored) {
@@ -189,6 +197,8 @@ function addLocalReply(postId: number, author: string, content: string): Reply {
     content,
     time: "刚刚",
     createdAt: Date.now(),
+    parentId,
+    authorId,
   };
 
   replies.push(newReply);
@@ -377,7 +387,8 @@ export async function addReply(
   postId: number,
   author: string,
   content: string,
-  authorId: string
+  authorId: string,
+  parentId?: number
 ): Promise<Reply> {
   if (isSupabaseConfigured()) {
     try {
@@ -396,6 +407,8 @@ export async function addReply(
           content: reply.content,
           time: "刚刚",
           createdAt: Date.now(),
+          parentId,
+          authorId,
         };
       }
     } catch (error) {
@@ -403,7 +416,7 @@ export async function addReply(
     }
   }
 
-  return addLocalReply(postId, author, content);
+  return addLocalReply(postId, author, content, authorId, parentId);
 }
 
 export function incrementViews(postId: number): void {
