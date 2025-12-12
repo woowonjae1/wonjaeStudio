@@ -1027,7 +1027,9 @@
     padding: 0.4rem 0.8rem;
   }
 }
-/ * Enhanced Reply Editor with Paste Support */ .textarea-container {
+
+/* Enhanced Reply Editor with Paste Support */
+.textarea-container {
   position: relative;
 }
 
