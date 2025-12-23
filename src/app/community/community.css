@@ -1,4 +1,9 @@
-/* Discourse-style Topics Table */
+/* ============================================
+   COMMUNITY PAGE - Electric Blue Theme
+   Topics List & Empty State
+   ============================================ */
+
+/* Topics Table */
 .topics-table {
   display: flex;
   flex-direction: column;
@@ -11,7 +16,7 @@
   padding: 0.75rem 1rem;
   font-size: 0.6875rem;
   font-weight: 700;
-  color: rgba(255, 255, 255, 0.4);
+  color: rgba(255, 255, 255, 0.35);
   text-transform: uppercase;
   letter-spacing: 0.05em;
   border-bottom: 1px solid rgba(255, 255, 255, 0.06);
@@ -23,16 +28,17 @@
   text-align: center;
 }
 
-/* Topic Row */
+/* Topic Row - Card Style */
 .topic-row {
   display: grid;
   grid-template-columns: 1fr 80px 80px 100px;
   gap: 1rem;
-  padding: 1rem;
+  padding: 1.125rem 1rem;
   text-decoration: none;
   align-items: center;
-  transition: background 0.15s ease;
+  transition: all 0.15s ease-out;
   border-bottom: 1px solid rgba(255, 255, 255, 0.03);
+  border-radius: 0;
 }
 
 .topic-row:hover {
@@ -40,13 +46,13 @@
 }
 
 .topic-row.pinned {
-  background: rgba(16, 185, 129, 0.03);
-  border-left: 3px solid #10b981;
+  background: rgba(77, 163, 255, 0.04);
+  border-left: 3px solid #4da3ff;
   margin-left: -3px;
 }
 
 .topic-row.pinned:hover {
-  background: rgba(59, 130, 246, 0.05);
+  background: rgba(77, 163, 255, 0.06);
 }
 
 /* Topic Column */
@@ -58,13 +64,13 @@
 }
 
 .topic-avatar {
-  width: 40px;
-  height: 40px;
+  width: 42px;
+  height: 42px;
   border-radius: 50%;
   background: linear-gradient(
     135deg,
-    rgba(59, 130, 246, 0.3),
-    rgba(139, 92, 246, 0.3)
+    rgba(77, 163, 255, 0.3),
+    rgba(59, 130, 246, 0.3)
   );
   display: flex;
   align-items: center;
@@ -92,10 +98,10 @@
 .pinned-badge {
   font-size: 0.625rem;
   font-weight: 700;
-  color: #10b981;
-  background: rgba(16, 185, 129, 0.15);
+  color: #4da3ff;
+  background: rgba(77, 163, 255, 0.15);
   padding: 0.125rem 0.375rem;
-  border-radius: 3px;
+  border-radius: 4px;
   text-transform: uppercase;
   letter-spacing: 0.03em;
   flex-shrink: 0;
@@ -112,7 +118,7 @@
 }
 
 .topic-row:hover .topic-title {
-  color: #10b981;
+  color: #4da3ff;
 }
 
 .topic-meta {
@@ -123,12 +129,12 @@
   color: rgba(255, 255, 255, 0.45);
 }
 
-/* Category Pills - Discourse Style */
+/* Category Pills */
 .category-pill {
   font-size: 0.6875rem;
   font-weight: 600;
   padding: 0.1875rem 0.5rem;
-  border-radius: 3px;
+  border-radius: 4px;
   text-transform: uppercase;
   letter-spacing: 0.02em;
 }
@@ -139,8 +145,8 @@
 }
 
 .category-pill[data-category="mixing"] {
-  color: #10b981;
-  background: rgba(16, 185, 129, 0.12);
+  color: #4da3ff;
+  background: rgba(77, 163, 255, 0.12);
 }
 
 .category-pill[data-category="plugins"] {
@@ -198,7 +204,9 @@
   color: rgba(255, 255, 255, 0.5);
 }
 
-/* Loading & Empty States */
+/* ============================================
+   LOADING STATE
+   ============================================ */
 .loading-state {
   display: flex;
   flex-direction: column;
@@ -213,7 +221,7 @@
   width: 32px;
   height: 32px;
   border: 3px solid rgba(255, 255, 255, 0.1);
-  border-top-color: #10b981;
+  border-top-color: #4da3ff;
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
 }
@@ -224,25 +232,56 @@
   }
 }
 
+/* ============================================
+   EMPTY STATE - Minimal Audio Waveform
+   ============================================ */
 .empty-state {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 4rem 2rem;
+  padding: 5rem 2rem;
   text-align: center;
 }
 
 .empty-icon {
-  font-size: 3rem;
-  margin-bottom: 1rem;
-  opacity: 0.5;
+  width: 80px;
+  height: 50px;
+  margin-bottom: 1.5rem;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  gap: 4px;
+  opacity: 0.4;
+}
+
+.empty-icon::before,
+.empty-icon::after,
+.empty-icon span {
+  content: "";
+  display: block;
+  width: 4px;
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 2px;
+}
+
+.empty-icon::before {
+  height: 20px;
+}
+
+.empty-icon span {
+  height: 35px;
+}
+
+.empty-icon::after {
+  height: 15px;
 }
 
 .empty-state p {
-  font-size: 1rem;
+  font-size: 1.125rem;
   color: rgba(255, 255, 255, 0.6);
   margin: 0 0 0.5rem;
+  font-weight: 500;
 }
 
 .empty-state span {
@@ -250,7 +289,64 @@
   color: rgba(255, 255, 255, 0.4);
 }
 
-/* Pagination - Discourse Style */
+/* Empty State Button - Electric Blue */
+.empty-state-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 2rem;
+  padding: 0.875rem 1.75rem;
+  background: #4da3ff;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: all 0.2s ease-out;
+}
+
+.empty-state-btn:hover {
+  background: #3b8de6;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(77, 163, 255, 0.35);
+}
+
+/* ============================================
+   FLOATING NEW TOPIC BUTTON (FAB)
+   ============================================ */
+.floating-new-topic-btn {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem 1.5rem;
+  background: #4da3ff;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  box-shadow: 0 4px 20px rgba(77, 163, 255, 0.4);
+  transition: all 0.2s ease-out;
+  z-index: 100;
+}
+
+.floating-new-topic-btn:hover {
+  background: #3b8de6;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(77, 163, 255, 0.5);
+}
+
+.floating-new-topic-btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* ============================================
+   PAGINATION
+   ============================================ */
 .pagination {
   display: flex;
   align-items: center;
@@ -269,10 +365,10 @@
   justify-content: center;
   background: rgba(255, 255, 255, 0.04);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 6px;
+  border-radius: 8px;
   color: rgba(255, 255, 255, 0.6);
   cursor: pointer;
-  transition: all 0.15s ease;
+  transition: all 0.15s ease-out;
 }
 
 .page-btn:hover:not(:disabled) {
@@ -303,12 +399,12 @@
   justify-content: center;
   background: transparent;
   border: 1px solid transparent;
-  border-radius: 6px;
+  border-radius: 8px;
   color: rgba(255, 255, 255, 0.6);
   font-size: 0.875rem;
   font-weight: 500;
   cursor: pointer;
-  transition: all 0.15s ease;
+  transition: all 0.15s ease-out;
 }
 
 .page-num:hover {
@@ -317,12 +413,14 @@
 }
 
 .page-num.active {
-  background: #10b981;
+  background: #4da3ff;
   color: #fff;
-  border-color: #10b981;
+  border-color: #4da3ff;
 }
 
-/* Mobile Responsive */
+/* ============================================
+   MOBILE RESPONSIVE
+   ============================================ */
 @media (max-width: 768px) {
   .table-header {
     display: none;
@@ -335,8 +433,8 @@
   }
 
   .topic-avatar {
-    width: 36px;
-    height: 36px;
+    width: 38px;
+    height: 38px;
     font-size: 0.8125rem;
   }
 
@@ -366,62 +464,7 @@
     height: 32px;
     min-width: 32px;
   }
-}
-/* Empty State Button */
-.empty-state-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  margin-top: 1.5rem;
-  padding: 0.75rem 1.5rem;
-  background: #10b981;
-  color: #fff;
-  text-decoration: none;
-  border-radius: 8px;
-  font-weight: 600;
-  font-size: 0.9rem;
-  transition: all 0.2s ease;
-}
 
-.empty-state-btn:hover {
-  background: #059669;
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
-}
-
-/* Floating New Topic Button */
-.floating-new-topic-btn {
-  position: fixed;
-  bottom: 2rem;
-  right: 2rem;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 1rem 1.5rem;
-  background: #10b981;
-  color: #fff;
-  text-decoration: none;
-  border-radius: 50px;
-  font-weight: 600;
-  font-size: 0.9rem;
-  box-shadow: 0 4px 20px rgba(16, 185, 129, 0.4);
-  transition: all 0.3s ease;
-  z-index: 100;
-}
-
-.floating-new-topic-btn:hover {
-  background: #059669;
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(16, 185, 129, 0.5);
-}
-
-.floating-new-topic-btn svg {
-  width: 18px;
-  height: 18px;
-}
-
-/* Mobile responsive */
-@media (max-width: 768px) {
   .floating-new-topic-btn {
     bottom: 1rem;
     right: 1rem;

@@ -1,0 +1,34 @@
+{
+  "topics": [
+    {
+      "name": "听感",
+      "slug": "listening",
+      "description": "音乐聆听体验和感受记录"
+    },
+    {
+      "name": "乐理",
+      "slug": "theory",
+      "description": "音乐理论学习和研究笔记"
+    },
+    {
+      "name": "制作",
+      "slug": "production",
+      "description": "音乐制作技巧和经验分享"
+    },
+    {
+      "name": "练习",
+      "slug": "practice",
+      "description": "乐器练习和技能提升记录"
+    },
+    {
+      "name": "器材",
+      "slug": "gear",
+      "description": "音乐设备和工具使用心得"
+    },
+    {
+      "name": "歌单",
+      "slug": "playlist",
+      "description": "精选歌单和音乐推荐"
+    }
+  ]
+}

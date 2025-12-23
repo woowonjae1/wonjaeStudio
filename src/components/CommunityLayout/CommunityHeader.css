@@ -1,14 +1,19 @@
-/* Discourse-style Fixed Header */
+/* ============================================
+   COMMUNITY HEADER - Electric Blue Theme
+   Glass Effect with Soft Shadow
+   ============================================ */
+
 .discourse-header {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   height: 60px;
-  background: #1a1a1a;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(18, 18, 18, 0.85);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
   z-index: 1000;
-  backdrop-filter: blur(12px);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
 }
 
 .header-container {
@@ -35,13 +40,13 @@
 }
 
 .brand-text {
-  font-size: 1.375rem;
+  font-size: 1.25rem;
   font-weight: 700;
   color: #fff;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.08em;
 }
 
-/* Search - 居中 */
+/* Search Bar - Centered with Glass Effect */
 .header-search {
   flex: 1;
   max-width: 480px;
@@ -51,21 +56,25 @@
 
 .header-search input {
   width: 100%;
-  height: 38px;
-  padding: 0 1rem 0 2.5rem;
+  height: 40px;
+  padding: 0 1rem 0 2.75rem;
   background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 6px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
   color: #fff;
   font-size: 0.875rem;
-  transition: all 0.2s ease;
+  transition: all 0.2s ease-out;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
 .header-search input:focus {
   outline: none;
   background: rgba(255, 255, 255, 0.08);
-  border-color: #10b981;
-  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.15);
+  border-color: #4da3ff;
+  box-shadow:
+    0 0 0 3px rgba(77, 163, 255, 0.15),
+    0 2px 12px rgba(0, 0, 0, 0.2);
 }
 
 .header-search input::placeholder {
@@ -74,7 +83,7 @@
 
 .search-icon {
   position: absolute;
-  left: 0.75rem;
+  left: 0.875rem;
   top: 50%;
   transform: translateY(-50%);
   width: 16px;
@@ -91,25 +100,26 @@
   flex-shrink: 0;
 }
 
+/* New Topic Button - Electric Blue */
 .new-topic-btn {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  padding: 0.5rem 1rem;
-  background: #10b981;
+  padding: 0.5rem 1.125rem;
+  background: #4da3ff;
   border: none;
-  border-radius: 6px;
+  border-radius: 8px;
   color: #fff;
   font-size: 0.875rem;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.2s ease-out;
 }
 
 .new-topic-btn:hover {
-  background: #059669;
+  background: #3b8de6;
   transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+  box-shadow: 0 4px 16px rgba(77, 163, 255, 0.35);
 }
 
 .new-topic-btn svg {
@@ -117,18 +127,19 @@
   height: 16px;
 }
 
+/* Icon Buttons */
 .header-icon-btn {
-  width: 38px;
-  height: 38px;
+  width: 40px;
+  height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
   background: transparent;
   border: 1px solid transparent;
-  border-radius: 6px;
+  border-radius: 8px;
   color: rgba(255, 255, 255, 0.6);
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.15s ease-out;
 }
 
 .header-icon-btn:hover {
@@ -147,21 +158,21 @@
 }
 
 .header-avatar-btn {
-  width: 38px;
-  height: 38px;
+  width: 40px;
+  height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
-  background: rgba(107, 114, 128, 0.3);
-  border: 2px solid rgba(107, 114, 128, 0.5);
+  background: rgba(77, 163, 255, 0.2);
+  border: 2px solid rgba(77, 163, 255, 0.4);
   border-radius: 50%;
   color: #fff;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: all 0.2s ease-out;
 }
 
 .header-avatar-btn:hover {
-  border-color: #6b7280;
+  border-color: #4da3ff;
   transform: scale(1.05);
 }
 
@@ -175,18 +186,18 @@
   font-weight: 600;
 }
 
-/* Dropdown */
+/* Dropdown Menu */
 .user-dropdown {
   position: absolute;
   top: calc(100% + 8px);
   right: 0;
   width: 240px;
-  background: #1f1f1f;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 8px;
+  background: #1e1e1e;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
   overflow: hidden;
-  animation: dropdownFadeIn 0.15s ease;
+  animation: dropdownFadeIn 0.15s ease-out;
 }
 
 @keyframes dropdownFadeIn {
@@ -214,7 +225,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(135deg, #6b7280, #9ca3af);
+  background: linear-gradient(135deg, #4da3ff, #3b82f6);
   border-radius: 50%;
   font-size: 1rem;
   font-weight: 600;
@@ -240,7 +251,7 @@
 
 .dropdown-divider {
   height: 1px;
-  background: rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.06);
 }
 
 .dropdown-item {
@@ -255,7 +266,7 @@
   font-size: 0.875rem;
   text-decoration: none;
   cursor: pointer;
-  transition: all 0.15s ease;
+  transition: all 0.15s ease-out;
 }
 
 .dropdown-item:hover {
@@ -269,7 +280,7 @@
   flex-shrink: 0;
 }
 
-/* Mobile */
+/* Mobile Responsive */
 @media (max-width: 768px) {
   .header-container {
     padding: 0 1rem;
@@ -289,8 +300,8 @@
   }
 
   .new-topic-btn {
-    width: 38px;
-    height: 38px;
+    width: 40px;
+    height: 40px;
     padding: 0;
     justify-content: center;
   }

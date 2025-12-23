@@ -1,0 +1,18 @@
+{
+  "site": {
+    "title": "WOOWONJAE",
+    "description": "音乐学习与聆听笔记",
+    "author": "Woowonjae",
+    "email": "contact@woowonjae.top",
+    "url": "https://woowonjae.top",
+    "social": {
+      "spotify": "",
+      "youtube": "",
+      "netease": ""
+    }
+  },
+  "blog": {
+    "postsPerPage": 10,
+    "pinnedPost": "start-here"
+  }
+}

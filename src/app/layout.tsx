@@ -1,54 +1,47 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { MusicPlayerProvider } from "@/contexts/MusicPlayerContext";
-import { CurvedLoopProvider } from "@/contexts/CurvedLoopContext";
-import GlobalMusicPlayer from "@/components/GlobalMusicPlayer";
+import { Header, Footer } from "@/components/layout";
+import { getSiteConfig } from "@/lib/content";
 
 const inter = Inter({ subsets: ["latin"] });
 
+// 获取站点配置
+const siteConfig = getSiteConfig();
+
 export const metadata: Metadata = {
   metadataBase: new URL(
-    process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"
+    process.env.NEXT_PUBLIC_SITE_URL || "https://woowonjae.top"
   ),
-  title: "WOOWONJAE MUSIC - Original Beats & Productions",
-  description:
-    "Experience the sound of tomorrow. Original beats, R&B, and emotional soundscapes by WOOWONJAE. Listen to Crush, Romantic, Nobody Gets Me, and more.",
+  title: {
+    default: siteConfig.site.title,
+    template: `%s | ${siteConfig.site.title}`,
+  },
+  description: siteConfig.site.description,
   keywords: [
+    "音乐笔记",
+    "音乐学习",
+    "乐理",
+    "听感",
+    "音乐制作",
     "WOOWONJAE",
-    "music producer",
-    "beats",
-    "R&B",
-    "hip hop",
-    "instrumental",
-    "music",
+    "音乐博客",
   ],
-  authors: [{ name: "WOOWONJAE" }],
-  creator: "WOOWONJAE",
-  publisher: "WOOWONJAE",
+  authors: [{ name: siteConfig.site.author }],
+  creator: siteConfig.site.author,
+  publisher: siteConfig.site.author,
   openGraph: {
     type: "website",
-    locale: "en_US",
-    url: "https://woowonjae.com",
-    title: "WOOWONJAE MUSIC - Original Beats & Productions",
-    description:
-      "Experience the sound of tomorrow. Original beats, R&B, and emotional soundscapes.",
-    siteName: "WOOWONJAE MUSIC",
-    images: [
-      {
-        url: "/image/Romantic.jpg",
-        width: 1200,
-        height: 630,
-        alt: "WOOWONJAE Music",
-      },
-    ],
+    locale: "zh_CN",
+    url: siteConfig.site.url,
+    title: siteConfig.site.title,
+    description: siteConfig.site.description,
+    siteName: siteConfig.site.title,
   },
   twitter: {
     card: "summary_large_image",
-    title: "WOOWONJAE MUSIC - Original Beats & Productions",
-    description:
-      "Experience the sound of tomorrow. Original beats, R&B, and emotional soundscapes.",
-    images: ["/image/Romantic.jpg"],
+    title: siteConfig.site.title,
+    description: siteConfig.site.description,
     creator: "@woowonjae",
   },
   robots: {
@@ -74,48 +67,33 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="zh-CN">
       <head>
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               "@context": "https://schema.org",
-              "@type": "MusicGroup",
-              name: "WOOWONJAE",
-              genre: ["R&B", "Hip Hop", "Electronic"],
-              url: "https://woowonjae.com",
-              email: "woowonjae0827@outlook.com",
-              description:
-                "Music producer creating original beats and emotional soundscapes",
-              album: [
-                {
-                  "@type": "MusicAlbum",
-                  name: "Crush",
-                  image: "/image/HeartBreaking.jpg",
-                },
-                {
-                  "@type": "MusicAlbum",
-                  name: "傍晚的 Romantic",
-                  image: "/image/Romantic.jpg",
-                },
-                {
-                  "@type": "MusicAlbum",
-                  name: "Nobody Gets Me",
-                  image: "/image/nobodygetsme.jpg",
-                },
-              ],
+              "@type": "Blog",
+              name: siteConfig.site.title,
+              description: siteConfig.site.description,
+              url: siteConfig.site.url,
+              author: {
+                "@type": "Person",
+                name: siteConfig.site.author,
+                email: siteConfig.site.email,
+              },
+              inLanguage: "zh-CN",
             }),
           }}
         />
       </head>
       <body className={inter.className}>
-        <CurvedLoopProvider>
-          <MusicPlayerProvider>
-            {children}
-            <GlobalMusicPlayer />
-          </MusicPlayerProvider>
-        </CurvedLoopProvider>
+        <div className="min-h-screen flex flex-col">
+          <Header />
+          <main className="flex-1">{children}</main>
+          <Footer />
+        </div>
       </body>
     </html>
   );

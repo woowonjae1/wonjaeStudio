@@ -5,6 +5,7 @@ module.exports = {
     "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./content/**/*.{md,mdx}",
   ],
   theme: {
     extend: {
@@ -48,8 +49,47 @@ module.exports = {
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
       },
+      // 极简设计的字体和间距系统
+      fontFamily: {
+        sans: [
+          "Inter",
+          "-apple-system",
+          "BlinkMacSystemFont",
+          "Segoe UI",
+          "Roboto",
+          "sans-serif",
+        ],
+        serif: ["Georgia", "Times New Roman", "serif"],
+      },
+      // 优化的行高和字符间距
+      lineHeight: {
+        relaxed: "1.75",
+        loose: "2",
+      },
+      // 内容宽度限制（60-80字符）
+      maxWidth: {
+        prose: "65ch",
+        "prose-wide": "80ch",
+      },
+      // 极简动画（减少动画效果）
       animation: {
-        "fade-in": "fadeIn 0.5s cubic-bezier(0.25, 0.1, 0.25, 1) forwards",
+        "fade-in": "fadeIn 0.3s ease-out",
+        "slide-up": "slideUp 0.2s ease-out",
+      },
+      keyframes: {
+        fadeIn: {
+          "0%": { opacity: "0" },
+          "100%": { opacity: "1" },
+        },
+        slideUp: {
+          "0%": { transform: "translateY(10px)", opacity: "0" },
+          "100%": { transform: "translateY(0)", opacity: "1" },
+        },
+      },
+      // 间距系统优化
+      spacing: {
+        18: "4.5rem",
+        88: "22rem",
       },
     },
   },

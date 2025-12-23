@@ -9,7 +9,10 @@
     "lint": "next lint",
     "lint:fix": "next lint --fix",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,css,scss,md}\"",
-    "prepare": "husky"
+    "prepare": "husky",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage"
   },
   "lint-staged": {
     "*.{js,jsx,ts,tsx}": [
@@ -43,6 +46,7 @@
     "country-flag-icons": "^1.5.18",
     "fast-check": "^4.4.0",
     "framer-motion": "^11.18.2",
+    "gray-matter": "^4.0.3",
     "jose": "^6.0.11",
     "lucide-react": "^0.475.0",
     "motion": "^12.15.0",
@@ -54,17 +58,22 @@
     "react-dom": "^18.2.0",
     "react-icons": "^5.5.0",
     "react-slick": "^0.30.3",
+    "rehype": "^13.0.2",
+    "rehype-stringify": "^10.0.1",
+    "remark": "^15.0.1",
+    "remark-html": "^16.0.1",
     "simplex-noise": "^4.0.3",
     "slick-carousel": "^1.8.1",
     "tailwind-merge": "^3.3.0",
     "tailwindcss-animate": "^1.0.7",
-    "typescript": "^5.3.3",
+    "unified": "^11.0.5",
     "zustand": "^5.0.8"
   },
   "devDependencies": {
     "@react-three/drei": "^9.122.0",
     "@react-three/fiber": "^8.18.0",
     "@types/bcryptjs": "^2.4.6",
+    "@types/jest": "^30.0.0",
     "@typescript-eslint/eslint-plugin": "^6.21.0",
     "@typescript-eslint/parser": "^6.21.0",
     "autoprefixer": "^10.4.20",
@@ -73,10 +82,13 @@
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-prettier": "^5.5.4",
     "husky": "^9.1.7",
+    "jest": "^30.2.0",
     "lint-staged": "^16.2.4",
     "postcss": "^8.4.49",
     "prettier": "^3.6.2",
     "tailwindcss": "^3.4.15",
-    "three": "^0.160.1"
+    "three": "^0.160.1",
+    "ts-jest": "^29.4.6",
+    "typescript": "^5.9.3"
   }
 }

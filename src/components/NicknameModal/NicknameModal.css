@@ -1,3 +1,7 @@
+/* ============================================
+   NICKNAME MODAL - Electric Blue Theme
+   ============================================ */
+
 .nickname-modal-overlay {
   position: fixed;
   top: 0;
@@ -10,17 +14,19 @@
   justify-content: center;
   z-index: 1000;
   padding: 1rem;
+  backdrop-filter: blur(8px);
 }
 
 .nickname-modal {
-  background: #111;
+  background: #1e1e1e;
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 8px;
+  border-radius: 12px;
   padding: 2rem;
   width: 100%;
-  max-width: 320px;
+  max-width: 340px;
   text-align: center;
   position: relative;
+  box-shadow: 0 8px 40px rgba(0, 0, 0, 0.4);
 }
 
 .close-btn {
@@ -34,6 +40,7 @@
   cursor: pointer;
   padding: 0.25rem;
   line-height: 1;
+  transition: color 0.15s ease-out;
 }
 
 .close-btn:hover {
@@ -41,15 +48,15 @@
 }
 
 .nickname-modal h2 {
-  font-size: 1.1rem;
-  font-weight: 500;
+  font-size: 1.125rem;
+  font-weight: 600;
   color: #fff;
   margin: 0 0 0.5rem;
 }
 
 .nickname-modal > p {
   font-size: 0.8rem;
-  color: rgba(255, 255, 255, 0.4);
+  color: rgba(255, 255, 255, 0.45);
   margin: 0 0 1.5rem;
 }
 
@@ -60,22 +67,24 @@
 }
 
 .nickname-modal input {
-  padding: 0.75rem 1rem;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 4px;
+  padding: 0.875rem 1rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
   color: #fff;
   font-size: 0.95rem;
   text-align: center;
+  transition: all 0.15s ease-out;
 }
 
 .nickname-modal input:focus {
   outline: none;
-  border-color: rgba(255, 255, 255, 0.2);
+  border-color: #4da3ff;
+  box-shadow: 0 0 0 3px rgba(77, 163, 255, 0.15);
 }
 
 .nickname-modal input::placeholder {
-  color: rgba(255, 255, 255, 0.25);
+  color: rgba(255, 255, 255, 0.3);
 }
 
 .nickname-modal .error {
@@ -84,27 +93,30 @@
 }
 
 .nickname-modal button {
-  padding: 0.65rem 1rem;
-  background: rgba(255, 255, 255, 0.1);
+  padding: 0.75rem 1rem;
+  background: #4da3ff;
   border: none;
-  border-radius: 4px;
+  border-radius: 8px;
   color: #fff;
-  font-size: 0.85rem;
+  font-size: 0.875rem;
+  font-weight: 600;
   cursor: pointer;
-  transition: background 0.15s;
+  transition: all 0.2s ease-out;
 }
 
 .nickname-modal button:hover:not(:disabled) {
-  background: rgba(255, 255, 255, 0.15);
+  background: #3b8de6;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(77, 163, 255, 0.35);
 }
 
 .nickname-modal button:disabled {
-  opacity: 0.4;
+  opacity: 0.5;
   cursor: not-allowed;
 }
 
 .nickname-modal .hint {
   font-size: 0.7rem;
-  color: rgba(255, 255, 255, 0.25);
+  color: rgba(255, 255, 255, 0.3);
   margin: 1rem 0 0;
 }
