@@ -1,97 +1,103 @@
 import React from "react";
-import { Container, Card, Tag } from "@/components/ui";
-import { ArticleCard, ArticleList } from "@/components/blog";
-import {
-  getLatestPosts,
-  getPinnedPost,
-  getAllTopics,
-  getSiteConfig,
-} from "@/lib/content";
+import { Container } from "@/components/ui";
+import { HomeDottedSurface } from "@/components/ui/dotted-surface-variants";
+import { NoteGrid } from "@/components/blog/NoteCard";
+import { Pagination } from "@/components/blog";
+import { getPaginatedPosts } from "@/lib/content";
 import Link from "next/link";
-import { formatDate } from "@/lib/markdown";
 
-export default function HomePage() {
-  const siteConfig = getSiteConfig();
-  const pinnedPost = getPinnedPost();
-  const latestPosts = getLatestPosts(12); // 获取最新12篇文章
-  const topics = getAllTopics();
+interface HomePageProps {
+  searchParams: { page?: string };
+}
+
+export default function HomePage({ searchParams }: HomePageProps) {
+  const currentPage = parseInt(searchParams.page || "1", 10);
+  const postsPerPage = 12;
+
+  const { posts, totalPages, totalPosts } = getPaginatedPosts(
+    currentPage,
+    postsPerPage
+  );
 
   return (
-    <div className="py-16">
-      <Container>
-        {/* Hero Section */}
-        <section className="blog-section text-center">
-          <h1 className="text-4xl font-semibold mb-4">
-            {siteConfig.site.title}
-          </h1>
-          <p className="text-xl text-muted-foreground mb-8 max-w-2xl mx-auto">
-            {siteConfig.site.description}
-          </p>
-          <p className="text-base text-muted-foreground/80 mb-8 max-w-xl mx-auto">
-            记录音乐学习的点滴，分享聆听的感悟，探索声音的奥秘
-          </p>
-          <Link href="/notes" className="btn btn-primary">
-            开始阅读
-          </Link>
-        </section>
+    <div className="relative min-h-screen bg-white dark:bg-gray-900">
+      {/* 主页专用背景 */}
+      <HomeDottedSurface />
 
-        {/* Pinned Post */}
-        {pinnedPost && (
-          <section className="blog-section">
-            <h2 className="text-2xl font-semibold mb-6">推荐阅读</h2>
-            <ArticleCard
-              post={pinnedPost}
-              variant="featured"
-              showTags={true}
-              showReadingTime={true}
-            />
-          </section>
-        )}
+      <Container className="relative z-10">
+        <div className="py-16">
+          {/* Hero Section - 简化 */}
+          <section className="text-center mb-16">
+            <div className="mb-12">
+              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gray-900 dark:bg-white text-white dark:text-gray-900 text-xl font-bold mb-6">
+                WJ
+              </div>
+              <h1 className="text-4xl font-bold mb-4 text-gray-900 dark:text-white">
+                WOOWONJAE
+              </h1>
+              <p className="text-lg text-gray-600 dark:text-gray-400 mb-8 max-w-xl mx-auto">
+                音乐制作人的学习笔记与创作感悟
+              </p>
 
-        {/* Latest Posts */}
-        <section className="blog-section">
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-2xl font-semibold">最新笔记</h2>
-            <Link
-              href="/notes"
-              className="text-sm text-muted-foreground hover:text-foreground transition-colors"
-            >
-              查看全部 →
-            </Link>
-          </div>
+              {/* Stats - 简化 */}
+              <div className="flex items-center justify-center gap-8 mb-8 text-sm">
+                <div className="text-center">
+                  <div className="text-xl font-bold text-gray-900 dark:text-white">
+                    {totalPosts}
+                  </div>
+                  <div className="text-gray-500">篇笔记</div>
+                </div>
+                <div className="w-px h-6 bg-gray-300 dark:bg-gray-700"></div>
+                <div className="text-center">
+                  <div className="text-xl font-bold text-gray-900 dark:text-white">
+                    {new Date().getFullYear()}
+                  </div>
+                  <div className="text-gray-500">年创立</div>
+                </div>
+              </div>
 
-          <ArticleList
-            posts={latestPosts}
-            variant="default"
-            showTags={true}
-            showReadingTime={true}
-            emptyMessage="还没有发布任何笔记"
-          />
-        </section>
-
-        {/* Topics */}
-        {topics.length > 0 && (
-          <section className="blog-section">
-            <h2 className="text-2xl font-semibold mb-6">主题分类</h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-              {topics.map((topic) => (
-                <Link
-                  key={topic.slug}
-                  href={`/topics/${topic.slug}`}
-                  className="block p-4 border border-border rounded-lg hover:bg-secondary/20 transition-colors"
-                >
-                  <h3 className="font-medium mb-1">{topic.name}</h3>
-                  <p className="text-sm text-muted-foreground mb-2 leading-relaxed">
-                    {topic.description}
-                  </p>
-                  <span className="text-xs text-muted-foreground">
-                    {topic.count} 篇文章
-                  </span>
-                </Link>
-              ))}
+              <Link
+                href="/notes/new"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-gray-900 dark:bg-white text-white dark:text-gray-900 rounded-lg hover:bg-gray-800 dark:hover:bg-gray-100 transition-colors"
+              >
+                写新笔记
+              </Link>
             </div>
           </section>
-        )}
+
+          {/* Notes Grid */}
+          <section>
+            <NoteGrid
+              posts={posts}
+              emptyMessage="还没有写过笔记，点击上方按钮开始记录吧！"
+              showSignature={false}
+            />
+          </section>
+
+          {/* Pagination */}
+          {totalPages > 1 && (
+            <section className="mt-12">
+              <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                basePath="/"
+              />
+            </section>
+          )}
+
+          {/* Footer Signature - 简化 */}
+          <section className="mt-16 pt-8 border-t border-gray-200 dark:border-gray-800">
+            <div className="text-center">
+              <div className="text-sm text-gray-500 dark:text-gray-400">
+                Made by{" "}
+                <span className="font-semibold text-gray-900 dark:text-white">
+                  WOOWONJAE
+                </span>{" "}
+                © {new Date().getFullYear()}
+              </div>
+            </div>
+          </section>
+        </div>
       </Container>
     </div>
   );

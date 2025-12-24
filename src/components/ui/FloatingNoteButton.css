@@ -1,0 +1,88 @@
+/* 浮动笔记按钮 */
+.floating-note-button-container {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 50;
+}
+
+.floating-note-button {
+  @apply flex items-center gap-2 px-4 py-3;
+  @apply bg-primary text-primary-foreground;
+  @apply rounded-full shadow-lg;
+  @apply hover:shadow-xl hover:scale-105;
+  @apply transition-all duration-300 ease-in-out;
+  @apply border-none no-underline;
+  min-width: 3rem;
+  overflow: hidden;
+}
+
+.floating-note-button:hover {
+  @apply text-primary-foreground;
+  transform: scale(1.05) translateY(-2px);
+  box-shadow:
+    0 20px 25px -5px rgba(0, 0, 0, 0.1),
+    0 10px 10px -5px rgba(0, 0, 0, 0.04);
+}
+
+.button-icon {
+  @apply text-lg;
+  flex-shrink: 0;
+}
+
+.button-text {
+  @apply text-sm font-medium whitespace-nowrap;
+  @apply transition-all duration-300 ease-in-out;
+  @apply opacity-0 max-w-0;
+  overflow: hidden;
+}
+
+.button-text.visible {
+  @apply opacity-100 max-w-20;
+}
+
+/* 响应式调整 */
+@media (max-width: 768px) {
+  .floating-note-button-container {
+    bottom: 1rem;
+    right: 1rem;
+  }
+
+  .floating-note-button {
+    @apply px-3 py-2;
+  }
+
+  .button-text {
+    display: none;
+  }
+}
+
+/* 动画效果 */
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+.floating-note-button:focus {
+  @apply outline-none ring-2 ring-primary/50 ring-offset-2;
+}
+
+/* 暗色模式适配 */
+@media (prefers-color-scheme: dark) {
+  .floating-note-button {
+    box-shadow:
+      0 10px 15px -3px rgba(0, 0, 0, 0.3),
+      0 4px 6px -2px rgba(0, 0, 0, 0.1);
+  }
+
+  .floating-note-button:hover {
+    box-shadow:
+      0 20px 25px -5px rgba(0, 0, 0, 0.3),
+      0 10px 10px -5px rgba(0, 0, 0, 0.2);
+  }
+}

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Navbar from "@/components/Navbar";
 import TutorialModal from "@/components/TutorialModal";
+import { TutorialDottedSurface } from "@/components/ui/dotted-surface-variants";
 import { tutorialsData } from "./tutorialsData";
 import "./tutorials.css";
 
@@ -80,102 +81,107 @@ export default function TutorialsPage() {
   };
 
   return (
-    <div className="tutorials-page">
-      <Navbar />
+    <div className="relative tutorials-page">
+      {/* 教程页面专用背景 */}
+      <TutorialDottedSurface />
 
-      <div className="tutorials-hero">
-        <h1 className="tutorials-hero-title">插件使用教程</h1>
-        <p className="tutorials-hero-subtitle">编曲与混音插件的实用指南</p>
-      </div>
+      <div className="relative z-10">
+        <Navbar />
 
-      <div className="tutorials-container">
-        {/* Search and Filter */}
-        <div className="tutorials-controls">
-          <div className="search-box">
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              className="search-icon"
-            >
-              <circle cx="11" cy="11" r="8" />
-              <path d="m21 21-4.35-4.35" />
-            </svg>
-            <input
-              type="text"
-              placeholder="搜索教程..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="search-input"
-            />
+        <div className="tutorials-hero">
+          <h1 className="tutorials-hero-title">插件使用教程</h1>
+          <p className="tutorials-hero-subtitle">编曲与混音插件的实用指南</p>
+        </div>
+
+        <div className="tutorials-container">
+          {/* Search and Filter */}
+          <div className="tutorials-controls">
+            <div className="search-box">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                className="search-icon"
+              >
+                <circle cx="11" cy="11" r="8" />
+                <path d="m21 21-4.35-4.35" />
+              </svg>
+              <input
+                type="text"
+                placeholder="搜索教程..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="search-input"
+              />
+            </div>
+
+            <div className="category-filters">
+              {categories.map((category) => (
+                <button
+                  key={category}
+                  className={`category-btn ${
+                    selectedCategory === category ? "active" : ""
+                  }`}
+                  onClick={() => setSelectedCategory(category)}
+                >
+                  {category}
+                </button>
+              ))}
+            </div>
           </div>
 
-          <div className="category-filters">
-            {categories.map((category) => (
-              <button
-                key={category}
-                className={`category-btn ${
-                  selectedCategory === category ? "active" : ""
-                }`}
-                onClick={() => setSelectedCategory(category)}
+          {/* Tutorials Grid */}
+          <div className="tutorials-grid">
+            {filteredTutorials.map((tutorial) => (
+              <div
+                key={tutorial.id}
+                className="tutorial-card"
+                onClick={() => handleCardClick(tutorial)}
               >
-                {category}
-              </button>
+                <div className="tutorial-card-image">
+                  <img src={tutorial.image} alt={tutorial.title} />
+                  <div className="tutorial-card-overlay">
+                    <span className="tutorial-card-category">
+                      {tutorial.category}
+                    </span>
+                  </div>
+                </div>
+                <div className="tutorial-card-content">
+                  <h3 className="tutorial-card-title">{tutorial.title}</h3>
+                  <p className="tutorial-card-description">
+                    {tutorial.description}
+                  </p>
+                  <div className="tutorial-card-meta">
+                    <span>{tutorial.date}</span>
+                    <span>•</span>
+                    <span>{tutorial.readTime}</span>
+                  </div>
+                  <button className="tutorial-card-btn">查看详情</button>
+                </div>
+              </div>
             ))}
           </div>
-        </div>
 
-        {/* Tutorials Grid */}
-        <div className="tutorials-grid">
-          {filteredTutorials.map((tutorial) => (
-            <div
-              key={tutorial.id}
-              className="tutorial-card"
-              onClick={() => handleCardClick(tutorial)}
-            >
-              <div className="tutorial-card-image">
-                <img src={tutorial.image} alt={tutorial.title} />
-                <div className="tutorial-card-overlay">
-                  <span className="tutorial-card-category">
-                    {tutorial.category}
-                  </span>
-                </div>
-              </div>
-              <div className="tutorial-card-content">
-                <h3 className="tutorial-card-title">{tutorial.title}</h3>
-                <p className="tutorial-card-description">
-                  {tutorial.description}
-                </p>
-                <div className="tutorial-card-meta">
-                  <span>{tutorial.date}</span>
-                  <span>•</span>
-                  <span>{tutorial.readTime}</span>
-                </div>
-                <button className="tutorial-card-btn">查看详情</button>
-              </div>
+          {filteredTutorials.length === 0 && (
+            <div className="no-results">
+              <p>没有找到相关教程</p>
             </div>
-          ))}
+          )}
         </div>
 
-        {filteredTutorials.length === 0 && (
-          <div className="no-results">
-            <p>没有找到相关教程</p>
-          </div>
+        {/* Modal */}
+        {selectedTutorial && (
+          <TutorialModal
+            isOpen={!!selectedTutorial}
+            onClose={handleCloseModal}
+            title={selectedTutorial.title}
+            category={selectedTutorial.category}
+            image={selectedTutorial.image}
+            content={getTutorialContent(selectedTutorial.id)?.content || []}
+          />
         )}
       </div>
-
-      {/* Modal */}
-      {selectedTutorial && (
-        <TutorialModal
-          isOpen={!!selectedTutorial}
-          onClose={handleCloseModal}
-          title={selectedTutorial.title}
-          category={selectedTutorial.category}
-          image={selectedTutorial.image}
-          content={getTutorialContent(selectedTutorial.id)?.content || []}
-        />
-      )}
     </div>
   );
 }

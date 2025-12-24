@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/components/Navbar";
-import { FloatingNoteButton } from "@/components/ui/FloatingNoteButton";
+import { Header, Footer } from "@/components/layout";
 import { getSiteConfig } from "@/lib/content";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -91,14 +90,9 @@ export default function RootLayout({
       </head>
       <body className={inter.className}>
         <div className="min-h-screen flex flex-col">
-          {/* 导航栏 */}
-          <Navbar />
-
-          {/* 主要内容区域，添加顶部间距以避免被固定导航栏遮挡 */}
-          <main className="flex-1 pt-20">{children}</main>
-
-          {/* 浮动笔记按钮 */}
-          <FloatingNoteButton />
+          <Header />
+          <main className="flex-1">{children}</main>
+          <Footer />
         </div>
       </body>
     </html>
