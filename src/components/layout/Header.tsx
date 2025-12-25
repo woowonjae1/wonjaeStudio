@@ -3,6 +3,7 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { Container } from "@/components/ui";
+import { SearchButton } from "@/components/search";
 
 export const Header: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -45,6 +46,7 @@ export const Header: React.FC = () => {
             >
               Music
             </Link>
+            <SearchButton />
           </nav>
 
           {/* 移动端菜单按钮 */}
