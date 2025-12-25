@@ -3,7 +3,6 @@
 import React from "react";
 import Link from "next/link";
 import { Container } from "@/components/ui";
-import { ArticleDottedSurface } from "@/components/ui/dotted-surface-variants";
 
 // 音乐作品数据
 const musicWorks = [
@@ -25,31 +24,44 @@ const musicWorks = [
 
 // 社交媒体链接
 const socialLinks = [
-  { name: "网易云音乐", url: "https://music.163.com", icon: "🎵" },
-  { name: "Spotify", url: "https://spotify.com", icon: "🎧" },
-  { name: "YouTube", url: "https://youtube.com", icon: "📺" },
-  { name: "Bilibili", url: "https://bilibili.com", icon: "📱" },
+  { name: "网易云音乐", url: "https://music.163.com" },
+  { name: "Spotify", url: "https://spotify.com" },
+  { name: "YouTube", url: "https://youtube.com" },
+  { name: "Bilibili", url: "https://bilibili.com" },
 ];
 
 export default function MusicPage() {
   return (
-    <div className="relative min-h-screen bg-white dark:bg-gray-900">
-      <ArticleDottedSurface />
-
-      <div className="relative z-10 py-16">
+    <div className="min-h-screen" style={{ background: "var(--bg-primary)" }}>
+      <div className="py-16">
         <Container>
           {/* 页面标题 */}
           <header className="text-center mb-16">
-            <div className="w-24 h-24 mx-auto mb-6 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center text-white text-3xl font-bold shadow-lg">
+            <div
+              className="w-20 h-20 mx-auto mb-6 rounded-full flex items-center justify-center text-xl font-bold"
+              style={{
+                background: "var(--accent-primary)",
+                color: "var(--bg-primary)",
+              }}
+            >
               WJ
             </div>
-            <h1 className="text-3xl md:text-4xl font-semibold mb-4 text-gray-900 dark:text-white">
+            <h1
+              className="text-2xl font-semibold mb-3"
+              style={{ color: "var(--text-primary)" }}
+            >
               WOOWONJAE
             </h1>
-            <p className="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto mb-6">
+            <p
+              className="text-base mb-4"
+              style={{ color: "var(--text-secondary)" }}
+            >
               音乐创作者 / 学习者 / 聆听者
             </p>
-            <p className="text-gray-500 dark:text-gray-500 max-w-xl mx-auto leading-relaxed">
+            <p
+              className="text-sm max-w-md mx-auto leading-relaxed"
+              style={{ color: "var(--text-muted)" }}
+            >
               热爱音乐，专注于电子音乐和流行音乐的创作与学习。
               这里记录我的音乐旅程，分享学习心得和创作灵感。
             </p>
@@ -57,22 +69,27 @@ export default function MusicPage() {
 
           {/* 社交媒体链接 */}
           <section className="mb-16">
-            <h2 className="text-xl font-semibold text-center mb-6 text-gray-900 dark:text-white">
+            <h2
+              className="text-base font-semibold text-center mb-6"
+              style={{ color: "var(--text-primary)" }}
+            >
               在这里找到我
             </h2>
-            <div className="flex flex-wrap justify-center gap-4">
+            <div className="flex flex-wrap justify-center gap-3">
               {socialLinks.map((link) => (
                 <a
                   key={link.name}
                   href={link.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 px-4 py-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg hover:border-gray-400 dark:hover:border-gray-500 hover:shadow-md transition-all"
+                  className="px-4 py-2 text-sm rounded-md transition-all"
+                  style={{
+                    background: "var(--bg-card)",
+                    border: "1px solid var(--border-color)",
+                    color: "var(--text-secondary)",
+                  }}
                 >
-                  <span>{link.icon}</span>
-                  <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                    {link.name}
-                  </span>
+                  {link.name}
                 </a>
               ))}
             </div>
@@ -80,69 +97,84 @@ export default function MusicPage() {
 
           {/* 音乐作品 */}
           <section className="mb-16">
-            <h2 className="text-xl font-semibold text-center mb-8 text-gray-900 dark:text-white">
+            <h2
+              className="text-base font-semibold text-center mb-8"
+              style={{ color: "var(--text-primary)" }}
+            >
               音乐作品
             </h2>
-            <div className="max-w-2xl mx-auto space-y-4">
+            <div className="max-w-lg mx-auto space-y-3">
               {musicWorks.map((work, index) => (
                 <a
                   key={index}
                   href={work.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group block p-5 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl hover:border-gray-400 dark:hover:border-gray-500 hover:shadow-md transition-all"
+                  className="block p-5 rounded-lg transition-all duration-200"
+                  style={{
+                    background: "var(--bg-card)",
+                    border: "1px solid var(--border-color)",
+                    textDecoration: "none",
+                  }}
                 >
                   <div className="flex items-center justify-between">
                     <div>
-                      <h3 className="font-semibold text-gray-900 dark:text-white group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors mb-1">
+                      <h3
+                        className="font-semibold mb-1"
+                        style={{ color: "var(--text-primary)" }}
+                      >
                         {work.title}
                       </h3>
-                      <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">
+                      <p
+                        className="text-sm mb-2"
+                        style={{ color: "var(--text-secondary)" }}
+                      >
                         {work.description}
                       </p>
-                      <div className="flex items-center gap-3 text-xs text-gray-500">
+                      <div
+                        className="flex items-center gap-2 text-xs"
+                        style={{ color: "var(--text-muted)" }}
+                      >
                         <span>{work.platform}</span>
                         <span>·</span>
                         <span>{work.year}</span>
                       </div>
                     </div>
-                    <span className="text-gray-400 group-hover:text-gray-600 dark:group-hover:text-gray-300 transition-colors text-xl">
-                      →
-                    </span>
+                    <span style={{ color: "var(--text-muted)" }}>→</span>
                   </div>
                 </a>
               ))}
             </div>
-            <p className="text-center text-sm text-gray-500 dark:text-gray-500 mt-6">
+            <p
+              className="text-center text-sm mt-6"
+              style={{ color: "var(--text-muted)" }}
+            >
               更多作品正在创作中...
             </p>
           </section>
 
           {/* 联系方式 */}
           <section className="text-center">
-            <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">
+            <h2
+              className="text-base font-semibold mb-4"
+              style={{ color: "var(--text-primary)" }}
+            >
               联系我
             </h2>
-            <p className="text-gray-600 dark:text-gray-400 mb-4">
+            <p
+              className="text-sm mb-4"
+              style={{ color: "var(--text-secondary)" }}
+            >
               如果你对音乐合作或交流感兴趣，欢迎联系我
             </p>
             <a
               href="mailto:contact@woowonjae.top"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-gray-900 dark:bg-white text-white dark:text-gray-900 rounded-lg hover:bg-gray-800 dark:hover:bg-gray-100 transition-colors font-medium"
+              className="inline-block px-6 py-3 text-sm font-medium rounded-md transition-colors"
+              style={{
+                background: "var(--accent-primary)",
+                color: "var(--bg-primary)",
+              }}
             >
-              <svg
-                className="w-5 h-5"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
-                />
-              </svg>
               发送邮件
             </a>
           </section>
@@ -151,9 +183,13 @@ export default function MusicPage() {
           <div className="text-center mt-16">
             <Link
               href="/"
-              className="inline-flex items-center px-4 py-2 text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white border border-gray-300 dark:border-gray-600 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
+              className="inline-block px-4 py-2 text-sm rounded-md transition-colors"
+              style={{
+                color: "var(--text-secondary)",
+                border: "1px solid var(--border-color)",
+              }}
             >
-              ← 返回首页
+              返回首页
             </Link>
           </div>
         </Container>

@@ -3,309 +3,499 @@
 @tailwind utilities;
 
 @layer base {
-  :root {
-    /* 极简设计的颜色系统 - 单一强调色 */
-    --background: 0 0% 100%;
-    --foreground: 0 0% 3.9%;
+  /* ========================================
+     简约米白主题 - 浅色模式（默认）
+     ======================================== */
+  :root,
+  [data-theme="light"] {
+    /* 背景色系 */
+    --bg-primary: #fafaf9;
+    --bg-card: #ffffff;
+    --bg-secondary: #f5f5f4;
+
+    /* 文本色系 */
+    --text-primary: #1c1917;
+    --text-secondary: #78716c;
+    --text-muted: #a8a29e;
+
+    /* 强调色 - 柔和协调 */
+    --accent-primary: #8b7355; /* 温暖棕色 - 主强调 */
+    --accent-secondary: #a39080; /* 浅棕灰 - 副强调 */
+    --accent-success: #7c9885; /* 柔和绿 - 成功/音频 */
+
+    /* 边框和分割线 */
+    --border-color: #e7e5e4;
+    --border-light: #f5f5f4;
+
+    /* 阴影 */
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.06);
+    --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.08);
+
+    /* 兼容 Tailwind/shadcn 变量 */
+    --background: 40 6% 97%;
+    --foreground: 20 14% 9%;
     --card: 0 0% 100%;
-    --card-foreground: 0 0% 3.9%;
+    --card-foreground: 20 14% 9%;
     --popover: 0 0% 100%;
-    --popover-foreground: 0 0% 3.9%;
-    --primary: 0 0% 9%;
-    --primary-foreground: 0 0% 98%;
-    --secondary: 0 0% 96.1%;
-    --secondary-foreground: 0 0% 9%;
-    --muted: 0 0% 96.1%;
-    --muted-foreground: 0 0% 45.1%;
-    --accent: 220 14.3% 95.9%;
-    --accent-foreground: 220 8.9% 46.1%;
-    --destructive: 0 84.2% 60.2%;
+    --popover-foreground: 20 14% 9%;
+    --primary: 30 20% 44%;
+    --primary-foreground: 40 6% 97%;
+    --secondary: 30 6% 96%;
+    --secondary-foreground: 20 14% 9%;
+    --muted: 30 6% 96%;
+    --muted-foreground: 25 6% 45%;
+    --accent: 30 6% 96%;
+    --accent-foreground: 20 14% 9%;
+    --destructive: 0 84% 60%;
     --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 89.8%;
-    --input: 0 0% 89.8%;
-    --ring: 0 0% 3.9%;
-    --radius: 0.25rem;
-
-    /* 极简设计的单一强调色 */
-    --blog-accent: 220 8.9% 46.1%;
-    --blog-accent-light: 220 14.3% 95.9%;
-
-    /* 极简设计的间距系统 */
-    --content-width: 65ch;
-    --content-width-wide: 80ch;
-    --section-spacing: 4rem;
-    --element-spacing: 1.5rem;
+    --border: 30 6% 90%;
+    --input: 30 6% 90%;
+    --ring: 30 20% 44%;
+    --radius: 0.5rem;
   }
 
-  .dark {
-    --background: 0 0% 3.9%;
-    --foreground: 0 0% 98%;
-    --card: 0 0% 3.9%;
-    --card-foreground: 0 0% 98%;
-    --popover: 0 0% 3.9%;
-    --popover-foreground: 0 0% 98%;
-    --primary: 0 0% 98%;
-    --primary-foreground: 0 0% 9%;
-    --secondary: 0 0% 14.9%;
-    --secondary-foreground: 0 0% 98%;
-    --muted: 0 0% 14.9%;
-    --muted-foreground: 0 0% 63.9%;
-    --accent: 0 0% 14.9%;
-    --accent-foreground: 0 0% 98%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 0 0% 98%;
-    --border: 0 0% 14.9%;
-    --input: 0 0% 14.9%;
-    --ring: 0 0% 83.1%;
+  /* ========================================
+     简约米白主题 - 深色模式
+     ======================================== */
+  .dark,
+  [data-theme="dark"] {
+    /* 背景色系 */
+    --bg-primary: #1c1917;
+    --bg-card: #292524;
+    --bg-secondary: #1c1917;
 
-    --blog-accent: 220 14.3% 95.9%;
-    --blog-accent-light: 220 8.9% 46.1%;
+    /* 文本色系 */
+    --text-primary: #fafaf9;
+    --text-secondary: #a8a29e;
+    --text-muted: #78716c;
+
+    /* 强调色 - 深色模式适配 */
+    --accent-primary: #c4b5a0; /* 浅棕金 - 主强调 */
+    --accent-secondary: #a39080; /* 中棕灰 - 副强调 */
+    --accent-success: #9db8a4; /* 浅绿 - 成功/音频 */
+
+    /* 边框和分割线 */
+    --border-color: #44403c;
+    --border-light: #292524;
+
+    /* 阴影 */
+    --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.2);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.3);
+    --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.4);
+
+    /* 兼容 Tailwind/shadcn 变量 */
+    --background: 20 14% 9%;
+    --foreground: 40 6% 97%;
+    --card: 20 10% 15%;
+    --card-foreground: 40 6% 97%;
+    --popover: 20 10% 15%;
+    --popover-foreground: 40 6% 97%;
+    --primary: 35 20% 70%;
+    --primary-foreground: 20 14% 9%;
+    --secondary: 20 10% 15%;
+    --secondary-foreground: 40 6% 97%;
+    --muted: 20 10% 15%;
+    --muted-foreground: 25 6% 65%;
+    --accent: 20 10% 15%;
+    --accent-foreground: 40 6% 97%;
+    --destructive: 0 62% 30%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 25 8% 25%;
+    --input: 25 8% 25%;
+    --ring: 35 20% 70%;
   }
+}
+
+/* ========================================
+   标签配色系统
+   ======================================== */
+:root {
+  /* 聆听笔记 - 淡紫 */
+  --tag-listening-bg: #f3e8ff;
+  --tag-listening-text: #7c3aed;
+
+  /* 乐理学习 - 淡蓝 */
+  --tag-theory-bg: #dbeafe;
+  --tag-theory-text: #2563eb;
+
+  /* 制作技巧 - 淡绿 */
+  --tag-production-bg: #d1fae5;
+  --tag-production-text: #059669;
+
+  /* 创作日志 - 淡橙 */
+  --tag-journal-bg: #fed7aa;
+  --tag-journal-text: #c2410c;
+
+  /* R&B - 淡粉 */
+  --tag-rnb-bg: #fce7f3;
+  --tag-rnb-text: #be185d;
+
+  /* 和声 - 靛蓝 */
+  --tag-harmony-bg: #e0e7ff;
+  --tag-harmony-text: #4f46e5;
+}
+
+[data-theme="dark"] {
+  /* 深色模式标签 - 降低亮度 */
+  --tag-listening-bg: #4c1d95;
+  --tag-listening-text: #ddd6fe;
+
+  --tag-theory-bg: #1e3a8a;
+  --tag-theory-text: #bfdbfe;
+
+  --tag-production-bg: #064e3b;
+  --tag-production-text: #a7f3d0;
+
+  --tag-journal-bg: #7c2d12;
+  --tag-journal-text: #fed7aa;
+
+  --tag-rnb-bg: #831843;
+  --tag-rnb-text: #fbcfe8;
+
+  --tag-harmony-bg: #312e81;
+  --tag-harmony-text: #c7d2fe;
 }
 
 @layer base {
   * {
-    @apply border-border;
+    border-color: var(--border-color);
+  }
+
+  html {
+    scroll-behavior: smooth;
   }
 
   body {
-    @apply bg-background text-foreground;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
     font-family:
       "Inter",
       -apple-system,
       BlinkMacSystemFont,
+      "Segoe UI",
       sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     line-height: 1.6;
+    transition:
+      background-color 0.3s ease,
+      color 0.3s ease;
   }
 
-  /* 极简设计的基础排版 */
+  /* 排版系统 */
   h1,
   h2,
   h3,
   h4,
   h5,
   h6 {
-    @apply font-sans;
     font-weight: 600;
-    line-height: 1.25;
-    letter-spacing: -0.025em;
-    margin-bottom: 0.75em;
+    line-height: 1.3;
+    letter-spacing: -0.02em;
+    color: var(--text-primary);
   }
 
   h1 {
-    font-size: 2.25rem;
+    font-size: 2rem;
   }
   h2 {
-    font-size: 1.875rem;
-  }
-  h3 {
     font-size: 1.5rem;
   }
-  h4 {
+  h3 {
     font-size: 1.25rem;
   }
-  h5 {
+  h4 {
     font-size: 1.125rem;
-  }
-  h6 {
-    font-size: 1rem;
   }
 
   p {
-    @apply leading-relaxed;
+    color: var(--text-primary);
+    line-height: 1.7;
     margin-bottom: 1rem;
   }
 
-  /* 链接样式 - 使用单一强调色 */
+  /* 链接样式 - 无图标 */
   a {
-    @apply text-foreground;
+    color: var(--accent-primary);
     text-decoration: none;
-    border-bottom: 1px solid transparent;
-    transition: all 0.2s ease;
+    transition: color 0.2s ease;
   }
 
   a:hover {
-    border-bottom-color: hsl(var(--blog-accent));
-    background-color: hsl(var(--blog-accent-light));
+    text-decoration: underline;
+    text-underline-offset: 2px;
   }
 
-  /* 按钮基础样式 */
-  button {
-    @apply transition-all duration-200 ease-out;
-    border: none;
-    background: none;
+  /* 选中文本 */
+  ::selection {
+    background-color: var(--accent-primary);
+    color: var(--bg-primary);
+  }
+}
+
+/* ========================================
+   全局组件样式
+   ======================================== */
+@layer components {
+  /* 容器 */
+  .container-blog {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* 卡片 */
+  .card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 24px;
+    box-shadow: var(--shadow-sm);
+    transition:
+      box-shadow 0.2s ease,
+      transform 0.2s ease;
+  }
+
+  .card:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+  }
+
+  /* 按钮 - 纯文字风格 */
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 20px;
+    font-size: 15px;
+    font-weight: 500;
+    border-radius: 6px;
     cursor: pointer;
+    transition: all 0.2s ease;
   }
 
-  /* 减少动画和装饰 */
-  * {
-    animation-duration: 0.2s !important;
+  .btn-primary {
+    background: var(--accent-primary);
+    color: var(--bg-primary);
+    border: none;
   }
 
-  /* 禁用不必要的动画 */
-  @media (prefers-reduced-motion: reduce) {
-    * {
-      animation-duration: 0.01ms !important;
-      animation-iteration-count: 1 !important;
-      transition-duration: 0.01ms !important;
-    }
+  .btn-primary:hover {
+    opacity: 0.9;
+  }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+  }
+
+  .btn-secondary:hover {
+    background: var(--bg-secondary);
+  }
+
+  .btn-text {
+    background: transparent;
+    color: var(--text-secondary);
+    border: none;
+    padding: 8px 12px;
+  }
+
+  .btn-text:hover {
+    color: var(--text-primary);
+    text-decoration: underline;
+  }
+
+  /* 标签 */
+  .tag {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: 500;
+    transition: opacity 0.2s ease;
+  }
+
+  .tag:hover {
+    opacity: 0.8;
+  }
+
+  .tag-listening {
+    background: var(--tag-listening-bg);
+    color: var(--tag-listening-text);
+  }
+
+  .tag-theory {
+    background: var(--tag-theory-bg);
+    color: var(--tag-theory-text);
+  }
+
+  .tag-production {
+    background: var(--tag-production-bg);
+    color: var(--tag-production-text);
+  }
+
+  .tag-journal {
+    background: var(--tag-journal-bg);
+    color: var(--tag-journal-text);
+  }
+
+  .tag-rnb {
+    background: var(--tag-rnb-bg);
+    color: var(--tag-rnb-text);
+  }
+
+  .tag-harmony {
+    background: var(--tag-harmony-bg);
+    color: var(--tag-harmony-text);
+  }
+
+  .tag-default {
+    background: var(--bg-secondary);
+    color: var(--text-secondary);
+  }
+
+  /* 输入框 */
+  .input {
+    width: 100%;
+    padding: 10px 14px;
+    font-size: 15px;
+    background: var(--bg-card);
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    color: var(--text-primary);
+    transition:
+      border-color 0.2s ease,
+      box-shadow 0.2s ease;
+  }
+
+  .input:focus {
+    outline: none;
+    border-color: var(--accent-primary);
+    box-shadow: 0 0 0 3px rgba(139, 115, 85, 0.1);
+  }
+
+  .input::placeholder {
+    color: var(--text-muted);
+  }
+
+  /* 文章内容 */
+  .prose {
+    color: var(--text-primary);
+    line-height: 1.8;
+  }
+
+  .prose h1,
+  .prose h2,
+  .prose h3 {
+    color: var(--text-primary);
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  .prose p {
+    margin-bottom: 1.25rem;
+  }
+
+  .prose a {
+    color: var(--accent-primary);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  .prose blockquote {
+    border-left: 3px solid var(--accent-primary);
+    padding-left: 1rem;
+    color: var(--text-secondary);
+    font-style: italic;
+    margin: 1.5rem 0;
+  }
+
+  .prose code {
+    background: var(--bg-secondary);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 0.9em;
+  }
+
+  .prose pre {
+    background: var(--bg-secondary);
+    padding: 1rem;
+    border-radius: 8px;
+    overflow-x: auto;
+    margin: 1.5rem 0;
+  }
+
+  .prose pre code {
+    background: transparent;
+    padding: 0;
+  }
+
+  /* 分割线 */
+  .divider {
+    height: 1px;
+    background: var(--border-color);
+    margin: 24px 0;
+  }
+
+  /* 博客区块 */
+  .blog-section {
+    margin-bottom: 3rem;
+  }
+
+  .blog-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 0 24px;
   }
 }
 
-/* 全局重置和基础样式 */
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-html,
-body {
-  width: 100%;
-  min-height: 100%;
-  margin: 0;
-  padding: 0;
-  overflow-x: hidden;
-  overflow-y: auto;
-}
-
-/* 优化的移动端样式 */
+/* ========================================
+   响应式适配
+   ======================================== */
 @media (max-width: 768px) {
   html {
-    font-size: 16px;
+    font-size: 15px;
   }
 
-  html {
-    -webkit-text-size-adjust: 100%;
-    -moz-text-size-adjust: 100%;
-    -ms-text-size-adjust: 100%;
-    text-size-adjust: 100%;
+  .container-blog {
+    padding: 0 16px;
+  }
+
+  .card {
+    padding: 16px;
+  }
+
+  h1 {
+    font-size: 1.75rem;
+  }
+  h2 {
+    font-size: 1.375rem;
   }
 }
 
 @media (max-width: 480px) {
   html {
-    font-size: 15px;
+    font-size: 14px;
+  }
+
+  .btn {
+    padding: 8px 16px;
+    font-size: 14px;
   }
 }
 
-/* 防止移动端水平滚动 */
+/* 防止水平滚动 */
+html,
 body {
   overflow-x: hidden;
-  position: relative;
 }
 
-/* 平滑滚动 */
-html {
-  scroll-behavior: smooth;
-}
-
-/* iOS 更好的触摸滚动 */
-* {
-  -webkit-overflow-scrolling: touch;
-}
-
-/* 极简设计的内容样式 */
-@layer components {
-  .blog-container {
-    @apply max-w-4xl mx-auto px-6;
-  }
-
-  .blog-content {
-    max-width: var(--content-width);
-    margin: 0 auto;
-  }
-
-  .blog-content-wide {
-    max-width: var(--content-width-wide);
-    margin: 0 auto;
-  }
-
-  .blog-section {
-    margin-bottom: var(--section-spacing);
-  }
-
-  .blog-element {
-    margin-bottom: var(--element-spacing);
-  }
-
-  /* 文章内容样式 */
-  .prose {
-    @apply max-w-none;
-  }
-
-  .prose h1 {
-    @apply text-3xl font-semibold mb-6 mt-8 first:mt-0;
-  }
-
-  .prose h2 {
-    @apply text-2xl font-semibold mb-4 mt-8;
-  }
-
-  .prose h3 {
-    @apply text-xl font-semibold mb-3 mt-6;
-  }
-
-  .prose p {
-    @apply mb-4 leading-relaxed;
-  }
-
-  .prose ul,
-  .prose ol {
-    @apply mb-4 ml-6;
-  }
-
-  .prose li {
-    @apply mb-2;
-  }
-
-  .prose blockquote {
-    @apply border-l-4 border-gray-300 pl-4 italic my-4;
-  }
-
-  .prose code {
-    @apply bg-gray-100 px-1 py-0.5 rounded text-sm;
-  }
-
-  .prose pre {
-    @apply bg-gray-100 p-4 rounded my-4 overflow-x-auto;
-  }
-
-  .prose pre code {
-    @apply bg-transparent p-0;
-  }
-
-  /* 极简按钮样式 */
-  .btn {
-    @apply inline-flex items-center justify-center px-4 py-2 text-sm font-medium;
-    @apply border border-transparent rounded transition-colors;
-    @apply focus:outline-none focus:ring-2 focus:ring-offset-2;
-  }
-
-  .btn-primary {
-    @apply bg-foreground text-background;
-    @apply hover:bg-foreground/90;
-    @apply focus:ring-foreground;
-  }
-
-  .btn-secondary {
-    @apply bg-transparent text-foreground border-foreground;
-    @apply hover:bg-foreground hover:text-background;
-    @apply focus:ring-foreground;
-  }
-
-  /* 极简卡片样式 */
-  .card {
-    @apply bg-card border border-border rounded-lg p-6;
-    @apply shadow-sm hover:shadow-md transition-shadow;
-  }
-
-  /* 极简标签样式 */
-  .tag {
-    @apply inline-flex items-center px-2 py-1 text-xs font-medium;
-    @apply bg-secondary text-secondary-foreground rounded;
-    @apply hover:bg-secondary/80 transition-colors;
+/* 减少动画 */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
   }
 }

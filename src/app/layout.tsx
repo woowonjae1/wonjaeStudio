@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import { FloatingNoteButton } from "@/components/ui/FloatingNoteButton";
+import { ThemeScript } from "@/components/theme";
 import { getSiteConfig } from "@/lib/content";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -68,8 +69,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="zh-CN">
+    <html lang="zh-CN" suppressHydrationWarning>
       <head>
+        {/* 主题初始化脚本 - 防止闪烁 */}
+        <ThemeScript />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
@@ -94,7 +97,7 @@ export default function RootLayout({
           {/* 导航栏 */}
           <Navbar />
 
-          {/* 主要内容区域，添加顶部间距以避免被固定导航栏遮挡 */}
+          {/* 主要内容区域 */}
           <main className="flex-1 pt-20">{children}</main>
 
           {/* 浮动笔记按钮 */}
