@@ -1,6 +1,7 @@
 "use client";
 
 import { usePathname, useRouter } from "next/navigation";
+import { ThemeToggle } from "@/components/theme";
 import "./Navbar.css";
 
 const Navbar = () => {
@@ -18,41 +19,28 @@ const Navbar = () => {
         <a href="/" onClick={handleHomeClick} className="navbar-logo">
           WJ
         </a>
-        <ul className="navbar-menu">
-          <li>
-            <a
-              href="/"
-              onClick={handleHomeClick}
-              className={pathname === "/" ? "active" : ""}
-            >
-              笔记
-            </a>
-          </li>
-          <li>
-            <a
-              href="/notes/new"
-              className={pathname === "/notes/new" ? "active" : ""}
-            >
-              写作
-            </a>
-          </li>
-          <li>
-            <a
-              href="/tutorials"
-              className={pathname === "/tutorials" ? "active" : ""}
-            >
-              教程
-            </a>
-          </li>
-          <li>
-            <a
-              href="/community"
-              className={pathname?.startsWith("/community") ? "active" : ""}
-            >
-              社区
-            </a>
-          </li>
-        </ul>
+        <div className="navbar-content">
+          <ul className="navbar-menu">
+            <li>
+              <a
+                href="/"
+                onClick={handleHomeClick}
+                className={pathname === "/" ? "active" : ""}
+              >
+                文章
+              </a>
+            </li>
+            <li>
+              <a
+                href="/notes/new"
+                className={pathname === "/notes/new" ? "active" : ""}
+              >
+                写作
+              </a>
+            </li>
+          </ul>
+          <ThemeToggle />
+        </div>
       </div>
     </nav>
   );

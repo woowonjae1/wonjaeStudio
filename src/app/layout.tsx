@@ -2,11 +2,10 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
-import { FloatingNoteButton } from "@/components/ui/FloatingNoteButton";
 import { ThemeScript } from "@/components/theme";
 import { getSiteConfig } from "@/lib/content";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({ subsets: ["latin"], weight: ["300", "400", "500"] });
 
 // 获取站点配置
 const siteConfig = getSiteConfig();
@@ -99,9 +98,6 @@ export default function RootLayout({
 
           {/* 主要内容区域 */}
           <main className="flex-1 pt-20">{children}</main>
-
-          {/* 浮动笔记按钮 */}
-          <FloatingNoteButton />
         </div>
       </body>
     </html>
