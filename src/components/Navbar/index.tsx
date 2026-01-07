@@ -2,44 +2,68 @@
 
 import { usePathname, useRouter } from "next/navigation";
 import { ThemeToggle } from "@/components/theme";
+import { LanguageToggle } from "@/components/LanguageToggle";
 import "./Navbar.css";
 
 const Navbar = () => {
   const pathname = usePathname();
   const router = useRouter();
 
-  const handleHomeClick = (e: React.MouseEvent) => {
+  const handleNavClick = (e: React.MouseEvent, path: string) => {
     e.preventDefault();
-    router.push("/");
+    router.push(path);
   };
 
   return (
     <nav className="navbar">
       <div className="navbar-container">
-        <a href="/" onClick={handleHomeClick} className="navbar-logo">
-          WJ
+        <a
+          href="/"
+          onClick={(e) => handleNavClick(e, "/")}
+          className="navbar-logo"
+        >
+          woowonjaeQAQ
         </a>
+
         <div className="navbar-content">
           <ul className="navbar-menu">
             <li>
               <a
                 href="/"
-                onClick={handleHomeClick}
-                className={pathname === "/" ? "active" : ""}
+                onClick={(e) => handleNavClick(e, "/")}
+                className={
+                  pathname === "/" && !pathname.startsWith("/english")
+                    ? "active"
+                    : ""
+                }
               >
-                文章
+                Notes
+              </a>
+            </li>
+            <li>
+              <a
+                href="/english"
+                onClick={(e) => handleNavClick(e, "/english")}
+                className={pathname.startsWith("/english") ? "active" : ""}
+              >
+                English
               </a>
             </li>
             <li>
               <a
                 href="/notes/new"
-                className={pathname === "/notes/new" ? "active" : ""}
+                onClick={(e) => handleNavClick(e, "/notes/new")}
+                className={`nav-write ${pathname === "/notes/new" ? "active" : ""}`}
               >
-                写作
+                Write
               </a>
             </li>
           </ul>
-          <ThemeToggle />
+
+          <div className="navbar-actions">
+            <LanguageToggle />
+            <ThemeToggle />
+          </div>
         </div>
       </div>
     </nav>

@@ -31,7 +31,6 @@ export interface PaginatedPosts {
 }
 
 const postsDirectory = path.join(process.cwd(), "content/posts");
-const pagesDirectory = path.join(process.cwd(), "content/pages");
 const configDirectory = path.join(process.cwd(), "content/config");
 
 // 计算阅读时间（基于平均阅读速度 200 字/分钟）

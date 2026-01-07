@@ -1,16 +1,15 @@
 .theme-toggle {
-  padding: 8px 14px;
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  color: var(--text-muted);
   background: transparent;
   border: none;
-  border-radius: 6px;
+  border-radius: 8px;
   cursor: pointer;
-  transition:
-    color 0.2s ease,
-    background-color 0.2s ease;
-  white-space: nowrap;
+  transition: all 0.2s ease;
 }
 
 .theme-toggle:hover {
@@ -23,14 +22,13 @@
 }
 
 .theme-toggle:focus-visible {
-  outline: 2px solid var(--accent-primary);
+  outline: 2px solid var(--accent-highlight);
   outline-offset: 2px;
 }
 
-/* 移动端适配 */
 @media (max-width: 768px) {
   .theme-toggle {
-    padding: 6px 12px;
-    font-size: 13px;
+    width: 32px;
+    height: 32px;
   }
 }

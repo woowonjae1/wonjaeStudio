@@ -1,6 +1,5 @@
 import { remark } from "remark";
 import remarkHtml from "remark-html";
-import { unified } from "unified";
 
 // Markdown 转 HTML 的处理器
 const processor = remark().use(remarkHtml, { sanitize: false });

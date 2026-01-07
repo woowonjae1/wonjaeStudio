@@ -3,7 +3,10 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Save, ArrowLeft } from "lucide-react";
-import { saveNote, NOTE_TEMPLATES } from "@/lib/notesStorage";
+import { saveNote } from "@/lib/notesStorage";
+import { Locale, getStoredLocale } from "@/lib/i18n";
+
+type NoteCategory = "music" | "english";
 
 export default function NewNotePage() {
   const router = useRouter();
@@ -11,37 +14,71 @@ export default function NewNotePage() {
   const [content, setContent] = useState("");
   const [tags, setTags] = useState<string[]>([]);
   const [tagInput, setTagInput] = useState("");
+  const [category, setCategory] = useState<NoteCategory>("music");
+  const [locale, setLocale] = useState<Locale>("zh");
+  const [mounted, setMounted] = useState(false);
 
-  // 自动保存草稿到 localStorage
+  useEffect(() => {
+    setMounted(true);
+    setLocale(getStoredLocale());
+
+    const handleLocaleChange = (e: CustomEvent<Locale>) => {
+      setLocale(e.detail);
+    };
+    window.addEventListener(
+      "localeChange",
+      handleLocaleChange as EventListener
+    );
+    return () => {
+      window.removeEventListener(
+        "localeChange",
+        handleLocaleChange as EventListener
+      );
+    };
+  }, []);
+
+  // 自动保存草稿
   useEffect(() => {
     const timer = setTimeout(() => {
       if (title || content) {
-        localStorage.setItem("draft", JSON.stringify({ title, content, tags }));
+        localStorage.setItem(
+          "draft",
+          JSON.stringify({ title, content, tags, category })
+        );
       }
     }, 1000);
     return () => clearTimeout(timer);
-  }, [title, content, tags]);
+  }, [title, content, tags, category]);
 
   // 加载草稿
   useEffect(() => {
     const draft = localStorage.getItem("draft");
     if (draft) {
-      const { title, content, tags } = JSON.parse(draft);
-      setTitle(title || "");
-      setContent(content || "");
-      setTags(tags || []);
+      const parsed = JSON.parse(draft);
+      setTitle(parsed.title || "");
+      setContent(parsed.content || "");
+      setTags(parsed.tags || []);
+      setCategory(parsed.category || "music");
     }
   }, []);
 
   const handleSave = () => {
     if (!title.trim() && !content.trim()) return;
 
+    // 根据分类添加默认标签
+    const categoryTag = category === "english" ? "英语" : "音乐";
+    const finalTags = tags.includes(categoryTag)
+      ? tags
+      : [categoryTag, ...tags];
+
     saveNote({
-      title: title || `无标题 ${new Date().toLocaleDateString("zh-CN")}`,
+      title:
+        title ||
+        `${locale === "zh" ? "无标题" : "Untitled"} ${new Date().toLocaleDateString(locale === "zh" ? "zh-CN" : "en-US")}`,
       content,
       type: "literature",
       template: "blank",
-      tags,
+      tags: finalTags,
       links: [],
       isArchived: false,
     });
@@ -61,25 +98,53 @@ export default function NewNotePage() {
     setTags(tags.filter((t) => t !== tag));
   };
 
+  if (!mounted) {
+    return <div className="min-h-screen bg-[var(--bg-primary)]" />;
+  }
+
   return (
-    <div className="min-h-screen bg-white dark:bg-black">
-      <div className="max-w-4xl mx-auto px-6 py-8">
+    <div className="min-h-screen bg-[var(--bg-primary)]">
+      <div className="max-w-3xl mx-auto px-6 py-8">
         {/* 顶部操作栏 */}
-        <div className="flex items-center justify-between mb-12 pb-4 border-b border-gray-100 dark:border-gray-900">
+        <div className="flex items-center justify-between mb-12 pb-4 border-b border-[var(--border-light)]">
           <button
             onClick={() => router.push("/")}
-            className="flex items-center gap-2 text-gray-400 hover:text-black dark:hover:text-white transition-colors"
+            className="flex items-center gap-2 text-[var(--text-muted)] hover:text-[var(--text-primary)] transition-colors"
           >
             <ArrowLeft className="w-4 h-4" />
-            <span className="text-sm font-light">返回</span>
+            <span className="text-sm">{locale === "zh" ? "返回" : "Back"}</span>
           </button>
           <button
             onClick={handleSave}
             disabled={!title.trim() && !content.trim()}
-            className="flex items-center gap-2 px-4 py-2 bg-black dark:bg-white text-white dark:text-black text-sm font-light rounded-lg hover:opacity-80 transition-opacity disabled:opacity-30 disabled:cursor-not-allowed"
+            className="flex items-center gap-2 px-4 py-2 bg-[var(--accent-primary)] text-[var(--bg-primary)] text-sm font-medium rounded-lg hover:opacity-90 transition-opacity disabled:opacity-30 disabled:cursor-not-allowed"
           >
             <Save className="w-4 h-4" />
-            发布
+            {locale === "zh" ? "发布" : "Publish"}
+          </button>
+        </div>
+
+        {/* 分类选择 */}
+        <div className="flex items-center gap-3 mb-8">
+          <button
+            onClick={() => setCategory("music")}
+            className={`flex items-center px-4 py-2 rounded-full text-sm font-medium transition-all ${
+              category === "music"
+                ? "bg-[var(--tag-music-bg)] text-[var(--tag-music-text)]"
+                : "bg-[var(--bg-secondary)] text-[var(--text-muted)] hover:text-[var(--text-primary)]"
+            }`}
+          >
+            {locale === "zh" ? "音乐笔记" : "Music"}
+          </button>
+          <button
+            onClick={() => setCategory("english")}
+            className={`flex items-center px-4 py-2 rounded-full text-sm font-medium transition-all ${
+              category === "english"
+                ? "bg-[var(--tag-english-bg)] text-[var(--tag-english-text)]"
+                : "bg-[var(--bg-secondary)] text-[var(--text-muted)] hover:text-[var(--text-primary)]"
+            }`}
+          >
+            {locale === "zh" ? "英语笔记" : "English"}
           </button>
         </div>
 
@@ -88,8 +153,8 @@ export default function NewNotePage() {
           type="text"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          placeholder="标题"
-          className="w-full text-4xl font-light bg-transparent border-none outline-none placeholder-gray-300 dark:placeholder-gray-700 text-black dark:text-white mb-8"
+          placeholder={locale === "zh" ? "标题" : "Title"}
+          className="w-full text-4xl font-medium bg-transparent border-none outline-none placeholder-[var(--text-muted)] text-[var(--text-primary)] mb-8 tracking-tight"
           autoFocus
         />
 
@@ -98,12 +163,12 @@ export default function NewNotePage() {
           {tags.map((tag) => (
             <span
               key={tag}
-              className="inline-flex items-center gap-2 px-3 py-1 text-sm text-gray-500 dark:text-gray-400 border border-gray-200 dark:border-gray-800 rounded-full"
+              className="inline-flex items-center gap-2 px-3 py-1.5 text-sm text-[var(--text-secondary)] bg-[var(--bg-secondary)] rounded-lg"
             >
               #{tag}
               <button
                 onClick={() => handleRemoveTag(tag)}
-                className="hover:text-black dark:hover:text-white"
+                className="hover:text-[var(--text-primary)] transition-colors"
               >
                 ×
               </button>
@@ -119,8 +184,8 @@ export default function NewNotePage() {
                 handleAddTag();
               }
             }}
-            placeholder="添加标签..."
-            className="text-sm bg-transparent border-none outline-none placeholder-gray-300 dark:placeholder-gray-700 text-gray-500 dark:text-gray-400 w-32"
+            placeholder={locale === "zh" ? "添加标签..." : "Add tag..."}
+            className="text-sm bg-transparent border-none outline-none placeholder-[var(--text-muted)] text-[var(--text-secondary)] w-32"
           />
         </div>
 
@@ -128,14 +193,16 @@ export default function NewNotePage() {
         <textarea
           value={content}
           onChange={(e) => setContent(e.target.value)}
-          placeholder="开始写作..."
-          className="w-full min-h-[500px] bg-transparent border-none outline-none resize-none placeholder-gray-300 dark:placeholder-gray-700 text-gray-700 dark:text-gray-300 text-lg font-light leading-relaxed"
+          placeholder={locale === "zh" ? "开始写作..." : "Start writing..."}
+          className="w-full min-h-[500px] bg-transparent border-none outline-none resize-none placeholder-[var(--text-muted)] text-[var(--text-primary)] text-lg leading-relaxed"
         />
 
         {/* 底部提示 */}
-        <div className="mt-8 pt-4 border-t border-gray-100 dark:border-gray-900">
-          <p className="text-xs text-gray-400 font-light">
-            自动保存草稿 • {content.replace(/\s/g, "").length} 字
+        <div className="mt-8 pt-4 border-t border-[var(--border-light)]">
+          <p className="text-xs text-[var(--text-muted)]">
+            {locale === "zh" ? "自动保存草稿" : "Auto-saving draft"} •{" "}
+            {content.replace(/\s/g, "").length}{" "}
+            {locale === "zh" ? "字" : "chars"}
           </p>
         </div>
       </div>

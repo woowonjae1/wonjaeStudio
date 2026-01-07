@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import { Sun, Moon } from "lucide-react";
 import "./ThemeToggle.css";
 
 type Theme = "light" | "dark";
@@ -9,11 +10,8 @@ export function ThemeToggle() {
   const [theme, setTheme] = useState<Theme>("light");
   const [mounted, setMounted] = useState(false);
 
-  // 初始化主题
   useEffect(() => {
     setMounted(true);
-
-    // 优先级：本地存储 > 系统偏好 > 默认浅色
     const stored = localStorage.getItem("theme") as Theme | null;
     if (stored) {
       setTheme(stored);
@@ -33,12 +31,9 @@ export function ThemeToggle() {
     }
   }, []);
 
-  // 监听系统主题变化
   useEffect(() => {
     const mediaQuery = window.matchMedia("(prefers-color-scheme: dark)");
-
     const handleChange = (e: MediaQueryListEvent) => {
-      // 只有在没有手动设置时才跟随系统
       if (!localStorage.getItem("theme")) {
         const newTheme = e.matches ? "dark" : "light";
         setTheme(newTheme);
@@ -46,7 +41,6 @@ export function ThemeToggle() {
         document.documentElement.classList.toggle("dark", newTheme === "dark");
       }
     };
-
     mediaQuery.addEventListener("change", handleChange);
     return () => mediaQuery.removeEventListener("change", handleChange);
   }, []);
@@ -59,11 +53,10 @@ export function ThemeToggle() {
     localStorage.setItem("theme", newTheme);
   };
 
-  // 避免服务端渲染不匹配
   if (!mounted) {
     return (
-      <button className="theme-toggle" aria-label="切换主题">
-        浅色模式
+      <button className="theme-toggle" aria-label="Toggle theme">
+        <Sun className="w-4 h-4" />
       </button>
     );
   }
@@ -72,9 +65,15 @@ export function ThemeToggle() {
     <button
       className="theme-toggle"
       onClick={toggleTheme}
-      aria-label={`切换到${theme === "light" ? "深色" : "浅色"}模式`}
+      aria-label={
+        theme === "light" ? "Switch to dark mode" : "Switch to light mode"
+      }
     >
-      {theme === "light" ? "深色模式" : "浅色模式"}
+      {theme === "light" ? (
+        <Moon className="w-4 h-4" />
+      ) : (
+        <Sun className="w-4 h-4" />
+      )}
     </button>
   );
 }
