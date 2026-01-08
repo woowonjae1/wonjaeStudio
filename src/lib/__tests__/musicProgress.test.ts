@@ -9,7 +9,6 @@
 
 import * as fc from "fast-check";
 import {
-  MusicLearningProgress,
   EarTrainingResult,
   serializeProgress,
   deserializeProgress,
@@ -17,7 +16,6 @@ import {
   calculateProgressPercentage,
   calculateAccuracy,
   markKnowledgePointComplete,
-  addEarTrainingResult,
   getLearningStatistics,
 } from "../musicProgress";
 

@@ -13,9 +13,9 @@ import {
   getInterval,
   getChordNotes,
   getScaleNotes,
-  parseNote,
   isValidNote,
-  INTERVALS,
+  ChordType,
+  ScaleType,
 } from "../musicTheory";
 
 // 生成有效音符的 arbitrary
@@ -267,7 +267,7 @@ describe("Music Theory Utilities", () => {
             "dominant7"
           ),
           (root, chordType) => {
-            const notes = getChordNotes(root, chordType as any);
+            const notes = getChordNotes(root, chordType as ChordType);
             return notes[0] === root;
           }
         ),
@@ -323,7 +323,7 @@ describe("Music Theory Utilities", () => {
             "blues"
           ),
           (root, scaleType) => {
-            const notes = getScaleNotes(root, scaleType as any);
+            const notes = getScaleNotes(root, scaleType as ScaleType);
             return notes[0] === root;
           }
         ),

@@ -305,7 +305,7 @@ export function transposeNote(note: string, semitones: number): string {
 export function getInterval(note1: string, note2: string): Interval {
   const midi1 = noteToMidi(note1);
   const midi2 = noteToMidi(note2);
-  let semitones = Math.abs(midi2 - midi1) % 12;
+  const semitones = Math.abs(midi2 - midi1) % 12;
 
   // 查找对应的音程
   const intervalEntry = Object.entries(INTERVALS).find(

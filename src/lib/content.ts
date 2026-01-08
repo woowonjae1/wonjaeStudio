@@ -135,14 +135,16 @@ export function getAllTopics(): Topic[] {
     const topicsConfig = JSON.parse(fs.readFileSync(topicsConfigPath, "utf8"));
     const allPosts = getAllPosts();
 
-    return topicsConfig.topics.map((topic: any) => ({
-      ...topic,
-      count: allPosts.filter((post) =>
-        post.topics.some(
-          (postTopic) => postTopic.toLowerCase() === topic.slug.toLowerCase()
-        )
-      ).length,
-    }));
+    return topicsConfig.topics.map(
+      (topic: { slug: string; name: string; description?: string }) => ({
+        ...topic,
+        count: allPosts.filter((post) =>
+          post.topics.some(
+            (postTopic) => postTopic.toLowerCase() === topic.slug.toLowerCase()
+          )
+        ).length,
+      })
+    );
   } catch (error) {
     return [];
   }
@@ -253,7 +255,7 @@ export function getAllTags(): { name: string; count: number }[] {
 }
 
 // 验证文章数据完整性
-export function validatePost(post: any): {
+export function validatePost(post: Record<string, unknown>): {
   isValid: boolean;
   errors: string[];
 } {

@@ -10,7 +10,7 @@ export async function markdownToHtml(markdown: string): Promise<string> {
 }
 
 // 验证 frontmatter 必需字段
-export function validateFrontmatter(data: any): {
+export function validateFrontmatter(data: Record<string, unknown>): {
   isValid: boolean;
   errors: string[];
 } {
