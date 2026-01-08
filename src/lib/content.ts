@@ -261,15 +261,19 @@ export function validatePost(post: Record<string, unknown>): {
 } {
   const errors: string[] = [];
 
-  if (!post.title || post.title.trim().length === 0) {
+  const title = post.title as string | undefined;
+  const date = post.date as string | undefined;
+  const summary = post.summary as string | undefined;
+
+  if (!title || title.trim().length === 0) {
     errors.push("标题不能为空");
   }
 
-  if (!post.date || !/^\d{4}-\d{2}-\d{2}$/.test(post.date)) {
+  if (!date || !/^\d{4}-\d{2}-\d{2}$/.test(date)) {
     errors.push("日期格式无效，应为 YYYY-MM-DD");
   }
 
-  if (!post.summary || post.summary.trim().length === 0) {
+  if (!summary || summary.trim().length === 0) {
     errors.push("摘要不能为空");
   }
 
