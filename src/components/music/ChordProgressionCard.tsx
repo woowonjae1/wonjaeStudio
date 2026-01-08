@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { ChordProgressionData } from "@/lib/musicData";
-import { getChordNotes, createChord } from "@/lib/musicTheory";
+import { getChordNotes, createChord, ChordType } from "@/lib/musicTheory";
 import PianoKeyboard from "./PianoKeyboard";
 import AudioPlayer from "./AudioPlayer";
 
@@ -39,7 +39,7 @@ export const ChordProgressionCard: React.FC<ChordProgressionCardProps> = ({
   }) => {
     const chordObj = createChord(
       chord.root,
-      chord.type as any,
+      chord.type as ChordType,
       chord.romanNumeral
     );
     return chordObj.symbol;
@@ -124,7 +124,7 @@ export const ChordProgressionCard: React.FC<ChordProgressionCardProps> = ({
               progression={{
                 chords: progression.chords.map((c) => ({
                   root: c.root,
-                  type: c.type as any,
+                  type: c.type as ChordType,
                 })),
                 beatsPerChord: 2,
               }}
@@ -158,7 +158,10 @@ export const ChordProgressionCard: React.FC<ChordProgressionCardProps> = ({
             </h4>
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
               {progression.chords.map((chord, index) => {
-                const notes = getChordNotes(chord.root, chord.type as any);
+                const notes = getChordNotes(
+                  chord.root,
+                  chord.type as ChordType
+                );
                 return (
                   <div
                     key={index}

@@ -14,7 +14,7 @@ export default function EnglishPage() {
   const [reviewCount, setReviewCount] = useState(0);
   const [locale, setLocale] = useState<Locale>("zh");
   const [mounted, setMounted] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const [_loading, setLoading] = useState(true);
 
   useEffect(() => {
     setMounted(true);

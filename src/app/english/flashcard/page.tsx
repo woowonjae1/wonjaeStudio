@@ -25,7 +25,7 @@ export default function FlashcardPage() {
   const [stats, setStats] = useState({ correct: 0, incorrect: 0 });
   const [locale, setLocale] = useState<Locale>("zh");
   const [mounted, setMounted] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const [_loading, setLoading] = useState(true);
 
   const loadWords = useCallback((mode: StudyMode) => {
     setLoading(true);

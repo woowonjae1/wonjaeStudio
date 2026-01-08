@@ -110,7 +110,7 @@ export const PianoKeyboard: React.FC<PianoKeyboardProps> = ({
       >
         {/* 白键 */}
         <div style={{ display: "flex", height: "100%", position: "relative" }}>
-          {whiteKeys.map((key, index) => {
+          {whiteKeys.map((key) => {
             const highlighted = isHighlighted(key.note);
             return (
               <button
