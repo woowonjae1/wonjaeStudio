@@ -536,9 +536,9 @@ export function updateWordProgress(wordId: string, correct: boolean): void {
   updateStats(true);
 }
 
-// 获取今日待复习单词（异步）
-export async function getTodayReviewWords(): Promise<Word[]> {
-  const words = await fetchAllWords();
+// 获取今日待复习单词
+export function getTodayReviewWords(): Word[] {
+  const words = getAllWords();
   const progress = getProgress();
   const now = new Date();
 
@@ -549,9 +549,9 @@ export async function getTodayReviewWords(): Promise<Word[]> {
   });
 }
 
-// 获取新单词（异步）
-export async function getNewWords(count: number = 10): Promise<Word[]> {
-  const words = await fetchAllWords();
+// 获取新单词
+export function getNewWords(count: number = 10): Word[] {
+  const words = getAllWords();
   const progress = getProgress();
   return words.filter((word) => !progress[word.id]).slice(0, count);
 }

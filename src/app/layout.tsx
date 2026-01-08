@@ -1,11 +1,25 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Noto_Sans_SC } from "next/font/google";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import { ThemeScript } from "@/components/theme";
 import { getSiteConfig } from "@/lib/content";
 
-const inter = Inter({ subsets: ["latin"], weight: ["300", "400", "500"] });
+// 英文字体 - Inter，现代简洁
+const inter = Inter({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600"],
+  variable: "--font-inter",
+  display: "swap",
+});
+
+// 中文字体 - Noto Sans SC，清晰易读
+const notoSansSC = Noto_Sans_SC({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "700"],
+  variable: "--font-noto",
+  display: "swap",
+});
 
 // 获取站点配置
 const siteConfig = getSiteConfig();
@@ -91,7 +105,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className={inter.className}>
+      <body className={`${inter.variable} ${notoSansSC.variable} font-sans`}>
         <div className="min-h-screen flex flex-col">
           {/* 导航栏 */}
           <Navbar />

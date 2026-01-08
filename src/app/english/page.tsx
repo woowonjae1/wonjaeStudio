@@ -21,11 +21,10 @@ export default function EnglishPage() {
     setLocale(getStoredLocale());
     setStats(getStats());
 
-    // 异步加载待复习单词数量
-    getTodayReviewWords().then((words) => {
-      setReviewCount(words.length);
-      setLoading(false);
-    });
+    // 同步获取待复习单词数量
+    const words = getTodayReviewWords();
+    setReviewCount(words.length);
+    setLoading(false);
 
     const handleLocaleChange = (e: CustomEvent<Locale>) => {
       setLocale(e.detail);
@@ -56,6 +55,18 @@ export default function EnglishPage() {
           : "Daily conversation & IELTS topics",
       href: "/english/speaking",
       stat: locale === "zh" ? "核心" : "Core",
+      accent: "var(--tag-production-bg)",
+      accentText: "var(--tag-production-text)",
+    },
+    {
+      id: "pronunciation",
+      title: locale === "zh" ? "发音技巧" : "Pronunciation",
+      description:
+        locale === "zh"
+          ? "连读、弱读、语调、重音"
+          : "Linking, weak forms, intonation, stress",
+      href: "/english/pronunciation",
+      stat: locale === "zh" ? "专项" : "Skills",
       accent: "var(--tag-production-bg)",
       accentText: "var(--tag-production-text)",
     },

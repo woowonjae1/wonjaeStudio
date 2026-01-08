@@ -32,12 +32,23 @@ const Navbar = () => {
                 href="/"
                 onClick={(e) => handleNavClick(e, "/")}
                 className={
-                  pathname === "/" && !pathname.startsWith("/english")
+                  pathname === "/" &&
+                  !pathname.startsWith("/english") &&
+                  !pathname.startsWith("/music")
                     ? "active"
                     : ""
                 }
               >
                 Notes
+              </a>
+            </li>
+            <li>
+              <a
+                href="/music"
+                onClick={(e) => handleNavClick(e, "/music")}
+                className={pathname.startsWith("/music") ? "active" : ""}
+              >
+                Music
               </a>
             </li>
             <li>

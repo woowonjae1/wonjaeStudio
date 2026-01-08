@@ -27,6 +27,11 @@ function rowToWordData(row: VocabularyRow): WordData {
 
 // 获取所有词汇
 export async function getAllVocabulary(): Promise<WordData[]> {
+  if (!supabase) {
+    console.error("Supabase 未配置");
+    return [];
+  }
+
   const { data, error } = await supabase
     .from("vocabulary")
     .select("*")
@@ -45,6 +50,10 @@ export async function getVocabularyPaginated(
   page: number = 1,
   pageSize: number = 50
 ): Promise<{ data: WordData[]; total: number }> {
+  if (!supabase) {
+    return { data: [], total: 0 };
+  }
+
   const from = (page - 1) * pageSize;
   const to = from + pageSize - 1;
 
@@ -69,6 +78,10 @@ export async function getVocabularyPaginated(
 export async function getVocabularyByLevel(
   level: WordData["level"]
 ): Promise<WordData[]> {
+  if (!supabase) {
+    return [];
+  }
+
   const { data, error } = await supabase
     .from("vocabulary")
     .select("*")
@@ -85,6 +98,10 @@ export async function getVocabularyByLevel(
 
 // 搜索词汇
 export async function searchVocabulary(query: string): Promise<WordData[]> {
+  if (!supabase) {
+    return [];
+  }
+
   const { data, error } = await supabase
     .from("vocabulary")
     .select("*")
@@ -103,7 +120,10 @@ export async function searchVocabulary(query: string): Promise<WordData[]> {
 export async function getRandomVocabulary(
   count: number = 10
 ): Promise<WordData[]> {
-  // Supabase 不直接支持随机，用 RPC 或获取全部后随机
+  if (!supabase) {
+    return [];
+  }
+
   const { data, error } = await supabase.from("vocabulary").select("*");
 
   if (error || !data) {
@@ -117,6 +137,10 @@ export async function getRandomVocabulary(
 
 // 获取词汇总数
 export async function getVocabularyCount(): Promise<number> {
+  if (!supabase) {
+    return 0;
+  }
+
   const { count, error } = await supabase
     .from("vocabulary")
     .select("*", { count: "exact", head: true });

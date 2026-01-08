@@ -58,13 +58,18 @@ module.exports = {
       },
       fontFamily: {
         sans: [
-          "Inter",
+          "var(--font-inter)",
+          "var(--font-noto)",
           "-apple-system",
           "BlinkMacSystemFont",
           "Segoe UI",
           "Roboto",
+          "Helvetica Neue",
+          "PingFang SC",
+          "Microsoft YaHei",
           "sans-serif",
         ],
+        mono: ["SF Mono", "Fira Code", "Consolas", "Monaco", "monospace"],
         serif: ["Georgia", "Times New Roman", "serif"],
       },
       lineHeight: {
