@@ -24,7 +24,7 @@ export function validateFrontmatter(data: Record<string, unknown>): {
   });
 
   // 验证日期格式
-  if (data.date && !isValidDate(data.date)) {
+  if (data.date && !isValidDate(data.date as string)) {
     errors.push("日期格式无效，应为 YYYY-MM-DD 格式");
   }
 
