@@ -25,15 +25,18 @@ export default function FlashcardPage() {
   const [stats, setStats] = useState({ correct: 0, incorrect: 0 });
   const [locale, setLocale] = useState<Locale>("zh");
   const [mounted, setMounted] = useState(false);
+  const [loading, setLoading] = useState(true);
 
-  const loadWords = useCallback((mode: StudyMode) => {
+  const loadWords = useCallback(async (mode: StudyMode) => {
+    setLoading(true);
     const wordList =
-      mode === "review" ? getTodayReviewWords() : getNewWords(10);
+      mode === "review" ? await getTodayReviewWords() : await getNewWords(10);
     setWords(wordList);
     setCurrentIndex(0);
     setCardState("front");
     setCompleted(false);
     setStats({ correct: 0, incorrect: 0 });
+    setLoading(false);
   }, []);
 
   useEffect(() => {

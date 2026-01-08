@@ -14,12 +14,18 @@ export default function EnglishPage() {
   const [reviewCount, setReviewCount] = useState(0);
   const [locale, setLocale] = useState<Locale>("zh");
   const [mounted, setMounted] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     setMounted(true);
     setLocale(getStoredLocale());
     setStats(getStats());
-    setReviewCount(getTodayReviewWords().length);
+
+    // 异步加载待复习单词数量
+    getTodayReviewWords().then((words) => {
+      setReviewCount(words.length);
+      setLoading(false);
+    });
 
     const handleLocaleChange = (e: CustomEvent<Locale>) => {
       setLocale(e.detail);

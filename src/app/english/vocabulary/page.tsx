@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import {
-  getAllWords,
+  fetchAllWords,
   getProgress,
   Word,
   WordProgress,
@@ -11,7 +11,7 @@ import {
 import { Locale, getStoredLocale } from "@/lib/i18n";
 import { speak, preloadVoices } from "@/lib/tts";
 
-type FilterLevel = "all" | "cet4" | "cet6" | "ielts-basic" | "ielts-advanced";
+type FilterLevel = "all" | "basic" | "cet4" | "cet6" | "ielts" | "advanced";
 type FilterStatus = "all" | "new" | "learning" | "mastered";
 
 export default function VocabularyPage() {
@@ -23,14 +23,20 @@ export default function VocabularyPage() {
   const [statusFilter, setStatusFilter] = useState<FilterStatus>("all");
   const [locale, setLocale] = useState<Locale>("zh");
   const [mounted, setMounted] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [expandedWord, setExpandedWord] = useState<string | null>(null);
 
   useEffect(() => {
     setMounted(true);
     setLocale(getStoredLocale());
-    setWords(getAllWords());
-    setProgress(getProgress());
     preloadVoices();
+
+    // 异步加载词汇数据
+    fetchAllWords().then((data) => {
+      setWords(data);
+      setLoading(false);
+    });
+    setProgress(getProgress());
 
     const handleLocaleChange = (e: CustomEvent<Locale>) => {
       setLocale(e.detail);
@@ -78,10 +84,11 @@ export default function VocabularyPage() {
 
   const getLevelLabel = (level: string) => {
     const labels: Record<string, string> = {
+      basic: locale === "zh" ? "基础" : "Basic",
       cet4: "CET-4",
       cet6: "CET-6",
-      "ielts-basic": locale === "zh" ? "雅思基础" : "IELTS Basic",
-      "ielts-advanced": locale === "zh" ? "雅思进阶" : "IELTS Advanced",
+      ielts: locale === "zh" ? "雅思" : "IELTS",
+      advanced: locale === "zh" ? "高级" : "Advanced",
     };
     return labels[level] || level;
   };
@@ -115,8 +122,14 @@ export default function VocabularyPage() {
     );
   };
 
-  if (!mounted) {
-    return <div className="min-h-screen bg-[var(--bg-primary)]" />;
+  if (!mounted || loading) {
+    return (
+      <div className="min-h-screen bg-[var(--bg-primary)] flex items-center justify-center">
+        <p className="text-[var(--text-muted)]">
+          {locale === "zh" ? "加载中..." : "Loading..."}
+        </p>
+      </div>
+    );
   }
 
   return (
@@ -164,10 +177,11 @@ export default function VocabularyPage() {
             {(
               [
                 "all",
+                "basic",
                 "cet4",
                 "cet6",
-                "ielts-basic",
-                "ielts-advanced",
+                "ielts",
+                "advanced",
               ] as FilterLevel[]
             ).map((level) => (
               <button

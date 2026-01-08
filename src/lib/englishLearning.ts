@@ -1,6 +1,10 @@
 "use client";
 
-import { VOCABULARY_DATA } from "./vocabularyData";
+import {
+  getAllVocabulary,
+  getRandomVocabulary,
+  WordData,
+} from "./vocabularyService";
 
 // 单词难度等级
 export type WordLevel = "basic" | "cet4" | "cet6" | "ielts" | "advanced";
@@ -58,10 +62,13 @@ export interface LearningStats {
 const PROGRESS_KEY = "english_progress";
 const STATS_KEY = "english_stats";
 
-// 从词汇数据生成单词列表
-function generateWords(): Word[] {
-  return VOCABULARY_DATA.map((w, i) => ({
-    id: `w${i + 1}`,
+// 词汇数据缓存
+let cachedWords: Word[] | null = null;
+
+// 将 WordData 转换为 Word
+function wordDataToWord(w: WordData, index: number): Word {
+  return {
+    id: `w${index + 1}`,
     word: w.word,
     phonetic: w.phonetic,
     meaning: w.meaning,
@@ -70,10 +77,27 @@ function generateWords(): Word[] {
     exampleCn: w.exampleCn,
     level: w.level,
     tags: w.tags,
-  }));
+  };
 }
 
-// 口语话题
+// 获取所有单词（异步，从 Supabase）
+export async function fetchAllWords(): Promise<Word[]> {
+  if (cachedWords) return cachedWords;
+
+  const data = await getAllVocabulary();
+  cachedWords = data.map(wordDataToWord);
+  return cachedWords;
+}
+
+// 同步获取缓存的单词（用于已加载后的场景）
+export function getAllWords(): Word[] {
+  return cachedWords || [];
+}
+
+// 清除缓存（用于刷新数据）
+export function clearWordsCache(): void {
+  cachedWords = null;
+}
 const SPEAKING_TOPICS: SpeakingTopic[] = [
   // 日常基础
   {
@@ -469,11 +493,6 @@ const SPEAKING_TOPICS: SpeakingTopic[] = [
   },
 ];
 
-// 获取所有单词
-export function getAllWords(): Word[] {
-  return generateWords();
-}
-
 // 获取学习进度
 export function getProgress(): Record<string, WordProgress> {
   if (typeof window === "undefined") return {};
@@ -517,9 +536,9 @@ export function updateWordProgress(wordId: string, correct: boolean): void {
   updateStats(true);
 }
 
-// 获取今日待复习单词
-export function getTodayReviewWords(): Word[] {
-  const words = getAllWords();
+// 获取今日待复习单词（异步）
+export async function getTodayReviewWords(): Promise<Word[]> {
+  const words = await fetchAllWords();
   const progress = getProgress();
   const now = new Date();
 
@@ -530,18 +549,19 @@ export function getTodayReviewWords(): Word[] {
   });
 }
 
-// 获取新单词
-export function getNewWords(count: number = 10): Word[] {
-  const words = getAllWords();
+// 获取新单词（异步）
+export async function getNewWords(count: number = 10): Promise<Word[]> {
+  const words = await fetchAllWords();
   const progress = getProgress();
   return words.filter((word) => !progress[word.id]).slice(0, count);
 }
 
-// 获取随机单词用于默写
-export function getRandomWordsForSpelling(count: number = 100): Word[] {
-  const words = getAllWords();
-  const shuffled = [...words].sort(() => Math.random() - 0.5);
-  return shuffled.slice(0, Math.min(count, words.length));
+// 获取随机单词用于默写（异步）
+export async function getRandomWordsForSpelling(
+  count: number = 100
+): Promise<Word[]> {
+  const data = await getRandomVocabulary(count);
+  return data.map(wordDataToWord);
 }
 
 // 获取学习统计

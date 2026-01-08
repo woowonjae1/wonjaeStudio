@@ -22,10 +22,12 @@ export default function SpellingPage() {
   const [stats, setStats] = useState({ correct: 0, incorrect: 0 });
   const [locale, setLocale] = useState<Locale>("zh");
   const [mounted, setMounted] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [wordCount, setWordCount] = useState(100);
 
-  const loadWords = useCallback((count: number) => {
-    const wordList = getRandomWordsForSpelling(count);
+  const loadWords = useCallback(async (count: number) => {
+    setLoading(true);
+    const wordList = await getRandomWordsForSpelling(count);
     setWords(wordList);
     setCurrentIndex(0);
     setUserInput("");
@@ -33,6 +35,7 @@ export default function SpellingPage() {
     setIsCorrect(null);
     setCompleted(false);
     setStats({ correct: 0, incorrect: 0 });
+    setLoading(false);
   }, []);
 
   useEffect(() => {
@@ -57,10 +60,10 @@ export default function SpellingPage() {
   }, [loadWords]);
 
   useEffect(() => {
-    if (mounted && inputRef.current && !showAnswer) {
+    if (mounted && inputRef.current && !showAnswer && !loading) {
       inputRef.current.focus();
     }
-  }, [currentIndex, showAnswer, mounted]);
+  }, [currentIndex, showAnswer, mounted, loading]);
 
   const currentWord = words[currentIndex];
 
