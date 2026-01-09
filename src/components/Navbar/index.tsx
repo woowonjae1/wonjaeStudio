@@ -60,6 +60,7 @@ const Navbar = () => {
                 English
               </a>
             </li>
+
             <li>
               <a
                 href="/notes/new"
